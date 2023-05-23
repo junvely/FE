@@ -1,27 +1,32 @@
 {
-	"root": true,
-	"env": {
-		"browser": true,
-		"es2021": true,
-		"node": true
-	},
-	"parserOptions": {
-		"ecmaFeatures": {
-			"jsx": true
-		},
-		"ecmaVersion": "latest",
-		"sourceType": "module"
-	},
-	"ignorePatterns": ["webpack.config.js"],
-	"extends": [
-		"airbnb",
-		"eslint:recommended",
-		"plugin:react/recommended",
-		"plugin:prettier/recommended"
-	],
-	"plugins": ["import", "eslint", "prettier"],
-	"rules": {
-		"prettier/prettier": ["error", { "endOfLine": "auto" }],
-		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
-	}
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["eslint", "prettier"],
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true,
+    "node": true
+  },
+  "ignorePatterns": ["node_modules/"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  },
+  "rules": {
+    "prettier/prettier": 0,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ]
+  }
 }
