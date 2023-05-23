@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from "pages/main/MainPage";
 import "styles/scss/reset.scss";
 import AccountPage from "pages/account/AccountPage";

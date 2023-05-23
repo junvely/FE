@@ -2,7 +2,7 @@
 	"root": true,
 	"env": {
 		"browser": true,
-		"es6": true,
+		"es2021": true,
 		"node": true
 	},
 	"parserOptions": {
@@ -10,17 +10,16 @@
 			"jsx": true
 		},
 		"ecmaVersion": "latest",
-		"sourceType": "module",
-		"project": "./tsconfig.json"
+		"sourceType": "module"
 	},
 	"ignorePatterns": ["webpack.config.js"],
 	"extends": [
+		"airbnb",
 		"eslint:recommended",
 		"plugin:react/recommended",
-		"plugin:prettier/recommended",
-		"airbnb"
+		"plugin:prettier/recommended"
 	],
-	"plugins": ["prettier", "import"],
+	"plugins": ["import", "eslint", "prettier"],
 	"rules": {
 		"prettier/prettier": ["error", { "endOfLine": "auto" }],
 		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
