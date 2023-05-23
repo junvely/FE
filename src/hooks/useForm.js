@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-const useForm = (initialState) => {
+const useForm = initialState => {
   const [form, setForm] = useState(initialState);
 
-  const handleFormChange = (e) => {
+  const handleFormChange = e => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = e => {
     const { name, files } = e.target;
     setForm({ ...form, [name]: files[0] });
   };
@@ -20,4 +20,4 @@ const useForm = (initialState) => {
   return [form, handleFormChange, handleFileChange, reset];
 };
 
-export { useForm };
+export default { useForm };
