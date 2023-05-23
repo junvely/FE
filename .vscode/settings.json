@@ -1,0 +1,6 @@
+{
+	"html-to-css-autocompletion.getSelectorsFromFileTypes": ["html", "php"],
+	"eslint.codeActionsOnSave.rules": null,
+	"eslint.execArgv": null,
+	"eslint.workingDirectories": ["./share-office"]
+}
