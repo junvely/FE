@@ -1,6 +1,11 @@
 {
-	"html-to-css-autocompletion.getSelectorsFromFileTypes": ["html", "php"],
-	"eslint.codeActionsOnSave.rules": null,
-	"eslint.execArgv": null,
-	"eslint.workingDirectories": ["./share-office"]
+  "html-to-css-autocompletion.getSelectorsFromFileTypes": ["html", "php"],
+  "eslint.codeActionsOnSave.rules": null,
+  "eslint.execArgv": null,
+  "eslint.workingDirectories": ["./share-office"],
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }
