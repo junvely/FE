@@ -1,3 +1,4 @@
+```
 yarn add react-query
 yarn add react-router-dom
 yarn add axios
@@ -9,3 +10,4 @@ yarn add eslint prettier eslint-plugin-prettier eslint-config-prettier eslint-pl
 yarn add prettier --dev
 yarn eslint --init
 yarn prettier --write ".eslintrc.js"
+```
