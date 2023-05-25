@@ -20,4 +20,4 @@ const useForm = initialState => {
   return [form, handleFormChange, handleFileChange, reset];
 };
 
-export default { useForm };
+export default useForm;

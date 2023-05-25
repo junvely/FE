@@ -14,4 +14,4 @@ const useInput = () => {
   return [state, handleInputChange, resetState];
 };
 
-export default { useInput };
+export default useInput;

@@ -12,9 +12,8 @@ yarn eslint --init
 yarn prettier --write ".eslintrc.js"
 ```
 
-커밋 예시
-#199 [chore] interceptor 로직 수정
+커밋 예시 #199 [chore] interceptor 로직 수정
 
-pull 예시
-Merge pull request #306 from gomin-solution/jeongpyo
-#199 [feat] 불필요한 리렌더링 요소 제거
+pull 예시 Merge pull request #306 from gomin-solution/jeongpyo #199 [feat] 불필요한 리렌더링 요소 제거
+
+<!-- test id :  "email": "kjs1",  "password": "kjskjs123" -->
