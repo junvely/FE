@@ -9,45 +9,40 @@ const instance = axios.create({
 
 instance.interceptors.request.use(config => {
   if (config.headers === undefined) return config;
-  const accessToken = sessionStorage.getItem('Access_Token');
-  const refreshToken = sessionStorage.getItem('Refresh_Token');
+  const accessToken = sessionStorage.getItem('access_token');
+  const refreshToken = sessionStorage.getItem('refresh_token');
 
   if (!accessToken || !refreshToken) return config;
   // eslint-disable-next-line no-param-reassign
   config.headers.Access_Token = accessToken;
   // eslint-disable-next-line no-param-reassign
   config.headers.Refresh_Token = refreshToken;
-  // 2. 매개변수를 변경하지 않고 새 객체를 생성해 서버에 config 전달하는 방법
-  // const setTokenConfig = {
-  //   ...config,
-  //   headers: {
-  //     ...config.headers,
-  //     Access_Token: accessToken,
-  //     Refresh_Token: accessToken,
-  //   },
-  // };
-  // return setTokenConfig;
+
   return config;
 });
 
 instance.interceptors.response.use(
   response => {
-    const accessToken = response.data.Access_Token;
-    const refreshToken = response.data.Refresh_Token;
+    const accessToken = response.headers.access_token;
+    const refreshToken = response.headers.refresh_token;
     if (accessToken) {
-      sessionStorage.setItem('Access_Token');
+      sessionStorage.setItem('access_token', accessToken);
     }
     if (refreshToken) {
-      sessionStorage.setItem('Refresh_Token');
+      sessionStorage.setItem('refresh_token', refreshToken);
     }
     return response;
   },
 
   error => {
     const { errorCode } = error.response.data;
-    // 토큰 만료시의 에러코드를 받으면 액세스 토큰 재발급 요청 API
-    // if(errorCode ==="")
-    return Promise.reject(error);
+    // 리프레쉬 토큰 만료시 토큰 삭제 및 로그아웃 처리
+    // if (errorCode === '') {
+    //   sessionStorage.removeItem('access_token');
+    //   sessionStorage.removeItem('refresh_token');
+    //   window.location.href = '/login';
+    // }
+    // return Promise.reject(error);
   },
 );
 

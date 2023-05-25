@@ -1,6 +1,6 @@
 import useForm from 'hooks/useForm';
 import { useMutation } from 'react-query';
-import { authLogin } from 'apis/auth/login';
+import authLogin from 'apis/auth/login';
 import { useNavigate } from 'react-router-dom';
 import styles from './login.module.scss';
 import Input from '../../components/common/Input/Input';
