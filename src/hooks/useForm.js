@@ -9,8 +9,10 @@ const useForm = initialState => {
   };
 
   const handleFileChange = e => {
-    const { name, files } = e.target;
-    setForm({ ...form, [name]: files[0] });
+    if (e) {
+      const { name, files } = e.target;
+      setForm({ ...form, [name]: files[0] });
+    }
   };
 
   const reset = (resetState = initialState) => {
