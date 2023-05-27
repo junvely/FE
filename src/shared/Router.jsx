@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from 'pages/main/MainPage';
 import 'styles/scss/reset.scss';
-import Layout from 'components/layout/Layout';
+import Layout from 'components/common/layout/Layout';
 import IntroPage from 'pages/intro/IntroPage';
 import LoginPage from 'pages/login/LoginPage';
 import RedirectKakaoPage from 'pages/redirectKakao/RedirectKakaoPage';

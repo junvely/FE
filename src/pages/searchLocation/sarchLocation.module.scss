@@ -1,6 +1,30 @@
-.map {
-  width: 90%;
-  height: 300px;
-  border: 2px solid;
-  margin: 0 auto;
+.searchList {
+  padding: 2%;
+  border: 1px solid;
+  cursor: pointer;
+
+  span {
+    font-weight: bold;
+  }
+}
+
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  ul {
+    padding: 3% 0;
+    display: flex;
+
+    li {
+      width: 25px;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}
+
+.on {
+  color: rgb(0, 119, 255);
 }
