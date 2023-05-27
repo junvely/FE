@@ -1,9 +1,12 @@
 import useForm from 'hooks/useForm';
 import { useMutation } from 'react-query';
 import authLogin from 'apis/auth/login';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './login.module.scss';
 import Input from '../../components/common/Input/Input';
+import KakaoButton from '../../assets/img/kakaoButton.png';
+
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`;
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -58,6 +61,9 @@ function LoginPage() {
       <button type='submit' onClick={handleLoginBtnClick}>
         LOGIN
       </button>
+      <Link to={KAKAO_AUTH_URL} className={styles.kakaoButton}>
+        <img src={KakaoButton} alt='kakao-button'></img>
+      </Link>
     </div>
   );
 }
