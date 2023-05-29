@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import styles from './map.module.scss';
 
 function Map({ location }) {
-  console.log(location);
   const { kakao } = window;
   const mapRef = useRef(null);
 

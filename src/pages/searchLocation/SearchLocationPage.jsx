@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from 'components/common/Input/Input';
 import Map from 'components/common/map/Map';
+import useInput from 'hooks/useInput';
 import styles from './sarchLocation.module.scss';
 
 function SearchLocationPage() {
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, handleInputValueChange, inputValueChange] = useInput();
+  const [searchedKeyword, setSearchedKeyword] = useState('');
   const [places, setPlaces] = useState([]);
-  const [pages, setPages] = useState([]);
+  const [pageNums, setPageNums] = useState([]);
   const [currenPage, setCurrentPage] = useState('');
 
   const { kakao } = window;
   const ps = new kakao.maps.services.Places();
 
   const displayPagination = pagination => {
-    const pagesArray = Array.from({ length: pagination.last }, (v, i) => i + 1);
-    setPages([...pagesArray]);
+    const pageNumsArray = Array.from(
+      { length: pagination.last },
+      (v, i) => i + 1,
+    );
+    setPageNums([...pageNumsArray]);
     setCurrentPage(1);
   };
 
-  const searchedResultStatusHandler = (data, status, pagination) => {
+  const getFirstPageData = (data, status, pagination) => {
     if (status === kakao.maps.services.Status.OK) {
       setPlaces([...data]);
-      console.log('초기 검색값 :', data);
       displayPagination(pagination);
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
       alert('검색 결과가 존재하지 않습니다.');
@@ -30,12 +34,18 @@ function SearchLocationPage() {
     }
   };
 
-  const updatePlaces = data => {
-    setPlaces([...data]);
+  const updatePageData = (data, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      setPlaces([...data]);
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+      alert('검색 결과가 존재하지 않습니다.');
+    } else if (status === kakao.maps.services.Status.ERROR) {
+      alert('검색 결과 중 오류가 발생했습니다.');
+    }
   };
 
-  const searchPlaces = page => {
-    if (!searchInput.replace(/^\s+|\s+$/g, '')) {
+  const requestCurrentPageData = (newSearchKeyword, page) => {
+    if (!searchedKeyword.replace(/^\s+|\s+$/g, '')) {
       alert('키워드를 입력해주세요!');
       return false;
     }
@@ -44,57 +54,72 @@ function SearchLocationPage() {
       size: 7,
     };
 
-    if (page) {
-      ps.keywordSearch(searchInput, updatePlaces, options);
+    if (newSearchKeyword) {
+      // Pagination 번호 클릭 시
+      ps.keywordSearch(newSearchKeyword, getFirstPageData, options);
+    } else if (page) {
+      // 새로운 장소 클릭 시
+      ps.keywordSearch(searchedKeyword, updatePageData, options);
     } else {
-      ps.keywordSearch(searchInput, searchedResultStatusHandler, options);
+      // 검색 시
+      ps.keywordSearch(searchedKeyword, getFirstPageData, options);
     }
     return true;
   };
 
-  const handlePageNumClick = page => {
+  const handlePageNumClickUpdateData = page => {
     setCurrentPage(page);
-    searchPlaces(page);
+    requestCurrentPageData('', page);
   };
 
-  const handlePlaceClick = e => {
+  const handlePlaceClickUpdateData = e => {
     const { target } = e;
+    let newSearchKeyword = '';
     if (target.getAttribute('name') === 'container') {
-      setSearchInput(target.children[1].innerText);
+      inputValueChange(target.children[1].innerText);
+      newSearchKeyword = target.children[1].innerText;
     } else if (target.getAttribute('name') === 'placeName') {
-      setSearchInput(target.nextSibling.innerText);
+      inputValueChange(target.nextSibling.innerText);
+      newSearchKeyword = target.nextSibling.innerText;
     } else if (target.getAttribute('name') === 'addressName') {
-      setSearchInput(target.innerText);
+      inputValueChange(target.innerText);
+      newSearchKeyword = target.innerText;
     }
-    searchPlaces();
+    requestCurrentPageData(newSearchKeyword);
   };
 
-  const handleInputChange = e => {
-    setSearchInput(e.target.value);
+  const handleSearchBtnClick = () => {
+    setSearchedKeyword(searchInput);
   };
+
+  useEffect(() => {
+    setSearchedKeyword(searchInput);
+  }, [inputValueChange]);
 
   return (
     <>
       <form
         onSubmit={e => {
           e.preventDefault();
-          searchPlaces();
+          requestCurrentPageData();
         }}
       >
         <Input
           type='text'
           placeholder='도로명 주소를 입력해 주세요'
           value={searchInput || ''}
-          onChange={handleInputChange}
+          onChange={handleInputValueChange}
         ></Input>
-        <button type='submit'>검색</button>
+        <button type='submit' onClick={handleSearchBtnClick}>
+          검색
+        </button>
       </form>
       <div>
         {places.map(place => (
           <div
             name='container'
             className={styles.searchList}
-            onClick={handlePlaceClick}
+            onClick={handlePlaceClickUpdateData}
             role='presentation'
           >
             <span name='placeName' role='presentation'>
@@ -105,12 +130,11 @@ function SearchLocationPage() {
         ))}
         <div className={styles.pagination}>
           <ul>
-            {pages.map(page =>
+            {pageNums.map(page =>
               currenPage === page ? (
                 <li
-                  key={page}
                   className={styles.on}
-                  onClick={() => handlePageNumClick(page)}
+                  onClick={() => handlePageNumClickUpdateData(page)}
                   role='presentation'
                 >
                   {page}
@@ -118,7 +142,7 @@ function SearchLocationPage() {
               ) : (
                 <li
                   key={page}
-                  onClick={() => handlePageNumClick(page)}
+                  onClick={() => handlePageNumClickUpdateData(page)}
                   role='presentation'
                 >
                   {page}
@@ -128,7 +152,7 @@ function SearchLocationPage() {
           </ul>
         </div>
       </div>
-      <Map location={searchInput}></Map>
+      <Map location={searchedKeyword}></Map>
     </>
   );
 }
