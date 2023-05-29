@@ -1,0 +1,26 @@
+@import '../../../styles/scss/variables';
+@import '../../../styles/scss/mixins';
+
+.header {
+  @include flex-space-between;
+  width: 100%;
+  align-items: center;
+  padding: 1.625rem 1.9375rem;
+  background-color: $color-Signature-purple;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .backArrow,
+  .search {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .logo {
+    height: 2.375rem;
+  }
+}
