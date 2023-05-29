@@ -28,7 +28,7 @@ function MainPage() {
       ModifiedAt: '2023-05-20',
     },
     {
-      id: 0,
+      id: 1,
       title: 'BIXPACE [3인 독립룸]',
       content: '서울 중랑구 광나루로 382 아스하임4차 3층',
       price: '10000',
@@ -81,6 +81,7 @@ function MainPage() {
               {sortingList.map(sort => (
                 <button
                   type='button'
+                  key={data.id}
                   className={currentSort === sort ? styles.active : ''}
                   onClick={handleClickChangeSort}
                 >
@@ -92,7 +93,7 @@ function MainPage() {
         </button>
       </div>
       {data.map(post => (
-        <MainPost post={post} />
+        <MainPost key={data.id} post={post} />
       ))}
     </div>
   );
