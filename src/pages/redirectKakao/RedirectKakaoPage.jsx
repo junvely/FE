@@ -1,8 +1,8 @@
 import authKakaoLogin from 'apis/auth/kakao';
+import LoadingSpinner from 'components/LoadingSpinner';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import LoadingSpinner from '../../assets/img/loadingSpinner.gif';
 
 function RedirectKakaoPage() {
   const navigate = useNavigate();
@@ -27,11 +27,7 @@ function RedirectKakaoPage() {
     redirectHandler();
   }, [data]);
 
-  return (
-    <div className='h-screen flex justify-center items-center'>
-      <img src={LoadingSpinner} alt='loading-spinner'></img>
-    </div>
-  );
+  return <LoadingSpinner />;
 }
 
 export default RedirectKakaoPage;
