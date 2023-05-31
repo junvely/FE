@@ -89,7 +89,6 @@ function MainPage() {
   //     ModifiedAt: '2023-05-20',
   //   },
   // ];
-  console.log('렌더링');
   return (
     <div className={styles.wrap}>
       <div className={styles.titleCon}>
@@ -103,14 +102,15 @@ function MainPage() {
           <img
             src={DropDownIcon}
             className={`${styles.toggleIcon} ${
-              !isSortingToggleOpen && styles.reverse
+              isSortingToggleOpen ? '' : styles.reverse
             }`}
             alt='toggle-drop-down'
           ></img>
           <div
             className={`${styles.sortingList} ${
-              isSortingToggleOpen && styles.hidden
-            }`}
+              isSortingToggleOpen ? styles.hidden : ''
+            }
+            `}
           >
             {sortingList.map(sort => (
               <button

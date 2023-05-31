@@ -1,6 +1,7 @@
 @import '../../../styles/scss/mixins';
 
 .wrap {
+  @include flex-all-center;
   width: 100%;
   max-width: 1920px;
   height: 100vh;
@@ -9,9 +10,10 @@
 
   section.contents {
     width: 430px;
-    height: 100%;
-    margin: 0 auto;
+    height: 900px;
     background-color: #fff;
+    overflow: hidden;
+    border-radius: 5px;
 
     @include mobile {
       width: 100%;
