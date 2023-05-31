@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import styles from './layout.module.scss';
 import Header from '../header/Header';
+import Nav from '../nav/Nav';
 
 function Layout() {
   return (
@@ -8,6 +9,7 @@ function Layout() {
       <section className={styles.contents}>
         <Header></Header>
         <Outlet />
+        <Nav />
       </section>
     </div>
   );
