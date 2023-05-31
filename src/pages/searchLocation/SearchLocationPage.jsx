@@ -51,7 +51,7 @@ function SearchLocationPage() {
     }
     const options = {
       page: page || 1,
-      size: 7,
+      size: 5,
     };
 
     if (newSearchKeyword) {

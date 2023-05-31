@@ -6,6 +6,7 @@
   padding: 0;
   font-family: $font-family-notoSans;
   transition: all 0.2s;
+  // font-size: 14px;
 
   @include mobile {
     font-size: 14px;
@@ -38,6 +39,20 @@ a {
 img {
   border: 0;
   vertical-align: middle;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  height: auto;
+  background: rgb(131, 131, 235);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(194, 131, 223, 0.1); /*스크롤바 뒷 배경 색상*/
 }
 
 fieldset {
