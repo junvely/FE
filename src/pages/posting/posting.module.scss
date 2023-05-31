@@ -59,13 +59,7 @@
   .button {
     @include button-disable;
     width: 100%;
-    color: #bebebe;
     margin-top: 2.5rem;
-
-    &:hover {
-      color: #fff;
-      background-color: $color-Signature-purple;
-    }
   }
 }
 

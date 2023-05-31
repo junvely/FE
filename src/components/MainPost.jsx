@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { postMainLike } from 'apis/posts';
+import { useMutation, useQueryClient } from 'react-query';
 import styles from '../pages/main/main.module.scss';
 import LikeNullIcon from '../assets/svg/likeNull.svg';
 import LikeFullIcon from '../assets/svg/likefull.svg';
@@ -9,11 +10,21 @@ import PriceIcon from '../assets/svg/price.svg';
 import Slider from './common/slider/Slider';
 
 function MainPost({ post }) {
-  const { title, location, price, likeCount, likeStatus } = post;
+  const { id, title, location, price, likeCount, likeStatus } = post;
+  const queryClient = useQueryClient();
+  const mutation = useMutation(postMainLike, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('mainPosts');
+    },
+  });
+
+  const handleLikeClick = () => {
+    mutation.mutate(id);
+  };
 
   return (
     <div className={styles.post}>
-      <Slider images={post.image}></Slider>
+      <Slider images={post.postImage}></Slider>
       <div className={styles.postContents}>
         <h3>{title}</h3>
         <p>
@@ -37,7 +48,7 @@ function MainPost({ post }) {
         </div>
       </div>
       <div className={styles.buttons}>
-        <button type='button' className={styles.like}>
+        <button type='button' className={styles.like} onClick={handleLikeClick}>
           {likeStatus ? (
             <img src={LikeFullIcon} alt='like-full-icon'></img>
           ) : (

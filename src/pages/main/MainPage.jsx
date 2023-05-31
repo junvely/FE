@@ -102,13 +102,13 @@ function MainPage() {
           <img
             src={DropDownIcon}
             className={`${styles.toggleIcon} ${
-              isSortingToggleOpen ? '' : styles.reverse
+              isSortingToggleOpen ? styles.reverse : ''
             }`}
             alt='toggle-drop-down'
           ></img>
           <div
             className={`${styles.sortingList} ${
-              isSortingToggleOpen ? styles.hidden : ''
+              isSortingToggleOpen ? '' : styles.hidden
             }
             `}
           >

@@ -103,7 +103,7 @@
       .like {
         @include flex-all-center;
         width: 4.375rem;
-        height: 3.3125rem;
+        height: 2.75rem;
         margin: 0 12px;
         border: 1px solid #b3b3b3;
         border-radius: 5px;
@@ -115,4 +115,12 @@
       }
     }
   }
+}
+
+.hidden {
+  display: none;
+}
+
+.reverse {
+  transform: scaleY(-1);
 }

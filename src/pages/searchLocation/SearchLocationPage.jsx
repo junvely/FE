@@ -50,7 +50,7 @@ function SearchLocationPage({ locationOpen, locationSave }) {
     }
     const options = {
       page: page || 1,
-      size: 7,
+      size: 5,
     };
 
     if (newSearchKeyword) {
@@ -135,7 +135,7 @@ function SearchLocationPage({ locationOpen, locationSave }) {
             <span name='placeName' role='presentation'>
               {place.place_name}
             </span>
-            <p name='addressName'>{place.road_address_name}</p>
+            <p name='addressName'>{place.address_name}</p>
           </div>
         ))}
       </div>
@@ -164,11 +164,7 @@ function SearchLocationPage({ locationOpen, locationSave }) {
       </div>
       <div className={styles.mapCon}>
         <Map location={searchedKeyword}></Map>
-        <button
-          type='button'
-          className={styles.selectButton}
-          onClick={locationOpen}
-        >
+        <button type='button' className={styles.button} onClick={locationOpen}>
           선택 완료
         </button>
       </div>
