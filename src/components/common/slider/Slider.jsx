@@ -1,15 +1,16 @@
 import { useState } from 'react';
+import uuid from 'react-uuid';
 import styles from './slider.module.scss';
 import arrowLeft from '../../../assets/svg/arrowLeft.svg';
 import arrowRight from '../../../assets/svg/arrowRight.svg';
 
 function Slider({ images }) {
+  const imageList = Array.isArray(images) ? images : [images, images, images];
   const [currentPage, setCurrentPage] = useState(0);
-  const slideLength = images.length;
+  const slideLength = imageList.length;
 
   const handleClickSetCurrentPage = e => {
     setCurrentPage(Number(e.target.id));
-    console.log('target', e.target.id, 'current', currentPage);
   };
 
   const handleClickNextSlide = () => {
@@ -33,8 +34,8 @@ function Slider({ images }) {
           transform: `translateX(-${currentPage * (100 / slideLength)}%)`,
         }}
       >
-        {images.map((image, idx) => (
-          <li className={styles.slide}>
+        {imageList.map((image, idx) => (
+          <li key={uuid()} className={styles.slide}>
             <img src={image} alt={`share-office${idx}`}></img>
           </li>
         ))}
@@ -49,14 +50,15 @@ function Slider({ images }) {
       </div>
       <div className={styles.sliderButtons}>
         <div>
-          {images.map((image, idx) => (
+          {imageList.map((image, idx) => (
             <button
-              className={currentPage === idx ? styles.active : ''}
               type='button'
+              key={uuid()}
+              className={currentPage === idx ? styles.active : ''}
               id={idx}
               aria-label='goto-page'
               onClick={handleClickSetCurrentPage}
-            ></button>
+            />
           ))}
         </div>
       </div>

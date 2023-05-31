@@ -121,3 +121,11 @@
     }
   }
 }
+
+.hidden {
+  display: none;
+}
+
+.reverse {
+  transform: scaleY(-1);
+}
