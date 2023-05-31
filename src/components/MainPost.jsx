@@ -44,7 +44,7 @@ function MainPost({ post }) {
             <img src={LikeNullIcon} alt='like-null-icon'></img>
           )}
         </button>
-        <button type='button' className={styles.reserve}>
+        <button type='button' className={styles.button}>
           예약하기
         </button>
       </div>

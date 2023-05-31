@@ -34,11 +34,7 @@ function Map({ location }) {
   useEffect(() => {
     kakaoMapDrawing();
   }, [location]);
-  return (
-    <div className={styles.map} ref={mapRef}>
-      ?
-    </div>
-  );
+  return <div className={styles.map} ref={mapRef}></div>;
 }
 
 export default Map;

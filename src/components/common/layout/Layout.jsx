@@ -5,10 +5,12 @@ import Header from '../header/Header';
 function Layout() {
   return (
     <div className={styles.wrap}>
-      <section className={styles.contents}>
+      <div className={styles.layoutCon}>
         <Header></Header>
-        <Outlet />
-      </section>
+        <section className={styles.contents}>
+          <Outlet />
+        </section>
+      </div>
     </div>
   );
 }
