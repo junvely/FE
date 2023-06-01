@@ -3,11 +3,12 @@
 
 .nav {
   width: 100%;
-  position: absolute;
-  bottom: 0;
+  // position: absolute;
+  // bottom: 0;
   background-color: #fff;
   border-top: 1px solid #dbdbdb;
   box-shadow: 3px 3px 3px 3px rgb(219, 219, 219);
+
   ul {
     @include flex-justify-center;
     height: 4.5rem;

@@ -7,10 +7,12 @@ function Layout() {
   return (
     <div className={styles.wrap}>
       <div className={styles.layoutCon}>
-        <Header></Header>
-        <Outlet />
+        <Header />
+        <section className={styles.contents}>
+          <Outlet />
+        </section>
         <Nav />
-      </section>
+      </div>
     </div>
   );
 }
