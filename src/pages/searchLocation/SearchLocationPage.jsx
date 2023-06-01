@@ -164,7 +164,11 @@ function SearchLocationPage({ locationOpen, locationSave }) {
       </div>
       <div className={styles.mapCon}>
         <Map location={searchedKeyword}></Map>
-        <button type='button' className={styles.button} onClick={locationOpen}>
+        <button
+          type='button'
+          className={`${styles.button} ${styles.select}`}
+          onClick={locationOpen}
+        >
           선택 완료
         </button>
       </div>

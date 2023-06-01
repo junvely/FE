@@ -17,19 +17,16 @@ function MainPage() {
   ];
   const [posts, setPosts] = useState([]);
 
-  const { data, isLoading, isError, refetch } = useQuery(
-    'mainPosts',
-    async () => {
-      const result = await getMainPosts({
-        page: '',
-        size: '',
-        keyword: '',
-        sorting: currentSort,
-        district: '',
-      });
-      return result;
-    },
-  );
+  const { data, isLoading, isError, refetch } = useQuery('mainPosts', () => {
+    const result = getMainPosts({
+      page: '',
+      size: '',
+      keyword: '',
+      sorting: currentSort === '최신순' ? '최근 게시물 순' : currentSort,
+      district: '',
+    });
+    return result;
+  });
 
   const updatePosts = () => {
     if (data) {
