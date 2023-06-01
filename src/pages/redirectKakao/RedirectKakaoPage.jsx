@@ -13,7 +13,7 @@ function RedirectKakaoPage() {
     return result;
   });
 
-  const redirectHandler = () => {
+  const kakaoLoginResultHandler = () => {
     if (data) {
       alert('로그인 성공');
       navigate('/main');
@@ -25,7 +25,7 @@ function RedirectKakaoPage() {
   };
 
   useEffect(() => {
-    redirectHandler();
+    kakaoLoginResultHandler();
   }, [data]);
 
   return <LoadingSpinner />;

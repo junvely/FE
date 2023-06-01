@@ -1,4 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
+import SearchBar from 'components/common/header/SearchBar';
+import { useState } from 'react';
 import styles from './header.module.scss';
 import BackArrowIcon from '../../../assets/svg/backArrow.svg';
 import SearchIcon from '../../../assets/svg/serach.svg';
@@ -6,6 +8,11 @@ import LogoIcon from '../../../assets/svg/logo.svg';
 
 function Header() {
   const navigate = useNavigate();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const handleClickSearchOpen = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
 
   return (
     <header className={styles.header}>
@@ -26,12 +33,11 @@ function Header() {
       <button
         type='button'
         className={styles.search}
-        onClick={() => {
-          navigate('/search');
-        }}
+        onClick={handleClickSearchOpen}
       >
         <img src={SearchIcon} alt='goto-back'></img>
       </button>
+      <SearchBar isSearchOpen={isSearchOpen} />
     </header>
   );
 }

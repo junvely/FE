@@ -51,40 +51,6 @@ function MainPage() {
     updatePosts();
   }, [currentSort]);
 
-  // const data = [
-  //   {
-  //     id: 0,
-  //     title: 'BIXPACE [3인 독립룸]',
-  //     content: '서울 중랑구 광나루로 382 아스하임4차 3층',
-  //     price: '10000',
-  //     username: 'username',
-  //     image: [SampleSlide, SampleSlide, SampleSlide, SampleSlide, SampleSlide],
-  //     category: 'category',
-  //     location: '서울 중랑구 광나루로 382 아스하임4차 3층',
-  //     startDate: '2023-05-28',
-  //     endDate: '2023-05-30',
-  //     likeCount: 26,
-  //     likeStatus: true,
-  //     CreatedAt: '2023-05-20',
-  //     ModifiedAt: '2023-05-20',
-  //   },
-  //   {
-  //     id: 1,
-  //     title: 'BIXPACE [3인 독립룸]',
-  //     content: '서울 중랑구 광나루로 382 아스하임4차 3층',
-  //     price: '10000',
-  //     username: 'username',
-  //     image: [SampleSlide, SampleSlide, SampleSlide],
-  //     category: 'category',
-  //     location: '서울 중랑구 광나루로 382 아스하임4차 3층',
-  //     startDate: '2023-05-28',
-  //     endDate: '2023-05-30',
-  //     likeCount: 26,
-  //     likeStatus: false,
-  //     CreatedAt: '2023-05-20',
-  //     ModifiedAt: '2023-05-20',
-  //   },
-  // ];
   return (
     <div className={styles.wrap}>
       <div className={styles.titleCon}>
