@@ -69,12 +69,10 @@ form {
   margin: 0 auto;
 }
 
-.button {
+.button.select {
   @include button-disable;
   width: 85%;
   max-width: 366px;
-  position: absolute;
-  bottom: 0;
   margin: 2.5rem auto;
 }
 

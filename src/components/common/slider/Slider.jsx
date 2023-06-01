@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import uuid from 'react-uuid';
 import styles from './slider.module.scss';
 import arrowLeft from '../../../assets/svg/arrowLeft.svg';
 import arrowRight from '../../../assets/svg/arrowRight.svg';
@@ -35,7 +34,7 @@ function Slider({ images }) {
         }}
       >
         {imageList.map((image, idx) => (
-          <li key={uuid()} className={styles.slide}>
+          <li className={styles.slide}>
             <img src={image} alt={`share-office${idx}`}></img>
           </li>
         ))}
@@ -53,7 +52,6 @@ function Slider({ images }) {
           {imageList.map((image, idx) => (
             <button
               type='button'
-              key={uuid()}
               className={currentPage === idx ? styles.active : ''}
               id={idx}
               aria-label='goto-page'

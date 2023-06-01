@@ -2,6 +2,8 @@ import PostInput from 'components/PostInput';
 import { useNavigate } from 'react-router-dom';
 import useForm from 'hooks/useForm';
 import { useState } from 'react';
+import { useMutation } from 'react-query';
+import { postAddPost } from 'apis/posts';
 import styles from './posting.module.scss';
 import AddImageIcon from '../../assets/svg/addImage.svg';
 import RightArrow from '../../assets/svg/addressArrow.svg';
@@ -9,6 +11,16 @@ import SearchLocationPage from '../searchLocation/SearchLocationPage';
 
 function PostingPage() {
   const navigate = useNavigate();
+  const mutation = useMutation(postAddPost, {
+    onSuccess: () => {
+      console.log('포스팅 성공');
+      navigate('/main');
+    },
+    onError: error => {
+      console.log('포스팅 실패 :', error.msg);
+    },
+  });
+
   const initialState = {
     title: '',
     price: '',
@@ -31,6 +43,18 @@ function PostingPage() {
 
   const locationSave = keyword => {
     setLocation(keyword);
+  };
+
+  const handleClickSubmitPosting = () => {
+    mutation.mutate({
+      ...form,
+      price: Number(form.price),
+      capacity: Number(form.capacity),
+      content: form.content.replace(/\n/g, '\\n'),
+      contentDetails: form.contentDetails.replace(/\n/g, '\\n'),
+      amenities: form.amenities.replace(/\n/g, '\\n'),
+      location,
+    });
   };
 
   console.log(location);
@@ -113,7 +137,11 @@ function PostingPage() {
             <img src={AddImageIcon} alt='add' />
           </button>
         </div>
-        <button type='button' className={styles.button}>
+        <button
+          type='button'
+          className={styles.button}
+          onClick={handleClickSubmitPosting}
+        >
           작성 완료
         </button>
       </div>
