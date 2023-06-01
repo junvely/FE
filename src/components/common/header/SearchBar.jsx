@@ -37,34 +37,38 @@ function SearchBar({ isSearchOpen }) {
     <div
       className={`${styles.searchCon} ${isSearchOpen ? styles.visible : ''}`}
     >
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-        }}
-      >
-        <input
-          type='text'
-          name='location'
-          value={input}
-          onChange={handleInputChange}
-          placeholder='지역을 선택해 주세요'
-        ></input>
-        <button className={styles.submitButton} type='submit'>
-          검색
-        </button>
-      </form>
-      <div className={styles.locationCon}>
-        <p>지역을 선택해 보세요</p>
-        <div className={styles.locationList}>
-          {locations.map(location => {
-            return (
-              <button type='button' onClick={handleClickAddLocation}>
-                {location}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      {isSearchOpen && (
+        <>
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+            }}
+          >
+            <input
+              type='text'
+              name='location'
+              value={input}
+              onChange={handleInputChange}
+              placeholder='지역을 선택해 주세요'
+            ></input>
+            <button className={styles.submitButton} type='submit'>
+              검색
+            </button>
+          </form>
+          <div className={styles.locationCon}>
+            <p>지역을 선택해 보세요</p>
+            <div className={styles.locationList}>
+              {locations.map(location => {
+                return (
+                  <button type='button' onClick={handleClickAddLocation}>
+                    {location}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
