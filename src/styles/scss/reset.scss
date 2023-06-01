@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   font-family: $font-family-notoSans;
-  transition: all 0.2s;
+  transition: all 0.1s;
   // font-size: 14px;
 
   @include mobile {
@@ -52,7 +52,7 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(194, 131, 223, 0.1); /*스크롤바 뒷 배경 색상*/
+  background: rgba(194, 131, 223, 0.1);
 }
 
 fieldset {

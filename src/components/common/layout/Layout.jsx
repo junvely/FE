@@ -6,7 +6,7 @@ import Nav from '../nav/Nav';
 function Layout() {
   return (
     <div className={styles.wrap}>
-      <section className={styles.contents}>
+      <div className={styles.layoutCon}>
         <Header></Header>
         <Outlet />
         <Nav />

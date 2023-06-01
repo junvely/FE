@@ -1,10 +1,44 @@
-.searchList {
-  padding: 2%;
-  border: 1px solid;
-  cursor: pointer;
+@import '../../styles/scss/variables';
+@import '../../styles/scss/mixins';
 
-  span {
-    font-weight: bold;
+form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1.25rem 0;
+
+  input {
+    width: 65%;
+    max-width: 280px;
+    padding: 0.8125rem 0.875rem;
+    line-height: 1.375rem;
+    border: 1px solid #b3b3b3;
+    border-radius: 4px;
+    margin-right: 12px;
+  }
+
+  .submitButton {
+    @include button-active;
+    font-weight: 500;
+    width: 17.5%;
+  }
+}
+
+.listCon {
+  border-bottom: 1px solid #b3b3b3;
+
+  .searchList {
+    height: 4.25rem;
+    padding: 0.75rem 2rem;
+    border-top: 1px solid #b3b3b3;
+    cursor: pointer;
+
+    span {
+      font-weight: bold;
+    }
+    p {
+      line-height: 1.375rem;
+    }
   }
 }
 
@@ -14,17 +48,37 @@
   justify-content: center;
 
   ul {
-    padding: 3% 0;
+    padding: 1.25rem 0 1.875rem;
     display: flex;
 
     li {
-      width: 25px;
+      width: 20px;
       text-align: center;
       cursor: pointer;
     }
   }
 }
 
+.mapCon {
+  width: 85%;
+  max-width: 366px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.button {
+  @include button-disable;
+  width: 85%;
+  max-width: 366px;
+  position: absolute;
+  bottom: 0;
+  margin: 2.5rem auto;
+}
+
 .on {
-  color: rgb(0, 119, 255);
+  font-weight: 600;
+  color: $color-Signature-purple;
 }

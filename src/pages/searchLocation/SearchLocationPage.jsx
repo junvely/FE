@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import Input from 'components/common/Input/Input';
+import { useEffect, useState } from 'react';
 import Map from 'components/common/map/Map';
 import useInput from 'hooks/useInput';
 import styles from './sarchLocation.module.scss';
 
-function SearchLocationPage() {
+function SearchLocationPage({ locationOpen, locationSave }) {
   const [searchInput, handleInputValueChange, inputValueChange] = useInput();
   const [searchedKeyword, setSearchedKeyword] = useState('');
   const [places, setPlaces] = useState([]);
@@ -96,6 +95,12 @@ function SearchLocationPage() {
     setSearchedKeyword(searchInput);
   }, [inputValueChange]);
 
+  useEffect(() => {
+    if (searchedKeyword) {
+      locationSave(searchedKeyword);
+    }
+  }, [searchedKeyword]);
+
   return (
     <>
       <form
@@ -104,17 +109,22 @@ function SearchLocationPage() {
           requestCurrentPageData();
         }}
       >
-        <Input
+        <input
           type='text'
           placeholder='도로명 주소를 입력해 주세요'
+          name='location'
           value={searchInput || ''}
           onChange={handleInputValueChange}
-        ></Input>
-        <button type='submit' onClick={handleSearchBtnClick}>
+        ></input>
+        <button
+          className={styles.submitButton}
+          type='submit'
+          onClick={handleSearchBtnClick}
+        >
           검색
         </button>
       </form>
-      <div>
+      <div className={styles.listCon}>
         {places.map(place => (
           <div
             name='container'
@@ -125,34 +135,39 @@ function SearchLocationPage() {
             <span name='placeName' role='presentation'>
               {place.place_name}
             </span>
-            <p name='addressName'>{place.road_address_name}</p>
+            <p name='addressName'>{place.address_name}</p>
           </div>
         ))}
-        <div className={styles.pagination}>
-          <ul>
-            {pageNums.map(page =>
-              currenPage === page ? (
-                <li
-                  className={styles.on}
-                  onClick={() => handlePageNumClickUpdateData(page)}
-                  role='presentation'
-                >
-                  {page}
-                </li>
-              ) : (
-                <li
-                  key={page}
-                  onClick={() => handlePageNumClickUpdateData(page)}
-                  role='presentation'
-                >
-                  {page}
-                </li>
-              ),
-            )}
-          </ul>
-        </div>
       </div>
-      <Map location={searchedKeyword}></Map>
+      <div className={styles.pagination}>
+        <ul>
+          {pageNums.map(page =>
+            currenPage === page ? (
+              <li
+                className={styles.on}
+                onClick={() => handlePageNumClickUpdateData(page)}
+                role='presentation'
+              >
+                {page}
+              </li>
+            ) : (
+              <li
+                key={page}
+                onClick={() => handlePageNumClickUpdateData(page)}
+                role='presentation'
+              >
+                {page}
+              </li>
+            ),
+          )}
+        </ul>
+      </div>
+      <div className={styles.mapCon}>
+        <Map location={searchedKeyword}></Map>
+        <button type='button' className={styles.button} onClick={locationOpen}>
+          선택 완료
+        </button>
+      </div>
     </>
   );
 }

@@ -23,6 +23,29 @@
   align-items: center;
 }
 
+@mixin button-active {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 2.75rem;
+  color: #fff;
+  background-color: $color-Signature-purple;
+  border-radius: 5px;
+}
+
+@mixin button-disable {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 2.75rem;
+  color: #bebebe;
+  background-color: $color-button-disable;
+  border-radius: 5px;
+
+  &:hover {
+    color: #fff;
+    background-color: $color-Signature-purple;
+  }
+}
+
 // media query
 @mixin mobile {
   @media (max-width: #{$breakpoint-mobile - 1px}) {
