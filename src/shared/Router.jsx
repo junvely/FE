@@ -7,6 +7,8 @@ import LoginPage from 'pages/login/LoginPage';
 import SignupPage from 'pages/signup/SIgnupPage';
 import RedirectKakaoPage from 'pages/redirectKakao/RedirectKakaoPage';
 import SearchLocationPage from 'pages/searchLocation/SearchLocationPage';
+import DetailPage from 'pages/detail/DetailPage';
+import ReservationPage from 'pages/reservation/ReservationPage';
 
 function Router() {
   return (
@@ -17,6 +19,8 @@ function Router() {
           <Route path='/main' element={<MainPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
+          <Route path='/detail/:postId' element={<DetailPage />} />
+          <Route path='/reservation' element={<ReservationPage />} />
           <Route path='/oauth/kakao' element={<RedirectKakaoPage />}></Route>
           <Route path='/search/map' element={<SearchLocationPage />}></Route>
         </Route>

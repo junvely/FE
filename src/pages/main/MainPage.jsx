@@ -3,7 +3,6 @@ import MainPost from 'components/MainPost';
 import { useQuery } from 'react-query';
 import { getMainPosts } from 'apis/posts';
 import LoadingSpinner from 'components/LoadingSpinner';
-import uuid from 'react-uuid';
 import styles from './main.module.scss';
 import DropDownIcon from '../../assets/svg/toggleDropDown.svg';
 
@@ -114,7 +113,6 @@ function MainPage() {
           >
             {sortingList.map(sort => (
               <button
-                key={uuid()}
                 type='button'
                 className={currentSort === sort && styles.active}
                 onClick={handleClickChangeSort}
