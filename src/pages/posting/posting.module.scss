@@ -1,0 +1,79 @@
+@import '../../styles/scss/variables';
+@import '../../styles/scss/mixins';
+
+.wrap {
+  @include wrap;
+  padding: 0 2rem 3rem;
+
+  .input {
+    width: 100%;
+    height: 3rem;
+    padding: 0.76rem 0rem 0.76rem 1.5rem;
+    border: 1px solid #b3b3b3;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+
+  .inputCon {
+    margin-top: 1.25rem;
+
+    label,
+    span {
+      line-height: 1.375rem;
+      font-weight: 600;
+      display: block;
+    }
+
+    textarea,
+    .info {
+      @extend .input;
+      overflow: hidden;
+      resize: none;
+
+      &:focus {
+        height: auto;
+      }
+    }
+
+    .addImage {
+      @include flex-all-center;
+      width: 6.25rem;
+      height: 6.25rem;
+      border: 1px solid #b3b3b3;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+  }
+
+  .address {
+    button {
+      @include flex-space-between;
+      align-items: center;
+      display: flex;
+      @extend .input;
+      text-align: left;
+      color: #929292;
+    }
+  }
+
+  .button {
+    @include button-disable;
+    width: 100%;
+    margin-top: 2.5rem;
+  }
+}
+
+.locationCon {
+  @include wrap;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: -100%;
+  background-color: #fff;
+  transition: all 0.2s ease-in;
+}
+
+.slide {
+  right: 0;
+}

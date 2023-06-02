@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function RedirectKakaoPage() {
   const navigate = useNavigate();
   const redirectCode = new URL(window.location.href).searchParams.get('code');
+
   const { data, isError } = useQuery('kakaoAuth', async () => {
     const result = await authKakaoLogin(redirectCode);
     return result;

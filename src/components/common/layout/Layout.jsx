@@ -6,11 +6,13 @@ import Nav from '../nav/Nav';
 function Layout() {
   return (
     <div className={styles.wrap}>
-      <section className={styles.contents}>
-        <Header></Header>
-        <Outlet />
+      <div className={styles.layoutCon}>
+        <Header />
+        <section className={styles.contents}>
+          <Outlet />
+        </section>
         <Nav />
-      </section>
+      </div>
     </div>
   );
 }

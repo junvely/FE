@@ -3,7 +3,6 @@ import { useMutation } from 'react-query';
 import authLogin from 'apis/auth/login';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './login.module.scss';
-import Input from '../../components/common/Input/Input';
 import KakaoButton from '../../assets/img/kakaoButton.png';
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`;
@@ -44,20 +43,20 @@ function LoginPage() {
 
   return (
     <div>
-      <Input
+      <input
         type='text'
         name='email'
         value={email}
         placeholder='아이디를 입력해주세요.'
         onChange={handleFormChange}
-      ></Input>
-      <Input
+      ></input>
+      <input
         type='password'
         name='password'
         value={password}
         placeholder='비밀번호를 입력해주세요.'
         onChange={handleFormChange}
-      ></Input>
+      ></input>
       <button type='submit' onClick={handleLoginBtnClick}>
         LOGIN
       </button>
