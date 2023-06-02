@@ -29,7 +29,7 @@ function PostingPage() {
     operatingTime: '',
     contentDetails: ' ',
     amenities: '',
-    image: '',
+    imageUrl: '',
   };
   const [form, handleFormChange, handleImageUpload, resetForm] =
     useForm(initialState);
@@ -146,9 +146,7 @@ function PostingPage() {
         </button>
       </div>
       <div
-        className={`${styles.locationCon} ${
-          isLocationOpen ? styles.slide : ''
-        }`}
+        className={`${styles.locationCon} ${isLocationOpen && styles.slide}`}
       >
         <SearchLocationPage
           locationOpen={handleClickLocationOpen}
