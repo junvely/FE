@@ -79,13 +79,25 @@
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(5, 1fr);
 
-      button {
+      label {
         width: 4.1875rem;
-        height: 2.6875rem;
+        line-height: 2.6875rem;
+        text-align: center;
         color: #d8d8d8;
         border: 1px solid;
         border-radius: 6px;
         margin: 0 7px 6px 0;
+        cursor: pointer;
+
+        input[type='radio'] {
+          display: none;
+        }
+      }
+
+      .selected {
+        font-weight: 600;
+        color: $color-Signature-purple;
+        border: 1px solid;
       }
     }
   }
@@ -94,8 +106,4 @@
 .visible {
   height: 600px;
   visibility: visible;
-}
-
-.searchVisible {
-  visibility: hidden;
 }

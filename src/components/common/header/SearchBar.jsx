@@ -4,7 +4,7 @@ import styles from './header.module.scss';
 
 function SearchBar({ isSearchOpen }) {
   const [input, handleInputChange] = useInput('');
-  const [locationList, setLocationList] = useState([]);
+  const [location, setLocation] = useState('서울');
   const locations = [
     '서울',
     '경기',
@@ -25,29 +25,27 @@ function SearchBar({ isSearchOpen }) {
     '제주',
     '전국',
   ];
-  console.log(...locationList);
 
-  const handleClickAddLocation = e => {
-    const location = e.target.innerText;
-    console.log(location);
-    setLocationList([...locationList, location]);
+  const handleClickSelectLocation = e => {
+    setLocation(e.target.value);
   };
 
+  const handleSubmitSearchPost = () => {};
+
   return (
-    <div
-      className={`${styles.searchCon} ${isSearchOpen ? styles.visible : ''}`}
-    >
+    <div className={`${styles.searchCon} ${isSearchOpen && styles.visible}`}>
       {isSearchOpen && (
         <>
           <form
             onSubmit={e => {
               e.preventDefault();
+              handleSubmitSearchPost();
             }}
           >
             <input
               type='text'
               name='location'
-              value={input}
+              value={input || ''}
               onChange={handleInputChange}
               placeholder='지역을 선택해 주세요'
             ></input>
@@ -56,13 +54,24 @@ function SearchBar({ isSearchOpen }) {
             </button>
           </form>
           <div className={styles.locationCon}>
-            <p>지역을 선택해 보세요</p>
+            <p>지역을 선택해 주세요</p>
             <div className={styles.locationList}>
-              {locations.map(location => {
+              {locations.map(val => {
                 return (
-                  <button type='button' onClick={handleClickAddLocation}>
-                    {location}
-                  </button>
+                  <label
+                    htmlFor={val}
+                    className={location === val && styles.selected}
+                  >
+                    {val}
+                    <input
+                      type='radio'
+                      id={val}
+                      name='location'
+                      value={val}
+                      defaultChecked={location === '서울'}
+                      onClick={handleClickSelectLocation}
+                    />
+                  </label>
                 );
               })}
             </div>
