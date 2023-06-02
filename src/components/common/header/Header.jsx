@@ -37,7 +37,10 @@ function Header() {
       >
         <img src={SearchIcon} alt='goto-back'></img>
       </button>
-      <SearchBar isSearchOpen={isSearchOpen} />
+      <SearchBar
+        isSearchOpen={isSearchOpen}
+        handleClickSearchOpen={handleClickSearchOpen}
+      />
     </header>
   );
 }

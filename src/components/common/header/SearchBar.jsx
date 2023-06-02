@@ -1,9 +1,11 @@
 import useInput from 'hooks/useInput';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './header.module.scss';
+import SearchPostsContext from '../../../contexts/PostsContext';
 
-function SearchBar({ isSearchOpen }) {
-  const [input, handleInputChange] = useInput('');
+function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
+  const { searchPayload, updateSearchPayload } = useContext(SearchPostsContext);
+  const [input, handleInputChange, resetInput] = useInput('');
   const [location, setLocation] = useState('서울');
   const locations = [
     '서울',
@@ -30,7 +32,16 @@ function SearchBar({ isSearchOpen }) {
     setLocation(e.target.value);
   };
 
-  const handleSubmitSearchPost = () => {};
+  const handleSubmitSearchPost = () => {
+    updateSearchPayload({
+      ...searchPayload,
+      keyword: input,
+      location,
+    });
+    resetInput();
+    setLocation('서울');
+    handleClickSearchOpen();
+  };
 
   return (
     <div className={`${styles.searchCon} ${isSearchOpen && styles.visible}`}>
@@ -47,7 +58,7 @@ function SearchBar({ isSearchOpen }) {
               name='location'
               value={input || ''}
               onChange={handleInputChange}
-              placeholder='지역을 선택해 주세요'
+              placeholder='검색어를 입력해 주세요'
             ></input>
             <button className={styles.submitButton} type='submit'>
               검색

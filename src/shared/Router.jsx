@@ -6,7 +6,6 @@ import IntroPage from 'pages/intro/IntroPage';
 import LoginPage from 'pages/login/LoginPage';
 import SignupPage from 'pages/signup/SIgnupPage';
 import RedirectKakaoPage from 'pages/redirectKakao/RedirectKakaoPage';
-import SearchLocationPage from 'pages/searchLocation/SearchLocationPage';
 import PostingPage from 'pages/posting/PostingPage';
 
 function Router() {
@@ -20,7 +19,6 @@ function Router() {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/oauth/kakao' element={<RedirectKakaoPage />}></Route>
-          {/* <Route path='/search/map' element={<SearchLocationPage />}></Route> */}
         </Route>
         {/* 그 밖의 요청시 404 페이지로 보내주기 */}
         {/* <Route path="*" element={<NotFound />} /> */}
