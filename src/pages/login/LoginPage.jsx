@@ -43,7 +43,7 @@ function LoginPage() {
     }
     mutation.mutate(form);
   };
-  console.log(email);
+
   return (
     <div className={styles.wrap}>
       <FormLabel>간편 로그인</FormLabel>
