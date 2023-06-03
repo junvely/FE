@@ -8,7 +8,6 @@ import SignupPage from 'pages/signup/SIgnupPage';
 import RedirectKakaoPage from 'pages/redirectKakao/RedirectKakaoPage';
 import DetailPage from 'pages/detail/DetailPage';
 import PostingPage from 'pages/posting/PostingPage';
-// import ReservationPage from 'pages/reservation/ReservationPage';
 
 function Router() {
   return (
