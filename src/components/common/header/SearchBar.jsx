@@ -36,7 +36,7 @@ function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
     updateSearchPayload({
       ...searchPayload,
       keyword: input,
-      location,
+      district: location,
     });
     resetInput();
     setLocation('서울');

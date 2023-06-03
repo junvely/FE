@@ -1,5 +1,6 @@
 import { postMainLike } from 'apis/posts';
 import { useMutation, useQueryClient } from 'react-query';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from '../pages/main/main.module.scss';
 import LikeNullIcon from '../assets/svg/likeNull.svg';
 import LikeFullIcon from '../assets/svg/likefull.svg';
@@ -10,6 +11,7 @@ import PriceIcon from '../assets/svg/price.svg';
 import Slider from './common/slider/Slider';
 
 function MainPost({ post }) {
+  const navigate = useNavigate();
   const { id, title, location, price, likeCount, likeStatus } = post;
   const queryClient = useQueryClient();
   const mutation = useMutation(postMainLike, {
@@ -55,7 +57,13 @@ function MainPost({ post }) {
             <img src={LikeNullIcon} alt='like-null-icon'></img>
           )}
         </button>
-        <button type='button' className={styles.button}>
+        <button
+          type='button'
+          className={styles.button}
+          onClick={() => {
+            navigate(`/detail/${id}`);
+          }}
+        >
           예약하기
         </button>
       </div>
