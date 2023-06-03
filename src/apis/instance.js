@@ -26,11 +26,18 @@ instance.interceptors.response.use(
   response => {
     const accessToken = response.headers.access_token;
     const refreshToken = response.headers.refresh_token;
+
     if (accessToken) {
-      setCookie('access_token', accessToken);
+      setCookie('access_token', accessToken, {
+        path: '/',
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      });
     }
     if (refreshToken) {
-      setCookie('refresh_token', refreshToken);
+      setCookie('refresh_token', refreshToken, {
+        path: '/',
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      });
     }
     return response;
   },
