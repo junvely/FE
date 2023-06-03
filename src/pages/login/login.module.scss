@@ -1,2 +1,42 @@
-.kakaoButton {
+@import '../../styles/scss/variables';
+@import '../../styles/scss/mixins';
+
+.wrap {
+  @include wrap;
+  padding: 0 2rem;
+
+  button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    line-height: 2.75rem;
+    border-radius: 4px;
+
+    img {
+      height: auto;
+      display: block;
+    }
+  }
+
+  .loginButton {
+    color: #bebebe;
+    font-weight: 600;
+    background-color: $color-button-disable;
+  }
+
+  .kakaoButton {
+    background-color: #fee500;
+  }
+
+  .signup {
+    font-size: 0.875rem;
+    padding: 1.1875rem;
+    text-align: center;
+
+    a {
+      color: #454545;
+      margin-left: 10px;
+      font-weight: 600;
+    }
+  }
 }

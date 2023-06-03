@@ -64,7 +64,7 @@ function MainPost({ post }) {
             navigate(`/detail/${id}`);
           }}
         >
-          예약하기
+          예약하러 가기
         </button>
       </div>
     </div>

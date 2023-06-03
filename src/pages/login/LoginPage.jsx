@@ -4,6 +4,9 @@ import authLogin from 'apis/auth/login';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './login.module.scss';
 import KakaoButton from '../../assets/img/kakaoButton.png';
+import Input from '../../components/common/input/Input';
+import FormLabel from '../../components/FormLabel';
+import AirBox from '../../components/common/airBox/AirBox';
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`;
 
@@ -42,27 +45,43 @@ function LoginPage() {
   };
 
   return (
-    <div>
-      <input
+    <div className={styles.wrap}>
+      <FormLabel>간편 로그인</FormLabel>
+      <button
+        type='button'
+        onClick={() => {
+          window.location.href = `${KAKAO_AUTH_URL}`;
+        }}
+        className={styles.kakaoButton}
+      >
+        <img src={KakaoButton} alt='kakao-button' />
+      </button>
+      <AirBox height='2.25rem' />
+      <FormLabel>이메일 로그인</FormLabel>
+      <Input
         type='text'
         name='email'
         value={email}
-        placeholder='아이디를 입력해주세요.'
+        placeholder='아이디를 입력'
         onChange={handleFormChange}
-      ></input>
-      <input
+      ></Input>
+      <Input
         type='password'
         name='password'
         value={password}
-        placeholder='비밀번호를 입력해주세요.'
+        placeholder='비밀번호를 입력'
         onChange={handleFormChange}
-      ></input>
-      <button type='submit' onClick={handleLoginBtnClick}>
-        LOGIN
+      ></Input>
+      <button
+        type='submit'
+        className={styles.loginButton}
+        onClick={handleLoginBtnClick}
+      >
+        로그인
       </button>
-      <Link to={KAKAO_AUTH_URL} className={styles.kakaoButton}>
-        <img src={KakaoButton} alt='kakao-button'></img>
-      </Link>
+      <p className={styles.signup}>
+        아직 회원이 아니신가요?<Link to='/signup'>회원가입</Link>
+      </p>
     </div>
   );
 }
