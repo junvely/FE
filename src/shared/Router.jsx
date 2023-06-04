@@ -13,6 +13,7 @@ import MyPostsPage from 'pages/mypage/MyPostsPage';
 import LikedPosts from 'pages/mypage/LikedPosts';
 import MyReservations from 'pages/mypage/MyReservations';
 // import ReservationPage from 'pages/reservation/ReservationPage';
+import PrivateRoutes from './PrivateRoutes';
 
 function Router() {
   return (
@@ -21,7 +22,9 @@ function Router() {
         <Route element={<Layout />}>
           <Route path='/' element={<IntroPage />} />
           <Route path='/main' element={<MainPage />} />
-          <Route path='/posting' element={<PostingPage />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path='/posting' element={<PostingPage />} />
+          </Route>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/detail/:postId' element={<DetailPage />} />

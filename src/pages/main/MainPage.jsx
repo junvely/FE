@@ -5,17 +5,16 @@ import { getMainPosts } from 'apis/posts';
 import LoadingSpinner from 'components/LoadingSpinner';
 import styles from './main.module.scss';
 import DropDownIcon from '../../assets/svg/toggleDropDown.svg';
-import SearchPostsContext from '../../contexts/PostsContext';
+import { SearchQueryContext } from '../../contexts/SearchQueryContext';
 
 function MainPage() {
   const [posts, setPosts] = useState([]);
-
-  const { searchPayload, updateSearchPayload } = useContext(SearchPostsContext);
-  const { sorting } = searchPayload;
+  const { searchQuery, updateSearchQuery } = useContext(SearchQueryContext);
+  const { sorting } = searchQuery;
 
   const { data, isLoading, isError, refetch } = useQuery('mainPosts', () => {
     const result = getMainPosts({
-      ...searchPayload,
+      ...searchQuery,
       sorting: sorting === '최신 순' ? '최근 게시물 순' : sorting,
     });
     return result;
@@ -29,7 +28,7 @@ function MainPage() {
   };
 
   const handleClickChangeSort = e => {
-    updateSearchPayload({ ...searchPayload, sorting: e.target.innerText });
+    updateSearchQuery({ ...searchQuery, sorting: e.target.innerText });
   };
 
   const updatePostData = () => {
@@ -45,7 +44,7 @@ function MainPage() {
   useEffect(() => {
     refetch();
     updatePostData();
-  }, [searchPayload]);
+  }, [searchQuery]);
 
   useEffect(() => {
     console.log('refetch');
