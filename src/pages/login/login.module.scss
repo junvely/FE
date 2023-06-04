@@ -19,9 +19,7 @@
   }
 
   .loginButton {
-    color: #bebebe;
-    font-weight: 600;
-    background-color: $color-button-disable;
+    @include button-disable;
   }
 
   .kakaoButton {
@@ -39,4 +37,8 @@
       font-weight: 600;
     }
   }
+}
+
+.loginButton.active {
+  @include button-active;
 }

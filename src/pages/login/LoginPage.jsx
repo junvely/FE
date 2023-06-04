@@ -1,33 +1,38 @@
 import useForm from 'hooks/useForm';
 import { useMutation } from 'react-query';
-import authLogin from 'apis/auth/login';
+import { authLogin } from 'apis/auth/login';
 import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 import styles from './login.module.scss';
 import KakaoButton from '../../assets/img/kakaoButton.png';
 import Input from '../../components/common/input/Input';
 import FormLabel from '../../components/FormLabel';
 import AirBox from '../../components/common/airBox/AirBox';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`;
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { updateLoginStatus } = useContext(AuthContext);
   const initialState = {
     email: '',
     password: '',
   };
 
   const [form, handleFormChange, resetForm] = useForm(initialState);
+  const [isActiveLogin, setIsActiveLogin] = useState(false);
   const { email, password } = form;
 
   const mutation = useMutation(authLogin, {
     onSuccess: result => {
       alert(result.message);
+      updateLoginStatus();
       navigate('/main');
       resetForm();
     },
     onError: error => {
-      const { errorCode } = error.response.data;
+      const { errorCode } = error;
       if (errorCode === 'NotExistEmail') {
         alert('등록되지 않은 이메일입니다.');
       } else if (errorCode === 'NotSamePassword') {
@@ -43,6 +48,14 @@ function LoginPage() {
     }
     mutation.mutate(form);
   };
+
+  useEffect(() => {
+    if (email && password) {
+      setIsActiveLogin(true);
+    } else {
+      setIsActiveLogin(false);
+    }
+  }, [email, password]);
 
   return (
     <div className={styles.wrap}>
@@ -74,7 +87,7 @@ function LoginPage() {
       ></Input>
       <button
         type='submit'
-        className={styles.loginButton}
+        className={`${styles.loginButton} ${isActiveLogin && styles.active}`}
         onClick={handleLoginBtnClick}
       >
         로그인
