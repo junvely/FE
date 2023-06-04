@@ -5,7 +5,8 @@ const authLogin = async payload => {
     const { data } = await instance.post('api/members/login', payload);
     return data;
   } catch (error) {
-    throw new Error(error.response.data);
+    console.log('error', error);
+    throw error.response.data;
   }
 };
 
