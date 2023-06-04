@@ -1,9 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
 
 function PrivateRoutes() {
-  const { isLogin } = useContext(AuthContext);
+  const { isLogin, updateLoginStatus } = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   updateLoginStatus();
+  // }, []);
 
   return isLogin ? (
     <Outlet />

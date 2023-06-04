@@ -23,6 +23,11 @@ function AuthContextProvider({ children }) {
     [isLogin, updateLoginStatus],
   );
 
+  // 웹이 로드되면 바로 로그인 상태 업데이트
+  useEffect(() => {
+    updateLoginStatus();
+  }, []);
+
   return (
     <AuthContext.Provider value={isLoginValue}>{children}</AuthContext.Provider>
   );
