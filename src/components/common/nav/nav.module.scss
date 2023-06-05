@@ -10,11 +10,13 @@
   box-shadow: 3px 3px 3px 3px rgb(219, 219, 219);
 
   ul {
-    @include flex-justify-center;
+    // @include flex-justify-center;
+    display: flex;
+    justify-content: space-evenly;
     height: 4.5rem;
     align-items: center;
     li {
-      padding: 0 2rem;
+      // padding: 0 2rem;
     }
   }
 }
