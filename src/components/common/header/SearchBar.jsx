@@ -1,10 +1,10 @@
 import useInput from 'hooks/useInput';
 import { useContext, useState } from 'react';
 import styles from './header.module.scss';
-import SearchPostsContext from '../../../contexts/PostsContext';
+import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
 
 function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
-  const { searchPayload, updateSearchPayload } = useContext(SearchPostsContext);
+  const { searchQuery, updateSearchQuery } = useContext(SearchQueryContext);
   const [input, handleInputChange, resetInput] = useInput('');
   const [location, setLocation] = useState('서울');
   const locations = [
@@ -33,8 +33,8 @@ function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
   };
 
   const handleSubmitSearchPost = () => {
-    updateSearchPayload({
-      ...searchPayload,
+    updateSearchQuery({
+      ...searchQuery,
       keyword: input,
       district: location,
     });

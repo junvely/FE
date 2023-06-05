@@ -15,7 +15,7 @@ function MyReservations() {
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <div>데이터 처리 중 ERROR가 발생하였습니다.</div>;
 
-  // console.log(data.data);
+  console.log(data.data);
 
   return (
     <div>
