@@ -28,7 +28,7 @@ function Router() {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/detail/:postId' element={<DetailPage />} />
-          {/* <Route path='/reservation' element={<ReservationPage />} /> */}
+          <Route path='/reservation' element={<ReservationPage />} />
           <Route path='/oauth/kakao' element={<RedirectKakaoPage />}></Route>
           <Route path='/mypage' element={<Mypage />}></Route>
           <Route path='/likedposts' element={<LikedPosts />}></Route>
