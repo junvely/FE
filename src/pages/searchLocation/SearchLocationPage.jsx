@@ -11,7 +11,7 @@ function SearchLocationPage({ locationOpen, locationSave }) {
   const [currenPage, setCurrentPage] = useState('');
 
   const { kakao } = window;
-  const ps = new kakao.maps.services.Places();
+  const location = new kakao.maps.services.Places();
 
   const displayPagination = pagination => {
     const pageNumsArray = Array.from(
@@ -55,13 +55,13 @@ function SearchLocationPage({ locationOpen, locationSave }) {
 
     if (newSearchKeyword) {
       // Pagination 번호 클릭 시
-      ps.keywordSearch(newSearchKeyword, getFirstPageData, options);
+      location.keywordSearch(newSearchKeyword, getFirstPageData, options);
     } else if (page) {
       // 새로운 장소 클릭 시
-      ps.keywordSearch(searchedKeyword, updatePageData, options);
+      location.keywordSearch(searchedKeyword, updatePageData, options);
     } else {
       // 검색 시
-      ps.keywordSearch(searchedKeyword, getFirstPageData, options);
+      location.keywordSearch(searchedKeyword, getFirstPageData, options);
     }
     return true;
   };
