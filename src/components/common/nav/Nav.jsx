@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './nav.module.scss';
 import homeIcon from '../../../assets/svg/home.svg';
 import chattingIcon from '../../../assets/svg/chatting.svg';
@@ -8,25 +8,36 @@ import postIcon from '../../../assets/svg/post.svg';
 
 function Nav() {
   const navigate = useNavigate();
+  const loc = useLocation();
 
   return (
     <nav className={styles.nav}>
       <ul>
         <Link to='/main'>
           <li>
-            <img src={homeIcon} alt='home' className={styles.homeIcon} />
+            <img
+              src={homeIcon}
+              alt='home'
+              className={
+                loc.pathname === '/main' ? styles.selectedIcon : styles.icon
+              }
+            />
           </li>
         </Link>
         <li>
-          <img
-            src={chattingIcon}
-            alt='chatting'
-            className={styles.chattingIcon}
-          />
+          <img src={chattingIcon} alt='chatting' className={styles.icon} />
         </li>
-        <li>
-          <img src={mypageIcon} alt='mypage' className={styles.mypageIcon} />
-        </li>
+        <Link to='/mypage'>
+          <li>
+            <img
+              src={mypageIcon}
+              alt='mypage'
+              className={
+                loc.pathname === '/mypage' ? styles.selectedIcon : styles.icon
+              }
+            />
+          </li>
+        </Link>
       </ul>
       <button
         type='button'

@@ -35,13 +35,17 @@
   }
 }
 
-.homeIcon,
-.chattingIcon,
-.mypageIcon {
+.icon {
   width: 2.75rem;
   height: 2.75rem;
   &:hover {
     filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
       brightness(90%) contrast(131%);
   }
+}
+
+.selectedIcon {
+  @extend .icon;
+  filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
+    brightness(90%) contrast(131%);
 }
