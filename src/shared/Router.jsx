@@ -24,16 +24,18 @@ function Router() {
           <Route path='/main' element={<MainPage />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/posting' element={<PostingPage />} />
+            <Route path='/mypage' element={<Mypage />}></Route>
+            <Route path='/likedposts' element={<LikedPosts />}></Route>
+            <Route path='/myposts' element={<MyPostsPage />}></Route>
+          <Route path='/myreservations' element={<MyReservations />}></Route>
           </Route>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/detail/:postId' element={<DetailPage />} />
-          <Route path='/reservation' element={<ReservationPage />} />
           <Route path='/oauth/kakao' element={<RedirectKakaoPage />}></Route>
           <Route path='/mypage' element={<Mypage />}></Route>
           <Route path='/likedposts' element={<LikedPosts />}></Route>
           <Route path='/myposts' element={<MyPostsPage />}></Route>
-          <Route path='/myreservations' element={<MyReservations />}></Route>
         </Route>
         {/* 그 밖의 요청시 404 페이지로 보내주기 */}
         {/* <Route path="*" element={<NotFound />} /> */}
