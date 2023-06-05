@@ -47,6 +47,7 @@ function Nav() {
       </ul>
       {loc.pathname === '/login' ||
       loc.pathname === '/signup' ||
+      loc.pathname === '/reservation' ||
       loc.pathname === '/posting' ? null : (
         <button
           type='button'
