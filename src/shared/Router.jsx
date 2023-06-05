@@ -13,7 +13,6 @@ import MyPostsPage from 'pages/mypage/MyPostsPage';
 import LikedPosts from 'pages/mypage/LikedPosts';
 import MyReservations from 'pages/mypage/MyReservations';
 // import ReservationPage from 'pages/reservation/ReservationPage';
-import ReservationPage from 'pages/reservation/ReservationPage';
 import PrivateRoutes from './PrivateRoutes';
 
 function Router() {
