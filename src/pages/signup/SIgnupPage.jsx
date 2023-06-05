@@ -2,8 +2,11 @@ import { useMutation } from 'react-query';
 import useForm from 'hooks/useForm';
 import { useState } from 'react';
 import { verifyEmail, addUser, verifyCode } from 'apis/auth/signup';
+import { useNavigate } from 'react-router';
+import styles from './signup.module.scss';
 
 function SignupPage() {
+  const navigate = useNavigate();
   const initialState = {
     email: '',
     nickname: '',
@@ -75,19 +78,8 @@ function SignupPage() {
   // 이메일, 닉네임, 비밀번호 유효성 검사
   const handleEmailCheckBtnClick = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const nicknamePattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
-    const passwordPattern =
-      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&()_])[A-Za-z\d@$!%*?&()_]{8,15}$/;
 
-    if (!nicknamePattern.test(nickname)) {
-      alert('닉네임은 최소 2~10글자여야 합니다.');
-    } else if (!passwordPattern.test(password)) {
-      alert(
-        '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
-      );
-    } else if (password !== passwordCheck) {
-      alert('비밀번호가 일치하지 않습니다.');
-    } else if (emailPattern.test(email)) {
+    if (emailPattern.test(email)) {
       const validEmail = { email };
       mutationEmailCheck.mutate(validEmail);
     } else {
@@ -108,73 +100,102 @@ function SignupPage() {
   // 가입하기
   const handleSignupBtnClick = () => {
     const signupData = { email, nickname, password, passwordCheck };
+    const nicknamePattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
+    const passwordPattern =
+      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&()_])[A-Za-z\d@$!%*?&()_]{8,15}$/;
+
+    if (!nicknamePattern.test(nickname)) {
+      alert('닉네임은 최소 2~10글자여야 합니다.');
+    }
+    if (!passwordPattern.test(password)) {
+      alert(
+        '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
+      );
+    }
+    if (password !== passwordCheck) {
+      alert('비밀번호가 일치하지 않습니다.');
+    }
     mutationAddUser.mutate(signupData);
+    navigate('/main');
   };
 
   return (
-    <div>
-      <input
-        type='email'
-        name='email'
-        value={email}
-        placeholder='이메일을 입력해주세요.'
-        className='border border-black'
-        onChange={handleFormChange}
-      />
-      <input
-        type='text'
-        name='nickname'
-        value={nickname}
-        placeholder='닉네임을 입력해주세요.'
-        className='border border-black'
-        onChange={handleFormChange}
-      />
-      <input
-        type='password'
-        name='password'
-        value={password}
-        placeholder='비밀번호 8-15자리 / 영문, 숫자, 특수문자 포함'
-        className='border border-black'
-        onChange={handleFormChange}
-      />
-      <input
-        type='password'
-        name='passwordCheck'
-        value={passwordCheck}
-        placeholder='비밀번호를 확인해주세요.'
-        className='border border-black'
-        onChange={handleFormChange}
-      />
-      <button
-        type='button'
-        className='border border-black'
-        onClick={handleEmailCheckBtnClick}
-      >
-        이메일 인증
-      </button>
-      <input
-        type='text'
-        name='code'
-        value={code}
-        placeholder='인증코드를 입력해주세요.'
-        className='border border-black'
-        onChange={handleFormChange}
-      />
-      <button
-        type='button'
-        disabled={isDisabled}
-        className='border border-black'
-        onClick={handleCodeCheckBtnClick}
-      >
-        인증하기
-      </button>
-      <button
-        type='submit'
-        className='border border-black'
-        onClick={handleSignupBtnClick}
-      >
-        가입하기
-      </button>
+    <div className={styles.container}>
+      <div className={styles.titleBox}>
+        <span className={styles.line} />
+        <h2 className={styles.title}>회원가입</h2>
+        <span className={styles.line} />
+      </div>
+      <div className={styles.inputBox}>
+        <input
+          type='email'
+          name='email'
+          value={email}
+          placeholder='이메일을 입력해주세요.'
+          className={styles.emailInput}
+          onChange={handleFormChange}
+        />
+        <button
+          type='button'
+          className={styles.sendButton}
+          onClick={handleEmailCheckBtnClick}
+        >
+          인증코드 발송
+        </button>
+        <p className={styles.reRequest}>
+          인증 코드가 안 오셨나요?
+          <button type='button' onClick={handleEmailCheckBtnClick}>
+            다시 보내기
+          </button>
+        </p>
+        <input
+          type='text'
+          name='code'
+          value={code}
+          placeholder='인증코드를 입력해주세요.'
+          className={styles.sendInput}
+          onChange={handleFormChange}
+        />
+        <button
+          type='button'
+          disabled={isDisabled}
+          className={styles.buttons}
+          onClick={handleCodeCheckBtnClick}
+        >
+          확인
+        </button>
+        <input
+          type='password'
+          name='password'
+          value={password}
+          placeholder='비밀번호 8-15자리 / 영문, 숫자, 특수문자 포함'
+          className={styles.input}
+          onChange={handleFormChange}
+        />
+        <input
+          type='password'
+          name='passwordCheck'
+          value={passwordCheck}
+          placeholder='비밀번호를 확인해주세요.'
+          className={styles.input}
+          onChange={handleFormChange}
+        />
+        <input
+          type='text'
+          name='nickname'
+          value={nickname}
+          placeholder='닉네임을 입력해주세요.'
+          className={styles.input}
+          onChange={handleFormChange}
+        />
+        <button
+          type='submit'
+          className={`${styles.buttons} ${styles.btn}`}
+          onClick={handleSignupBtnClick}
+        >
+          완료
+        </button>
+      </div>
     </div>
   );
 }
