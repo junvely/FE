@@ -11,8 +11,8 @@ import PostingPage from 'pages/posting/PostingPage';
 import Mypage from 'pages/mypage/Mypage';
 import MyPostsPage from 'pages/mypage/MyPostsPage';
 import LikedPosts from 'pages/mypage/LikedPosts';
-import MyReservations from 'pages/mypage/MyReservations';
-// import ReservationPage from 'pages/reservation/ReservationPage';
+// import MyReservations from 'pages/mypage/MyReservations';
+import ReservationPage from 'pages/reservation/ReservationPage';
 import PrivateRoutes from './PrivateRoutes';
 
 function Router() {
@@ -33,7 +33,7 @@ function Router() {
           <Route path='/mypage' element={<Mypage />}></Route>
           <Route path='/likedposts' element={<LikedPosts />}></Route>
           <Route path='/myposts' element={<MyPostsPage />}></Route>
-          <Route path='/myreservations' element={<MyReservations />}></Route>
+          {/* <Route path='/myreservations' element={<MyReservations />}></Route> */}
         </Route>
         {/* 그 밖의 요청시 404 페이지로 보내주기 */}
         {/* <Route path="*" element={<NotFound />} /> */}

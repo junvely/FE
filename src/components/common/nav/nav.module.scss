@@ -10,11 +10,13 @@
   box-shadow: 3px 3px 3px 3px rgb(219, 219, 219);
 
   ul {
-    @include flex-justify-center;
+    // @include flex-justify-center;
+    display: flex;
+    justify-content: space-evenly;
     height: 4.5rem;
     align-items: center;
     li {
-      padding: 0 2rem;
+      // padding: 0 2rem;
     }
   }
 }
@@ -48,4 +50,9 @@
   @extend .icon;
   filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
     brightness(90%) contrast(131%);
+}
+
+.logoutIcon {
+  width: 2.1875rem;
+  height: 2.1875rem;
 }
