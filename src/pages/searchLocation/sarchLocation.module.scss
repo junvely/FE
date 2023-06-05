@@ -25,12 +25,13 @@ form {
 }
 
 .listCon {
-  border-bottom: 1px solid #b3b3b3;
+  border-top: 1px solid #d6d5d5;
 
   .searchList {
     height: 4.25rem;
     padding: 0.75rem 2rem;
-    border-top: 1px solid #b3b3b3;
+    border-bottom: 1px solid #d6d5d5;
+
     cursor: pointer;
 
     span {

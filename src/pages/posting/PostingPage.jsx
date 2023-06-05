@@ -41,7 +41,7 @@ function PostingPage() {
     setIsLocationOpen(!isLocationOpen);
   };
 
-  const locationSave = keyword => {
+  const saveLocation = keyword => {
     setLocation(keyword);
   };
 
@@ -56,8 +56,6 @@ function PostingPage() {
       location,
     });
   };
-
-  console.log(location);
 
   return (
     <>
@@ -150,7 +148,7 @@ function PostingPage() {
       >
         <SearchLocationPage
           locationOpen={handleClickLocationOpen}
-          locationSave={locationSave}
+          saveLocation={saveLocation}
         />
       </div>
     </>
