@@ -45,13 +45,17 @@ function Nav() {
           </li>
         </Link>
       </ul>
-      <button
-        type='button'
-        className={styles.post}
-        onClick={() => navigate('/posting')}
-      >
-        <img src={postIcon} alt='post' />
-      </button>
+      {loc.pathname === '/login' ||
+      loc.pathname === '/signup' ||
+      loc.pathname === '/posting' ? null : (
+        <button
+          type='button'
+          className={styles.post}
+          onClick={() => navigate('/posting')}
+        >
+          <img src={postIcon} alt='post' />
+        </button>
+      )}
     </nav>
   );
 }
