@@ -45,10 +45,6 @@ function MainPage() {
     updatePostData();
   }, [searchQuery]);
 
-  useEffect(() => {
-    console.log('refetch');
-  }, [refetch]);
-
   return (
     <div className={styles.wrap}>
       <div className={styles.titleCon}>

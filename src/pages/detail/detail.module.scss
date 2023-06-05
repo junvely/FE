@@ -3,7 +3,7 @@
 
 .container {
   @include wrap;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .wrap {

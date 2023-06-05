@@ -3,27 +3,23 @@
 
 .nav {
   width: 100%;
-  // position: absolute;
-  // bottom: 0;
+  height: 8%;
   background-color: #fff;
   border-top: 1px solid #dbdbdb;
   box-shadow: 3px 3px 3px 3px rgb(219, 219, 219);
 
   ul {
-    // @include flex-justify-center;
+    height: 100%;
     display: flex;
     justify-content: space-evenly;
-    height: 4.5rem;
     align-items: center;
-    li {
-      // padding: 0 2rem;
-    }
   }
 }
 
 .nav .post {
   width: 3.75rem;
-  height: 3.75rem;
+  // height: 3.75rem;
+  // height: 6.66%;
   position: absolute;
   bottom: 5.875rem;
   right: 2rem;

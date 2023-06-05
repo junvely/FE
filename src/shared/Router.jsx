@@ -11,7 +11,6 @@ import SignupPage from 'pages/signup/SignupPage';
 import Mypage from 'pages/mypage/Mypage';
 import MyPostsPage from 'pages/mypage/MyPostsPage';
 import LikedPosts from 'pages/mypage/LikedPosts';
-import ReservationPage from 'pages/reservation/ReservationPage';
 import MyReservations from 'pages/mypage/MyReservations';
 import PrivateRoutes from './PrivateRoutes';
 
@@ -27,7 +26,7 @@ function Router() {
             <Route path='/mypage' element={<Mypage />}></Route>
             <Route path='/likedposts' element={<LikedPosts />}></Route>
             <Route path='/myposts' element={<MyPostsPage />}></Route>
-          <Route path='/myreservations' element={<MyReservations />}></Route>
+            <Route path='/myreservations' element={<MyReservations />}></Route>
           </Route>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
