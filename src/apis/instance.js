@@ -46,8 +46,7 @@ instance.interceptors.response.use(
     const { errorCode } = error.response.data;
     // 리프레쉬 토큰 만료시 토큰 삭제 및 로그아웃 처리
     if (errorCode === 'refresh') {
-      removeCookie('access_token');
-      removeCookie('refresh_token');
+      removeCookie();
       alert('로그인 기간이 만료되어 로그인 페이지로 이동합니다');
       window.location.href = '/login';
     }

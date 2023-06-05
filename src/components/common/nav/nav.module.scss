@@ -18,14 +18,13 @@
 
 .nav .post {
   width: 3.75rem;
-  // height: 3.75rem;
-  // height: 6.66%;
   position: absolute;
   bottom: 5.875rem;
   right: 2rem;
   background-color: #fff;
   border-radius: 50%;
   opacity: 0.8;
+
   img {
     padding: 7px;
     filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
@@ -36,6 +35,7 @@
 .icon {
   width: 2.75rem;
   height: 2.75rem;
+
   &:hover {
     filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
       brightness(90%) contrast(131%);
