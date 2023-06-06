@@ -51,8 +51,8 @@ function ReservationSuccessPage() {
       <div className={styles.resSuccessInfoWrap}>
         <div className={styles.resSuccessInfoBox}>
           <p className={styles.resSuccessInfo}>
-            <img src={calendarIcon} alt='달력 아이콘' /> {formattedStDate} ~{' '}
-            {formattedEdDate}
+            <img src={calendarIcon} alt='달력 아이콘' />
+            {formattedStDate} ~ {` ${formattedEdDate}`}
           </p>
           <p className={styles.resSuccessInfo}>
             <img src={locationIcon} alt='위치 아이콘' /> 서울 중락구 광나루로
