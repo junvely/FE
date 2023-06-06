@@ -3,33 +3,28 @@
 
 .nav {
   width: 100%;
-  // position: absolute;
-  // bottom: 0;
+  height: 8%;
   background-color: #fff;
   border-top: 1px solid #dbdbdb;
   box-shadow: 3px 3px 3px 3px rgb(219, 219, 219);
 
   ul {
-    // @include flex-justify-center;
+    height: 100%;
     display: flex;
     justify-content: space-evenly;
-    height: 4.5rem;
     align-items: center;
-    li {
-      // padding: 0 2rem;
-    }
   }
 }
 
-.post {
+.nav .post {
   width: 3.75rem;
-  height: 3.75rem;
   position: absolute;
   bottom: 5.875rem;
   right: 2rem;
   background-color: #fff;
   border-radius: 50%;
   opacity: 0.8;
+
   img {
     padding: 7px;
     filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
@@ -40,6 +35,7 @@
 .icon {
   width: 2.75rem;
   height: 2.75rem;
+
   &:hover {
     filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
       brightness(90%) contrast(131%);

@@ -4,15 +4,12 @@ import { getCookie } from '../utils/cookies';
 const AuthContext = createContext();
 
 function AuthContextProvider({ children }) {
-  const [isLogin, setIsLogin] = useState(false);
+  const isToken = !!getCookie('access_token');
+  const [isLogin, setIsLogin] = useState(isToken);
 
   const updateLoginStatus = () => {
     const token = getCookie('access_token');
-    if (token) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(!!token);
   };
 
   const isLoginValue = useMemo(

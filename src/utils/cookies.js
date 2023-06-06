@@ -10,6 +10,7 @@ export const getCookie = name => {
   return cookies.get(name);
 };
 
-export const deleteCookie = name => {
-  cookies.remove(name);
+export const removeCookie = () => {
+  cookies.remove('access_token', { path: '/' });
+  cookies.remove('refresh_token', { path: '/' });
 };

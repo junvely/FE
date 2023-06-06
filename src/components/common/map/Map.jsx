@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import styles from './map.module.scss';
+import { useEffect, useRef } from 'react';
+import './map.scss';
 
 function Map({ location }) {
   const { kakao } = window;
@@ -22,11 +22,22 @@ function Map({ location }) {
           position: coords,
         });
 
-        const infowindow = new kakao.maps.InfoWindow({
-          content: `<div style="width:150px;text-align:center;padding:6px 0;">${location}</div>`,
+        const position = coords;
+        const content = `<div class="customoverlay"  title="클릭하면 큰 지도로 이동해요!">
+                          <a href="https://map.kakao.com/link/map/${location},${position.Ma},${position.La}" target="_blank"> 
+                          <span class="title">${location}</span>
+                          </a>
+                        </div>;`;
+
+        const customOverlay = new kakao.maps.CustomOverlay({
+          position,
+          content,
+          xAnchor: 0.5,
+          yAnchor: 0.2,
         });
-        infowindow.open(map, marker);
+
         map.setCenter(coords);
+        customOverlay.setMap(map);
       }
     });
   };
@@ -34,7 +45,7 @@ function Map({ location }) {
   useEffect(() => {
     kakaoMapDrawing();
   }, [location]);
-  return <div className={styles.map} ref={mapRef}></div>;
+  return <div className='map' ref={mapRef}></div>;
 }
 
 export default Map;
