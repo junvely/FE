@@ -12,6 +12,7 @@ import Mypage from 'pages/mypage/Mypage';
 import MyPostsPage from 'pages/mypage/MyPostsPage';
 import LikedPosts from 'pages/mypage/LikedPosts';
 import MyReservations from 'pages/mypage/MyReservations';
+import ReservationSuccessPage from 'pages/reservation/ReservationSuccessPage';
 import PrivateRoutes from './PrivateRoutes';
 
 function Router() {
@@ -32,9 +33,14 @@ function Router() {
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/detail/:postId' element={<DetailPage />} />
           <Route path='/oauth/kakao' element={<RedirectKakaoPage />}></Route>
-          <Route path='/mypage' element={<Mypage />}></Route>
-          <Route path='/likedposts' element={<LikedPosts />}></Route>
-          <Route path='/myposts' element={<MyPostsPage />}></Route>
+          <Route path='/mypage' element={<Mypage />} />
+          <Route path='/likedposts' element={<LikedPosts />} />
+          <Route path='/myposts' element={<MyPostsPage />} />
+          <Route path='/myreservations' element={<MyReservations />} />
+          <Route
+            path='/reservationSuccess'
+            element={<ReservationSuccessPage />}
+          />
         </Route>
         {/* 그 밖의 요청시 404 페이지로 보내주기 */}
         {/* <Route path="*" element={<NotFound />} /> */}

@@ -72,10 +72,11 @@ function DetailPage() {
   // 예약하기 클릭 시 이동
   const handleClickResBtn = () => {
     if (userStatus === 0) {
+      alert('로그인이 필요한 기능입니다.');
       navigate('/login');
     }
     if (userStatus === 1) {
-      navigate('/reservation');
+      navigate('/reservation', { state: { postId } });
     }
     if (userStatus === 2) {
       mutationDeleteReservation.mutate(postId);
