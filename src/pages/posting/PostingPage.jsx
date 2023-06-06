@@ -13,11 +13,11 @@ function PostingPage() {
   const navigate = useNavigate();
   const mutation = useMutation(postAddPost, {
     onSuccess: () => {
-      console.log('포스팅 성공');
+      alert('포스팅 성공');
       navigate('/main');
     },
     onError: error => {
-      console.log('포스팅 실패 :', error.msg);
+      alert('서버 에러 발생 : 포스팅 실패', error.msg);
     },
   });
 
@@ -33,6 +33,18 @@ function PostingPage() {
   };
   const [form, handleFormChange, handleImageUpload, resetForm] =
     useForm(initialState);
+
+  const {
+    title,
+    price,
+    capacity,
+    content,
+    operatingTime,
+    contentDetails,
+    amenities,
+    imageUrl,
+  } = form;
+
   const [location, setLocation] = useState('주소를 입력해주세요');
 
   const [isLocationOpen, setIsLocationOpen] = useState(false);
@@ -46,13 +58,30 @@ function PostingPage() {
   };
 
   const handleClickSubmitPosting = () => {
+    if (
+      !title ||
+      !price ||
+      !capacity ||
+      !content ||
+      !operatingTime ||
+      !contentDetails ||
+      !amenities
+    ) {
+      alert('입력란을 모두 작성해 주셔야 합니다');
+      return;
+    }
+    if (!imageUrl) {
+      alert('사진을 선택해 주세요');
+      return;
+    }
+
     mutation.mutate({
       ...form,
-      price: Number(form.price),
-      capacity: Number(form.capacity),
-      content: form.content.replace(/\n/g, '\\n'),
-      contentDetails: form.contentDetails.replace(/\n/g, '\\n'),
-      amenities: form.amenities.replace(/\n/g, '\\n'),
+      price: Number(price),
+      capacity: Number(capacity),
+      content: content.replace(/\n/g, '\\n'),
+      contentDetails: contentDetails.replace(/\n/g, '\\n'),
+      amenities: amenities.replace(/\n/g, '\\n'),
       location,
     });
   };
@@ -63,7 +92,7 @@ function PostingPage() {
         <PostInput
           type='text'
           name='title'
-          value={form.title}
+          value={title}
           label='글 제목'
           placeHolder='글 제목을 입력해 주세요'
           onChange={handleFormChange}
@@ -82,7 +111,7 @@ function PostingPage() {
         <PostInput
           type='text'
           name='price'
-          value={form.price}
+          value={price}
           label='가격'
           placeHolder='ex. 50000'
           onChange={handleFormChange}
@@ -90,7 +119,7 @@ function PostingPage() {
         <PostInput
           type='text'
           name='capacity'
-          value={form.capacity}
+          value={capacity}
           label='최대 인원'
           placeHolder='수용 가능한 인원을 작성해 주세요'
           onChange={handleFormChange}
@@ -102,13 +131,13 @@ function PostingPage() {
             placeholder='오피스 공간에 대해 소개해 주세요'
             onChange={handleFormChange}
           >
-            {form.content}
+            {content}
           </textarea>
         </div>
         <PostInput
           type='text'
           name='operatingTime'
-          value={form.operatingTime}
+          value={operatingTime}
           label='운영 시간'
           placeHolder='ex. 월-금 8시-18시'
           onChange={handleFormChange}
