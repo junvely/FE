@@ -34,7 +34,7 @@ function DetailPage() {
   // 예약 취소
   const mutationDeleteReservation = useMutation(deleteCancelReservation, {
     onSuccess: result => {
-      if (result.status === '200') {
+      if (result.status === 'OK') {
         alert('예약이 취소되었습니다.');
       }
     },
