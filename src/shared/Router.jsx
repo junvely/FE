@@ -25,24 +25,19 @@ function Router() {
           <Route path='/main' element={<MainPage />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/posting' element={<PostingPage />} />
-            <Route path='/mypage' element={<Mypage />}></Route>
-            <Route path='/likedposts' element={<LikedPosts />}></Route>
-            <Route path='/myposts' element={<MyPostsPage />}></Route>
-            <Route path='/myreservations' element={<MyReservations />}></Route>
+            <Route path='/mypage' element={<Mypage />} />
+            <Route path='/likedposts' element={<LikedPosts />} />
+            <Route path='/myposts' element={<MyPostsPage />} />
+            <Route path='/myreservations' element={<MyReservations />} />
+            <Route
+              path='/reservationSuccess'
+              element={<ReservationSuccessPage />}
+            />
           </Route>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/detail/:postId' element={<DetailPage />} />
           <Route path='/oauth/kakao' element={<RedirectKakaoPage />}></Route>
-          <Route path='/mypage' element={<Mypage />}></Route>
-          <Route path='/likedposts' element={<LikedPosts />}></Route>
-          <Route path='/myposts' element={<MyPostsPage />}></Route>
-          <Route path='/reservation' element={<ReservationPage />}></Route>
-          <Route path='/myreservations' element={<MyReservations />} />
-          <Route
-            path='/reservationSuccess'
-            element={<ReservationSuccessPage />}
-          />
         </Route>
         {/* 그 밖의 요청시 404 페이지로 보내주기 */}
         {/* <Route path="*" element={<NotFound />} /> */}
