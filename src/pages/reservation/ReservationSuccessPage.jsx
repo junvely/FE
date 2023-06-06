@@ -37,6 +37,7 @@ function ReservationSuccessPage() {
     navigate('/myreservations');
   };
 
+  console.log(data.data);
   return (
     <div>
       <div className={styles.resSuccessTextWrap}>
@@ -56,8 +57,8 @@ function ReservationSuccessPage() {
             {formattedStDate} ~ {` ${formattedEdDate}`}
           </p>
           <p className={styles.resSuccessInfo}>
-            <img src={locationIcon} alt='위치 아이콘' /> 서울 중락구 광나루로
-            382 아스하임4차 3층
+            <img src={locationIcon} alt='위치 아이콘' />
+            {data.data.location}
           </p>
         </div>
         <button
