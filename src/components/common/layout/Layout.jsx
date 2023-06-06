@@ -8,12 +8,14 @@ function Layout() {
   return (
     <SearchQueryProvider>
       <div className={styles.wrap}>
-        <div className={styles.layoutCon}>
-          <Header />
-          <section className={styles.contents}>
-            <Outlet />
-          </section>
-          <Nav />
+        <div className={styles.backgroundWrap}>
+          <div className={styles.layoutCon}>
+            <Header />
+            <section className={styles.contents}>
+              <Outlet />
+            </section>
+            <Nav />
+          </div>
         </div>
       </div>
     </SearchQueryProvider>

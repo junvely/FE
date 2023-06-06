@@ -30,6 +30,10 @@
     position: absolute;
     bottom: 20px;
 
+    @include mobile {
+      bottom: 1.35rem;
+    }
+
     div {
       display: flex;
       margin: 0 auto;
