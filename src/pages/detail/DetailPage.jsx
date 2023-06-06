@@ -13,6 +13,7 @@ import profileSmallIcon from '../../assets/svg/profileSmall.svg';
 import likeNullIcon from '../../assets/svg/likeNull.svg';
 import likeFullIcon from '../../assets/svg/likefull.svg';
 import chattingIcon from '../../assets/svg/chatting.svg';
+import Map from '../../components/common/map/Map';
 
 function DetailPage() {
   const { postId } = useParams();
@@ -165,7 +166,7 @@ function DetailPage() {
             {amenities}
           </pre>
           <h3 className={styles.subTitle}>오시는 길</h3>
-          <div className={styles.map}>지도 영역</div>
+          <Map location={location} />
         </div>
       </div>
     </div>
