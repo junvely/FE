@@ -29,6 +29,7 @@ function Router() {
             <Route path='/likedposts' element={<LikedPosts />} />
             <Route path='/myposts' element={<MyPostsPage />} />
             <Route path='/myreservations' element={<MyReservations />} />
+            <Route path='/reservation' element={<ReservationPage />} />
             <Route
               path='/reservationSuccess'
               element={<ReservationSuccessPage />}
