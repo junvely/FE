@@ -45,10 +45,7 @@ function Nav() {
           </li>
         </Link>
       </ul>
-      {loc.pathname === '/login' ||
-      loc.pathname === '/signup' ||
-      loc.pathname === '/reservation' ||
-      loc.pathname === '/posting' ? null : (
+      {loc.pathname === '/main' || loc.pathname === '/detail' ? (
         <button
           type='button'
           className={styles.post}
@@ -56,7 +53,7 @@ function Nav() {
         >
           <img src={postIcon} alt='post' />
         </button>
-      )}
+      ) : null}
     </nav>
   );
 }
