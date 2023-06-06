@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { deleteCookie, getCookie, setCookie } from '../utils/cookies';
+import { getCookie, removeCookie, setCookie } from '../utils/cookies';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER,
@@ -43,12 +43,10 @@ instance.interceptors.response.use(
   },
 
   error => {
-    const { errorCode } = error.response.data;
-    // 리프레쉬 토큰 만료시 토큰 삭제 및 로그아웃 처리
-    if (errorCode === 'refresh') {
-      deleteCookie('access_token');
-      deleteCookie('refresh_token');
-      alert('로그인 기간이 만료되어 로그인 페이지로 이동합니다');
+    const message = error.response.data;
+    if (message === '리프레쉬 토큰이 만료되어 로그인이 필요합니다.') {
+      removeCookie();
+      alert('로그인 기간이 만료되어 로그인 페이지로 이동합니다.');
       window.location.href = '/login';
     }
     return Promise.reject(error);

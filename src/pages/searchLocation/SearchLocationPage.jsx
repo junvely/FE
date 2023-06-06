@@ -3,7 +3,7 @@ import Map from 'components/common/map/Map';
 import useInput from 'hooks/useInput';
 import styles from './sarchLocation.module.scss';
 
-function SearchLocationPage({ locationOpen, locationSave }) {
+function SearchLocationPage({ locationOpen, saveLocation }) {
   const [searchInput, handleInputValueChange, inputValueChange] = useInput();
   const [searchedKeyword, setSearchedKeyword] = useState('');
   const [places, setPlaces] = useState([]);
@@ -11,7 +11,7 @@ function SearchLocationPage({ locationOpen, locationSave }) {
   const [currenPage, setCurrentPage] = useState('');
 
   const { kakao } = window;
-  const ps = new kakao.maps.services.Places();
+  const location = new kakao.maps.services.Places();
 
   const displayPagination = pagination => {
     const pageNumsArray = Array.from(
@@ -44,10 +44,6 @@ function SearchLocationPage({ locationOpen, locationSave }) {
   };
 
   const requestCurrentPageData = (newSearchKeyword, page) => {
-    if (!searchedKeyword.replace(/^\s+|\s+$/g, '')) {
-      alert('키워드를 입력해주세요!');
-      return false;
-    }
     const options = {
       page: page || 1,
       size: 5,
@@ -55,13 +51,13 @@ function SearchLocationPage({ locationOpen, locationSave }) {
 
     if (newSearchKeyword) {
       // Pagination 번호 클릭 시
-      ps.keywordSearch(newSearchKeyword, getFirstPageData, options);
+      location.keywordSearch(newSearchKeyword, getFirstPageData, options);
     } else if (page) {
       // 새로운 장소 클릭 시
-      ps.keywordSearch(searchedKeyword, updatePageData, options);
+      location.keywordSearch(searchedKeyword, updatePageData, options);
     } else {
       // 검색 시
-      ps.keywordSearch(searchedKeyword, getFirstPageData, options);
+      location.keywordSearch(searchedKeyword, getFirstPageData, options);
     }
     return true;
   };
@@ -88,6 +84,10 @@ function SearchLocationPage({ locationOpen, locationSave }) {
   };
 
   const handleSearchBtnClick = () => {
+    if (!searchInput) {
+      alert('주소를 입력해 주세요!');
+      return;
+    }
     setSearchedKeyword(searchInput);
   };
 
@@ -97,7 +97,7 @@ function SearchLocationPage({ locationOpen, locationSave }) {
 
   useEffect(() => {
     if (searchedKeyword) {
-      locationSave(searchedKeyword);
+      saveLocation(searchedKeyword);
     }
   }, [searchedKeyword]);
 
@@ -111,7 +111,7 @@ function SearchLocationPage({ locationOpen, locationSave }) {
       >
         <input
           type='text'
-          placeholder='도로명 주소를 입력해 주세요'
+          placeholder='지번 주소로 입력해 주세요'
           name='location'
           value={searchInput || ''}
           onChange={handleInputValueChange}
@@ -162,16 +162,18 @@ function SearchLocationPage({ locationOpen, locationSave }) {
           )}
         </ul>
       </div>
-      <div className={styles.mapCon}>
-        <Map location={searchedKeyword}></Map>
-        <button
-          type='button'
-          className={`${styles.button} ${styles.select}`}
-          onClick={locationOpen}
-        >
-          선택 완료
-        </button>
-      </div>
+      {searchedKeyword && (
+        <div className={styles.mapCon}>
+          <Map location={searchedKeyword}></Map>
+          <button
+            type='button'
+            className={`${styles.button} ${styles.select}`}
+            onClick={locationOpen}
+          >
+            선택 완료
+          </button>
+        </div>
+      )}
     </>
   );
 }

@@ -11,7 +11,6 @@ function MainPage() {
   const [posts, setPosts] = useState([]);
   const { searchQuery, updateSearchQuery } = useContext(SearchQueryContext);
   const { sorting } = searchQuery;
-
   const { data, isLoading, isError, refetch } = useQuery('mainPosts', () => {
     const result = getMainPosts({
       ...searchQuery,
@@ -45,10 +44,6 @@ function MainPage() {
     refetch();
     updatePostData();
   }, [searchQuery]);
-
-  useEffect(() => {
-    console.log('refetch');
-  }, [refetch]);
 
   return (
     <div className={styles.wrap}>

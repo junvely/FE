@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { deleteWithdrawal, getMypage } from 'apis/mypage';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,14 +10,27 @@ import officeIcon from '../../assets/svg/office.svg';
 import reservationIcon from '../../assets/svg/reservation.svg';
 import logoutIcon from '../../assets/svg/logout.svg';
 import profileDefault from '../../assets/img/profileDefault.png';
+import { AuthContext } from '../../contexts/AuthContext';
+import { authLogout } from '../../apis/auth/login';
+import { removeCookie } from '../../utils/cookies';
 
 function Mypage() {
   const navigate = useNavigate();
+  const { updateLoginStatus } = useContext(AuthContext);
+
+  const mutationLogout = useMutation(authLogout, {
+    onSuccess: () => {
+      removeCookie();
+      updateLoginStatus();
+      alert('로그아웃 처리 되었습니다');
+      navigate('/main');
+    },
+  });
+
   const initialState = {
     password: '',
   };
   const [password, setPassword] = useState(initialState);
-
   // 데이터 조회
   const { data, isLoading, isError } = useQuery('mypage', getMypage);
 
@@ -25,8 +38,8 @@ function Mypage() {
   const mutationWithdrawal = useMutation(deleteWithdrawal, {
     onSuccess: result => {
       if (result === 200) {
+        removeCookie();
         alert('탈퇴가 완료되었습니다.');
-        sessionStorage.clear();
         navigate('/main');
       }
     },
@@ -43,9 +56,7 @@ function Mypage() {
 
   // 로그아웃 버튼
   const handleClickLogoutBtn = () => {
-    // Cookies.remove('token');
-    sessionStorage.clear();
-    navigate('/main');
+    mutationLogout.mutate();
   };
 
   // 회원 탈퇴 버튼
