@@ -9,7 +9,8 @@ import { SearchQueryContext } from '../../contexts/SearchQueryContext';
 
 function MainPage() {
   const [posts, setPosts] = useState([]);
-  const { searchQuery, updateSearchQuery } = useContext(SearchQueryContext);
+  const { searchQuery, updateSearchQuery, resetSearchQuery } =
+    useContext(SearchQueryContext);
   const { sorting } = searchQuery;
   const { data, isLoading, isError, refetch } = useQuery('mainPosts', () => {
     const result = getMainPosts({
@@ -22,11 +23,11 @@ function MainPage() {
   const [isSortingToggleOpen, setIsSortingToggleOpen] = useState(false);
   const sortingList = ['인기순', '최신 순', '낮은 가격 순', '높은 가격 순'];
 
-  const handleClickOpenToggle = () => {
+  const handleOpenToggleClick = () => {
     setIsSortingToggleOpen(!isSortingToggleOpen);
   };
 
-  const handleClickChangeSort = e => {
+  const handleChangeSortClick = e => {
     updateSearchQuery({ ...searchQuery, sorting: e.target.innerText });
   };
 
@@ -52,7 +53,7 @@ function MainPage() {
         <button
           type='button'
           className={styles.toggleBtn}
-          onClick={handleClickOpenToggle}
+          onClick={handleOpenToggleClick}
         >
           {sorting}
           <img
@@ -72,7 +73,7 @@ function MainPage() {
               <button
                 type='button'
                 className={sorting === sort && styles.active}
-                onClick={handleClickChangeSort}
+                onClick={handleChangeSortClick}
               >
                 {sort}
               </button>
@@ -81,7 +82,17 @@ function MainPage() {
         </button>
       </div>
       {isLoading && <LoadingSpinner />}
-      {posts && posts.map(post => <MainPost key={post.id} post={post} />)}
+      {posts.map(post => (
+        <MainPost key={post.id} post={post} />
+      ))}
+      {data && !posts.length && (
+        <div className={styles.notFound}>
+          <p>검색 결과가 존재하지 않습니다.</p>
+          <button type='button' onClick={resetSearchQuery}>
+            홈으로 돌아가기
+          </button>
+        </div>
+      )}
     </div>
   );
 }
