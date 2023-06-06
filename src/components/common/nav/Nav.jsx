@@ -48,6 +48,7 @@ function Nav() {
       {loc.pathname === '/login' ||
       loc.pathname === '/signup' ||
       loc.pathname === '/reservation' ||
+      loc.pathname === '/myreservations' ||
       loc.pathname === '/posting' ? null : (
         <button
           type='button'
