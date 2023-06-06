@@ -20,8 +20,8 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='/' element={<IntroPage />} />
         <Route element={<Layout />}>
-          <Route path='/' element={<IntroPage />} />
           <Route path='/main' element={<MainPage />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/posting' element={<PostingPage />} />

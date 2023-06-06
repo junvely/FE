@@ -2,32 +2,23 @@
 @import '../../../styles/scss/mixins';
 
 .wrap {
+  @include wrap;
   @include flex-all-center;
-  width: 100%;
-  height: 100vh;
-  background-color: rgb(233, 208, 233);
-  overflow: hidden;
 
-  .layoutCon {
-    width: 430px;
-    height: 900px;
-    background-color: #fff;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: $shadow-wide;
-    position: relative;
+  .backgroundWrap {
+    @include backgroundWrap;
+    background: url('../../../assets/img/introBg2.jpg') 50% / cover no-repeat;
 
-    @include mobile {
-      width: 100%;
-      height: 100%;
-    }
+    .layoutCon {
+      @include layout;
 
-    .contents {
-      width: 100%;
-      height: 83.55%;
-      position: relative;
-      left: 0;
-      top: 0;
+      .contents {
+        width: 100%;
+        height: 83.55%;
+        position: relative;
+        left: 0;
+        top: 0;
+      }
     }
   }
 }
