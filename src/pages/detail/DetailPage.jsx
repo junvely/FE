@@ -69,6 +69,7 @@ function DetailPage() {
     userStatus,
   } = data.data;
 
+  console.log(content);
   console.log(userStatus);
 
   // 예약하기 클릭 시 이동
@@ -150,21 +151,13 @@ function DetailPage() {
         </div>
         <div>
           <h3 className={styles.subTitle}>오피스 소개</h3>
-          <pre id='pre' className={styles.contentBox}>
-            {content}
-          </pre>
+          <div className={styles.contentBox}>{content}</div>
           <h3 className={styles.subTitle}>운영 시간</h3>
-          <pre id='pre' className={styles.contentBox}>
-            {operatingTime}
-          </pre>
+          <div className={styles.contentBox}>{operatingTime}</div>
           <h3 className={styles.subTitle}>추가 안내</h3>
-          <pre id='pre' className={styles.contentBox}>
-            {contentDetails}
-          </pre>
+          <div className={styles.contentBox}>{contentDetails}</div>
           <h3 className={styles.subTitle}>편의시설</h3>
-          <pre id='pre' className={styles.contentBox}>
-            {amenities}
-          </pre>
+          <div className={styles.contentBox}>{amenities}</div>
           <h3 className={styles.subTitle}>오시는 길</h3>
           <Map location={location} />
         </div>
@@ -172,4 +165,5 @@ function DetailPage() {
     </div>
   );
 }
+
 export default DetailPage;
