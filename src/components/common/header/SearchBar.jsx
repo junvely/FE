@@ -25,7 +25,6 @@ function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
     '광주',
     '전북',
     '제주',
-    '전국',
   ];
 
   const handleClickSelectLocation = e => {

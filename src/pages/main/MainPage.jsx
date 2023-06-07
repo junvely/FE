@@ -85,7 +85,7 @@ function MainPage() {
       {posts.map(post => (
         <MainPost key={post.id} post={post} />
       ))}
-      {data && !posts.length && (
+      {data && data.content.length === 0 && (
         <div className={styles.notFound}>
           <p>검색 결과가 존재하지 않습니다.</p>
           <button type='button' onClick={resetSearchQuery}>
