@@ -26,7 +26,7 @@ const postAddPost = async payload => {
     },
   };
 
-  console.log(payload.image);
+  // console.log(payload.image);
   const formData = new FormData();
   // const imageBlob = new Blob([payload.imageUrl], { type: 'image/png' });
   formData.append('imageFile', payload.image);
@@ -34,7 +34,7 @@ const postAddPost = async payload => {
   const sendData = { ...payload };
   delete sendData.image;
 
-  console.log(sendData);
+  // console.log(sendData);
 
   const blob = new Blob([JSON.stringify(sendData)], {
     type: 'application/json',
