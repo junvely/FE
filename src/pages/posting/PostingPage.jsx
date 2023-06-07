@@ -29,8 +29,9 @@ function PostingPage() {
     operatingTime: '',
     contentDetails: ' ',
     amenities: '',
-    imageUrl: '',
+    image: '',
   };
+
   const [form, handleFormChange, handleImageUpload, resetForm] =
     useForm(initialState);
 
@@ -76,12 +77,14 @@ function PostingPage() {
     }
 
     mutation.mutate({
-      ...form,
-      price: Number(price),
-      capacity: Number(capacity),
-      content: content.replace(/\n/g, '\\n'),
-      contentDetails: contentDetails.replace(/\n/g, '\\n'),
-      amenities: amenities.replace(/\n/g, '\\n'),
+      title: form.title,
+      price: Number(form.price),
+      capacity: Number(form.capacity),
+      content: form.content.replace(/\n/g, '\\n'),
+      contentDetails: form.contentDetails.replace(/\n/g, '\\n'),
+      amenities: form.amenities.replace(/\n/g, '\\n'),
+      operatingTime: form.operatingTime,
+      image: form.image,
       location,
     });
   };
@@ -160,9 +163,16 @@ function PostingPage() {
         </div>
         <div className={styles.inputCon}>
           <span>이미지 등록</span>
-          <button type='button' className={styles.addImage}>
+          <label htmlFor='image' className={styles.addImage}>
             <img src={AddImageIcon} alt='add' />
-          </button>
+            <input
+              type='file'
+              name='image'
+              id='image'
+              onClick={handleImageUpload}
+              className='hidden'
+            />
+          </label>
         </div>
         <button
           type='button'
