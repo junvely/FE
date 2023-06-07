@@ -20,7 +20,6 @@ const postMainLike = async id => {
 };
 
 const postAddPost = async payload => {
-  console.log(payload);
   const config = {
     headers: {
       'Content-Type': 'multipart/form-data',

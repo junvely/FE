@@ -1,0 +1,232 @@
+@import '../../styles/scss/variables';
+@import '../../styles/scss/mixins';
+
+// slider color
+$color-Blue: #bfd9ff;
+$color-Green: #9ad9d7;
+$color-purple: #bfc6ff;
+$color-yellow: #ffedbf;
+
+.colorBlue {
+  background-color: $color-Blue;
+}
+.colorGreen {
+  background-color: $color-Green;
+}
+.colorPurple {
+  background-color: $color-purple;
+}
+.colorYellow {
+  background-color: $color-yellow;
+}
+
+.wrap {
+  @include wrap;
+  @include flex-all-center;
+
+  .backgroundWrap {
+    @include backgroundWrap;
+    background: url('../../assets/img/introBg.jpg') 50% / cover no-repeat;
+    position: relative;
+
+    .layoutCon {
+      @include layout;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      .logo {
+        width: 47%;
+        margin: 7% auto 1.1875rem;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: center;
+        margin: 0.75rem;
+        z-index: 10;
+
+        a {
+          font-size: 1.25rem;
+          font-weight: 600;
+          text-align: center;
+          line-height: 2.75rem;
+          border-radius: 6px;
+        }
+
+        .skipButton {
+          width: 7.875rem;
+          color: #454545;
+          background-color: #fff;
+          border: 1px solid #929292;
+          margin-right: 0.9375rem;
+        }
+
+        .passButton {
+          width: 9.0625rem;
+          color: #fff;
+          background-color: $color-Signature-purple;
+        }
+      }
+
+      .peoplesImage {
+        position: absolute;
+        bottom: -10%;
+        z-index: 3;
+
+        @include mobile {
+          bottom: 0%;
+        }
+      }
+    }
+  }
+}
+
+// bannerSlider
+.sliderWrap {
+  width: 100%;
+  height: 47.4444%;
+  position: relative;
+
+  .colorBox {
+    position: absolute;
+    left: 3.75rem;
+    top: 2.0625rem;
+    width: 65%;
+    height: 24.5rem;
+    border-radius: 6px;
+    z-index: 5;
+  }
+
+  .sliderCon {
+    width: 82%;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    background-size: auto;
+    position: relative;
+    z-index: 10;
+
+    .bannerCon {
+      position: absolute;
+    }
+
+    @include mobile {
+      width: 100%;
+    }
+
+    ul {
+      height: 100%;
+      transition: all 0.3s;
+      display: flex;
+
+      li.slide {
+        @include flex-all-center;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        font-weight: 600;
+
+        h3 {
+          font-size: 1.5rem;
+        }
+      }
+
+      .slide1 {
+        h3 {
+          color: #1e1e1e;
+          margin-bottom: 1.4375rem;
+        }
+        p {
+          color: #1e1e1e;
+          line-height: 1.375rem;
+        }
+      }
+      .slide2 {
+        h3 {
+          color: #1e1e1e;
+          margin-bottom: 1.4375rem;
+
+          span {
+            letter-spacing: -3px;
+            line-height: 2.375rem;
+
+            @include mobile {
+              letter-spacing: -0px;
+            }
+          }
+        }
+        img {
+          width: 67%;
+        }
+      }
+      .slide3 {
+        img {
+          width: 63%;
+          margin: 1.3125rem 0 2.0625rem;
+        }
+      }
+
+      .slide4 {
+        h3 {
+          color: #1e1e1e;
+          margin-bottom: 1.4375rem;
+        }
+
+        span {
+          @include flex-all-center;
+          width: 6.875rem;
+          height: 6.875rem;
+          background: rgba(251, 242, 255, 0.8);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .sliderButtons {
+      @include flex-justify-center;
+      width: 100%;
+      position: absolute;
+      bottom: 1.25rem;
+
+      @include mobile {
+        bottom: 1.875rem;
+      }
+
+      div {
+        display: flex;
+        margin: 0 auto;
+
+        button {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          margin-right: 4px;
+          background-color: $color-slide-default;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $color-slide-active;
+          }
+        }
+
+        .active {
+          background-color: $color-slide-active;
+        }
+      }
+    }
+  }
+
+  .arrowButtons {
+    @include flex-space-between;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    padding: 0 0.9375rem;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+  }
+}

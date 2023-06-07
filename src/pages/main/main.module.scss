@@ -124,3 +124,19 @@
 .reverse {
   transform: scaleY(-1);
 }
+
+.notFound {
+  @include flex-all-center;
+  width: 100%;
+  font-weight: 500;
+  color: #333;
+  padding: 10% 0;
+
+  button {
+    padding: 1.5% 3%;
+    color: #202020;
+    background-color: #b1d0fe;
+    border-radius: 5px;
+    margin: 10%;
+  }
+}

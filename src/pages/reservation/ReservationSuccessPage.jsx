@@ -8,6 +8,7 @@ import { ko } from 'date-fns/locale';
 import styles from './reservation.module.scss';
 import calendarIcon from '../../assets/svg/calendar.svg';
 import locationIcon from '../../assets/svg/location.svg';
+import Map from '../../components/common/map/Map';
 
 function ReservationSuccessPage() {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ function ReservationSuccessPage() {
     navigate('/myreservations');
   };
 
+  console.log(data.data);
   return (
     <div>
       <div className={styles.resSuccessTextWrap}>
@@ -46,7 +48,7 @@ function ReservationSuccessPage() {
       </div>
       <div className={styles.resSuccessMapBox}>
         <h2 className={styles.resSuccessTitle}>{data.data.title}</h2>
-        <div className={styles.resSuccessMap}>지도 영역</div>
+        <Map location={data.data.location} />
       </div>
       <div className={styles.resSuccessInfoWrap}>
         <div className={styles.resSuccessInfoBox}>
@@ -55,8 +57,8 @@ function ReservationSuccessPage() {
             {formattedStDate} ~ {` ${formattedEdDate}`}
           </p>
           <p className={styles.resSuccessInfo}>
-            <img src={locationIcon} alt='위치 아이콘' /> 서울 중락구 광나루로
-            382 아스하임4차 3층
+            <img src={locationIcon} alt='위치 아이콘' />
+            {data.data.location}
           </p>
         </div>
         <button
