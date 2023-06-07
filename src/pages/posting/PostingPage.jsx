@@ -12,7 +12,7 @@ import SearchLocationPage from '../searchLocation/SearchLocationPage';
 function PostingPage() {
   const navigate = useNavigate();
   const mutation = useMutation(postAddPost, {
-    onSuccess: () => {
+    onSuccess: result => {
       alert('포스팅 성공');
       navigate('/main');
     },
@@ -43,7 +43,7 @@ function PostingPage() {
     operatingTime,
     contentDetails,
     amenities,
-    imageUrl,
+    image,
   } = form;
 
   const [location, setLocation] = useState('주소를 입력해주세요');
@@ -71,7 +71,7 @@ function PostingPage() {
       alert('입력란을 모두 작성해 주셔야 합니다');
       return;
     }
-    if (!imageUrl) {
+    if (!image) {
       alert('사진을 선택해 주세요');
       return;
     }
