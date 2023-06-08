@@ -55,6 +55,7 @@ function SignupPage() {
     onSuccess: result => {
       if (result.status === 'OK') {
         alert('회원가입이 완료되었습니다.');
+        navigate('/login');
       }
     },
     onError: error => {
@@ -116,7 +117,6 @@ function SignupPage() {
       alert('비밀번호가 일치하지 않습니다.');
     }
     mutationAddUser.mutate(signupData);
-    navigate('/main');
   };
 
   return (
