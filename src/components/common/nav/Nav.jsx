@@ -5,7 +5,6 @@ import homeIcon from '../../../assets/svg/home.svg';
 import chattingIcon from '../../../assets/svg/chatting.svg';
 import mypageIcon from '../../../assets/svg/mypage.svg';
 import postIcon from '../../../assets/svg/post.svg';
-import logoutIcon from '../../../assets/svg/logout.svg';
 import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
 
 function Nav() {
@@ -43,11 +42,6 @@ function Nav() {
                 loc.pathname === '/mypage' ? styles.selectedIcon : styles.icon
               }
             />
-          </li>
-        </Link>
-        <Link to='/login'>
-          <li>
-            <img src={logoutIcon} alt='logout' className={styles.logoutIcon} />
           </li>
         </Link>
       </ul>
