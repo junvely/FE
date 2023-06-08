@@ -1,9 +1,5 @@
-import { postMainLike } from 'apis/posts';
-import { useMutation, useQueryClient } from 'react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from '../pages/main/main.module.scss';
-import LikeNullIcon from '../assets/svg/likeNull.svg';
-import LikeFullIcon from '../assets/svg/likefull.svg';
 import LikeSmallIcon from '../assets/svg/likeSmall.svg';
 import LocationIcon from '../assets/svg/mapSmall.svg';
 import ProfileIcon from '../assets/svg/profileSmall.svg';
@@ -12,21 +8,15 @@ import Slider from './common/slider/Slider';
 
 function MainPost({ post }) {
   const navigate = useNavigate();
-  const { id, title, location, price, likeCount, likeStatus } = post;
-  const queryClient = useQueryClient();
-  const mutation = useMutation(postMainLike, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('mainPosts');
-    },
-  });
-
-  const handleLikeClick = () => {
-    mutation.mutate(id);
-  };
+  const { id, title, location, price, likeCount, capacity } = post;
 
   return (
-    <div className={styles.post}>
-      <Slider images={post.postImage}></Slider>
+    <div
+      className={styles.post}
+      onClick={() => navigate(`/detail/${id}`)}
+      role='presentation'
+    >
+      <Slider post={post}></Slider>
       <div className={styles.postContents}>
         <h3>{title}</h3>
         <p>
@@ -45,27 +35,9 @@ function MainPost({ post }) {
           </p>
           <p className={styles.profile}>
             <img src={ProfileIcon} alt='post-profile' />
-            최대 3명
+            최대 {capacity}명
           </p>
         </div>
-      </div>
-      <div className={styles.buttons}>
-        <button type='button' className={styles.like} onClick={handleLikeClick}>
-          {likeStatus ? (
-            <img src={LikeFullIcon} alt='like-full-icon'></img>
-          ) : (
-            <img src={LikeNullIcon} alt='like-null-icon'></img>
-          )}
-        </button>
-        <button
-          type='button'
-          className={styles.button}
-          onClick={() => {
-            navigate(`/detail/${id}`);
-          }}
-        >
-          예약하러 가기
-        </button>
       </div>
     </div>
   );

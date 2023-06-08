@@ -65,12 +65,8 @@ function DetailPage() {
     amenities,
     likeStatus,
     likeCount,
-    imageUrl,
     userStatus,
   } = data.data;
-
-  console.log(content);
-  console.log(userStatus);
 
   // 예약하기 클릭 시 이동
   const handleClickResBtn = () => {
@@ -93,7 +89,7 @@ function DetailPage() {
 
   return (
     <div className={styles.container}>
-      <Slider images={imageUrl} />
+      <Slider post={data.data} />
       <div className={styles.wrap}>
         <h2 className={styles.title}>{title}</h2>
         {userStatus === 3 ? null : (

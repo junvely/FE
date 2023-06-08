@@ -1,12 +1,35 @@
 import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { useLocation } from 'react-router';
 import styles from './slider.module.scss';
 import arrowLeft from '../../../assets/svg/arrowLeft.svg';
 import arrowRight from '../../../assets/svg/arrowRight.svg';
+import { postMainLike } from '../../../apis/posts';
+import LikeNullIcon from '../../../assets/svg/likeNull.svg';
+import LikeFullIcon from '../../../assets/svg/likefull.svg';
 
-function Slider({ images }) {
+function Slider({ post }) {
+  const location = useLocation();
+  const { pathname } = location;
+
+  const images = post.postImage || post.imageUrl;
   const imageList = Array.isArray(images) ? images : [images, images, images];
+
   const [currentPage, setCurrentPage] = useState(0);
   const slideLength = imageList.length;
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(postMainLike, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('mainPosts');
+    },
+  });
+
+  const { id, likeStatus } = post;
+
+  const handleLikeClick = () => {
+    mutation.mutate(id);
+  };
 
   const handleClickSetCurrentPage = e => {
     setCurrentPage(Number(e.target.id));
@@ -25,7 +48,11 @@ function Slider({ images }) {
   };
 
   return (
-    <div className={styles.sliderCon}>
+    <div
+      className={styles.sliderCon}
+      onClick={e => e.stopPropagation()}
+      role='presentation'
+    >
       <ul
         className={styles.slides}
         style={{
@@ -39,6 +66,15 @@ function Slider({ images }) {
           </li>
         ))}
       </ul>
+      {!pathname.includes('detail') && (
+        <button type='button' className={styles.like} onClick={handleLikeClick}>
+          {likeStatus ? (
+            <img src={LikeFullIcon} alt='like-full-icon'></img>
+          ) : (
+            <img src={LikeNullIcon} alt='like-null-icon'></img>
+          )}
+        </button>
+      )}
       <div className={styles.arrowButtons}>
         <button type='button' onClick={handleClickPrevSlide}>
           <img src={arrowLeft} alt='prev-button' />
