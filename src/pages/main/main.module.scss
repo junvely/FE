@@ -4,9 +4,10 @@
 .wrap {
   @include wrap;
   padding: 0 2rem;
+
   .titleCon {
     @include flex-space-between;
-    padding: 1.6875rem 0 1rem;
+    padding: 1.6875rem 0 2rem;
 
     .title {
       font-size: 1.5rem;
