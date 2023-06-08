@@ -12,10 +12,19 @@ function AuthContextProvider({ children }) {
     setIsLogin(!!token);
   };
 
+  const checkingLogin = () => {
+    if (isLogin) {
+      return true;
+    }
+    alert('로그인시 이용 가능한 서비스입니다');
+    return false;
+  };
+
   const isLoginValue = useMemo(
     () => ({
       isLogin,
       updateLoginStatus,
+      checkingLogin,
     }),
     [isLogin, updateLoginStatus],
   );
