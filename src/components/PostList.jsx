@@ -68,7 +68,7 @@ function PostList({ post }) {
           {loc.pathname === '/chattings' && (
             <div>
               <p className={styles.listTitle}>{post.nickname}</p>
-              <div>안녕안녕안녕 ㅋㅋㅋㅋㅋㅋㅋ</div>
+              <div>테스트 중입니다.</div>
             </div>
           )}
         </div>

@@ -14,6 +14,7 @@ import LikedPosts from 'pages/mypage/LikedPosts';
 import MyReservations from 'pages/mypage/MyReservations';
 import ReservationSuccessPage from 'pages/reservation/ReservationSuccessPage';
 import ReservationPage from 'pages/reservation/ReservationPage';
+import ChattingPage from 'pages/chatting/ChattingPage';
 import PrivateRoutes from './PrivateRoutes';
 
 function Router() {
@@ -34,6 +35,7 @@ function Router() {
               path='/reservationSuccess'
               element={<ReservationSuccessPage />}
             />
+            <Route path='/chattings' element={<ChattingPage />} />
           </Route>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
