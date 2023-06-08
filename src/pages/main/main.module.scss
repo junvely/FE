@@ -7,13 +7,18 @@
 
   .titleCon {
     @include flex-space-between;
-    padding: 1.6875rem 0 2rem;
 
     .title {
+      padding: 1.6875rem 0;
       font-size: 1.5rem;
       font-weight: 700;
       line-height: 2rem;
       color: $color-Signature-purple;
+    }
+
+    .searchResult {
+      font-weight: 500;
+      padding: 1rem 0;
     }
 
     .toggleBtn {

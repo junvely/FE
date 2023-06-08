@@ -14,8 +14,8 @@ function IntroPage() {
           </h1>
           <IntroBannerSlide />
           <div className={styles.buttons}>
-            <Link to='/main' className={styles.skipButton}>
-              건너뛰기
+            <Link to='/login' className={styles.skipButton}>
+              로그인
             </Link>
             <Link to='/main' className={styles.passButton}>
               둘러보기

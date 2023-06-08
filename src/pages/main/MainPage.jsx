@@ -10,7 +10,7 @@ import { SearchQueryContext } from '../../contexts/SearchQueryContext';
 function MainPage() {
   const [posts, setPosts] = useState([]);
 
-  const { searchQuery, updateSearchQuery, resetSearchQuery } =
+  const { searchQuery, isSearched, updateSearchQuery, resetSearchQuery } =
     useContext(SearchQueryContext);
   const { sorting } = searchQuery;
 
@@ -48,10 +48,21 @@ function MainPage() {
     updatePostData();
   }, [searchQuery]);
 
+  const { district, keyword } = searchQuery;
+
   return (
     <div className={styles.wrap}>
       <div className={styles.titleCon}>
-        <h2 className={styles.title}>오늘의 Pick!</h2>
+        {isSearched ? (
+          <h2 className={styles.searchResult}>
+            {district || '전체'}{' '}
+            <span className='text-[#7c00de]'>{keyword && `'${keyword}'`}</span>{' '}
+            검색결과 {(data && data.numberOfElements) || 0}건
+          </h2>
+        ) : (
+          <h2 className={styles.title}>오늘의 Pick!</h2>
+        )}
+
         <button
           type='button'
           className={styles.toggleBtn}
