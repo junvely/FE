@@ -89,6 +89,8 @@ function PostingPage() {
     });
   };
 
+  console.log(image);
+
   return (
     <>
       <div className={styles.wrap}>
@@ -172,7 +174,7 @@ function PostingPage() {
               type='file'
               name='image'
               id='image'
-              onClick={handleImageUpload}
+              onChange={handleImageUpload}
               className='hidden'
             />
           </label>
