@@ -17,11 +17,12 @@
   }
 
   h1.logo {
+    width: 7.6875rem;
     margin-left: 2rem;
   }
 
   .flexCon {
-    width: 20.9%;
+    width: 5.625rem;
     display: flex;
   }
 
@@ -45,7 +46,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 10;
+  z-index: 30;
   padding: 0 2rem;
   background-color: #fff;
   box-shadow: $shadow-wide;

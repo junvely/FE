@@ -1,13 +1,17 @@
 import useInput from 'hooks/useInput';
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styles from './header.module.scss';
 import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
 
 function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
+  const navigate = useNavigate();
   const { searchQuery, updateSearchQuery } = useContext(SearchQueryContext);
+
   const [input, handleInputChange, resetInput] = useInput('');
-  const [location, setLocation] = useState('서울');
+  const [location, setLocation] = useState('전체');
   const locations = [
+    '전체',
     '서울',
     '경기',
     '인천',
@@ -32,13 +36,14 @@ function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
   };
 
   const handleSubmitSearchPost = () => {
+    navigate('/main');
     updateSearchQuery({
       ...searchQuery,
       keyword: input,
-      district: location,
+      district: location === '전체' ? null : location,
     });
     resetInput();
-    setLocation('서울');
+    setLocation('전체');
     handleClickSearchOpen();
   };
 
