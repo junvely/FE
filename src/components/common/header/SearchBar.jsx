@@ -1,15 +1,20 @@
 import useInput from 'hooks/useInput';
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import styles from './header.module.scss';
 import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
+import { searchToggleContext } from '../../../contexts/SearchToggleContext';
 
-function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
+function SearchBar() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { pathname } = location;
+
   const { searchQuery, updateSearchQuery } = useContext(SearchQueryContext);
+  const { isSearchOpen, searchToggleSwitch } = useContext(searchToggleContext);
 
   const [input, handleInputChange, resetInput] = useInput('');
-  const [location, setLocation] = useState('전체');
+  const [district, setDistrict] = useState('전체');
   const locations = [
     '전체',
     '서울',
@@ -32,7 +37,7 @@ function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
   ];
 
   const handleClickSelectLocation = e => {
-    setLocation(e.target.value);
+    setDistrict(e.target.value);
   };
 
   const handleSubmitSearchPost = () => {
@@ -40,12 +45,18 @@ function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
     updateSearchQuery({
       ...searchQuery,
       keyword: input,
-      district: location === '전체' ? null : location,
+      district: district === '전체' ? null : district,
     });
     resetInput();
-    setLocation('전체');
-    handleClickSearchOpen();
+    setDistrict('전체');
+    searchToggleSwitch();
   };
+
+  useEffect(() => {
+    if (isSearchOpen) {
+      searchToggleSwitch();
+    }
+  }, [pathname]);
 
   return (
     <div className={`${styles.searchCon} ${isSearchOpen && styles.visible}`}>
@@ -75,7 +86,7 @@ function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
                 return (
                   <label
                     htmlFor={val}
-                    className={location === val && styles.selected}
+                    className={district === val && styles.selected}
                   >
                     {val}
                     <input
@@ -83,7 +94,7 @@ function SearchBar({ isSearchOpen, handleClickSearchOpen }) {
                       id={val}
                       name='location'
                       value={val}
-                      defaultChecked={location === '서울'}
+                      defaultChecked={district === '서울'}
                       onClick={handleClickSelectLocation}
                     />
                   </label>
