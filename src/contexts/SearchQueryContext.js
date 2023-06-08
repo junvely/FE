@@ -12,18 +12,22 @@ function SearchQueryProvider({ children }) {
   };
 
   const [searchQuery, setSearchQuery] = useState(initialQuery);
+  const [isSearched, setIsSearched] = useState(false);
 
   const updateSearchQuery = newPayload => {
     setSearchQuery(newPayload);
+    setIsSearched(true);
   };
 
   const resetSearchQuery = () => {
     setSearchQuery(initialQuery);
+    setIsSearched(false);
   };
 
   const searchQueryValue = useMemo(
     () => ({
       searchQuery,
+      isSearched,
       updateSearchQuery,
       resetSearchQuery,
     }),
