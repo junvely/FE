@@ -11,15 +11,8 @@ import SearchLocationPage from '../searchLocation/SearchLocationPage';
 
 function PostingPage() {
   const navigate = useNavigate();
-  const mutation = useMutation(postAddPost, {
-    onSuccess: result => {
-      alert('포스팅 성공');
-      navigate('/main');
-    },
-    onError: error => {
-      alert('서버 에러 발생 : 포스팅 실패', error.msg);
-    },
-  });
+  const [location, setLocation] = useState('주소를 입력해주세요');
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
 
   const initialState = {
     title: '',
@@ -46,9 +39,16 @@ function PostingPage() {
     image,
   } = form;
 
-  const [location, setLocation] = useState('주소를 입력해주세요');
-
-  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const mutation = useMutation(postAddPost, {
+    onSuccess: result => {
+      alert('포스팅 성공');
+      resetForm();
+      navigate('/main');
+    },
+    onError: error => {
+      alert('서버 에러 발생 : 포스팅 실패', error.msg);
+    },
+  });
 
   const handleClickLocationOpen = () => {
     setIsLocationOpen(!isLocationOpen);
@@ -98,6 +98,7 @@ function PostingPage() {
           value={title}
           label='글 제목'
           placeHolder='글 제목을 입력해 주세요'
+          max='50'
           onChange={handleFormChange}
         ></PostInput>
         <div className={`${styles.inputCon} ${styles.address}`}>
@@ -117,6 +118,7 @@ function PostingPage() {
           value={price}
           label='가격'
           placeHolder='ex. 50000'
+          max='9'
           onChange={handleFormChange}
         ></PostInput>
         <PostInput
@@ -125,6 +127,7 @@ function PostingPage() {
           value={capacity}
           label='최대 인원'
           placeHolder='수용 가능한 인원을 작성해 주세요'
+          max='3'
           onChange={handleFormChange}
         ></PostInput>
         <div className={styles.inputCon}>
