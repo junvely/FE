@@ -1,6 +1,6 @@
 import styles from '../pages/posting/posting.module.scss';
 
-function PostInput({ type, name, value, label, placeHolder, onChange }) {
+function PostInput({ type, name, value, label, placeHolder, max, onChange }) {
   return (
     <div className={styles.inputCon}>
       <label htmlFor={name}>{label}</label>
@@ -11,6 +11,7 @@ function PostInput({ type, name, value, label, placeHolder, onChange }) {
         name={name}
         value={value}
         placeholder={placeHolder}
+        maxLength={max}
         onChange={onChange}
       ></input>
     </div>

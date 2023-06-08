@@ -53,6 +53,10 @@
   color: #fff;
   background-color: $color-Signature-purple;
   border-radius: 5px;
+
+  &:hover {
+    background-color: #6600b4;
+  }
 }
 
 @mixin button-disable {
