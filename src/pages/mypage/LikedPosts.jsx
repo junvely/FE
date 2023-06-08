@@ -13,7 +13,7 @@ function LikedPosts() {
   if (isError) return <div>데이터 처리 중 ERROR가 발생하였습니다.</div>;
 
   return (
-    <div>
+    <div className={styles.pageContainer}>
       {data.data.length === 0 ? (
         <div>
           <div className={styles.pageTitleBox}>
@@ -25,7 +25,7 @@ function LikedPosts() {
           <div className={styles.noData}>데이터가 없습니다.</div>
         </div>
       ) : (
-        <div>
+        <div className={styles.pageWrap}>
           <div className={styles.pageTitleBox}>
             <h2 className={styles.pageTitle}>
               <img src={likeFullIcon} alt='LikeIcon' />
