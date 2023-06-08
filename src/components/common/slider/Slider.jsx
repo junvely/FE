@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useLocation } from 'react-router';
 import styles from './slider.module.scss';
@@ -7,6 +7,7 @@ import arrowRight from '../../../assets/svg/arrowRight.svg';
 import { postMainLike } from '../../../apis/posts';
 import LikeNullIcon from '../../../assets/svg/likeNull.svg';
 import LikeFullIcon from '../../../assets/svg/likefull.svg';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 function Slider({ post }) {
   const location = useLocation();
@@ -18,6 +19,7 @@ function Slider({ post }) {
   const [currentPage, setCurrentPage] = useState(0);
   const slideLength = imageList.length;
 
+  const { checkingLogin } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const mutation = useMutation(postMainLike, {
     onSuccess: () => {
@@ -28,7 +30,9 @@ function Slider({ post }) {
   const { id, likeStatus } = post;
 
   const handleLikeClick = () => {
-    mutation.mutate(id);
+    if (checkingLogin()) {
+      mutation.mutate(id);
+    }
   };
 
   const handleClickSetCurrentPage = e => {

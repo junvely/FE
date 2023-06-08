@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Slider from 'components/common/slider/Slider';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteCancelReservation, getPostDetail } from 'apis/detail';
@@ -14,11 +14,13 @@ import likeNullIcon from '../../assets/svg/likeNull.svg';
 import likeFullIcon from '../../assets/svg/likefull.svg';
 import chattingIcon from '../../assets/svg/chatting.svg';
 import Map from '../../components/common/map/Map';
+import { AuthContext } from '../../contexts/AuthContext';
 
 function DetailPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { checkingLogin } = useContext(AuthContext);
 
   // 데이터 가져오기
   const { data, isLoading, isError } = useQuery('postDetail', () =>
@@ -84,7 +86,9 @@ function DetailPage() {
 
   // 좋아요 토글
   const handleClickLikeBtn = () => {
-    mutationLikedPost.mutate(postId);
+    if (checkingLogin()) {
+      mutationLikedPost.mutate(postId);
+    }
   };
 
   return (
