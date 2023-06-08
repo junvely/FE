@@ -9,9 +9,11 @@ import { SearchQueryContext } from '../../contexts/SearchQueryContext';
 
 function MainPage() {
   const [posts, setPosts] = useState([]);
+
   const { searchQuery, updateSearchQuery, resetSearchQuery } =
     useContext(SearchQueryContext);
   const { sorting } = searchQuery;
+
   const { data, isLoading, isError, refetch } = useQuery('mainPosts', () => {
     const result = getMainPosts({
       ...searchQuery,

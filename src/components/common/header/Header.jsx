@@ -5,6 +5,7 @@ import styles from './header.module.scss';
 import BackArrowIcon from '../../../assets/svg/backArrow.svg';
 import SearchIcon from '../../../assets/svg/serach.svg';
 import LogoIcon from '../../../assets/svg/logo.svg';
+import LoginIcon from '../../../assets/svg/login.svg';
 
 function Header() {
   const navigate = useNavigate();
@@ -30,13 +31,22 @@ function Header() {
           <img src={LogoIcon} alt='goto-back'></img>
         </h1>
       </Link>
-      <button
-        type='button'
-        className={styles.search}
-        onClick={handleClickSearchOpen}
-      >
-        <img src={SearchIcon} alt='goto-back'></img>
-      </button>
+      <div className={styles.flexCon}>
+        <button
+          type='button'
+          className={styles.search}
+          onClick={handleClickSearchOpen}
+        >
+          <img src={SearchIcon} alt='goto-back'></img>
+        </button>
+        <button
+          type='button'
+          className={styles.login}
+          onClick={() => navigate('/login')}
+        >
+          <img src={LoginIcon} alt='goto-back'></img>
+        </button>
+      </div>
       <SearchBar
         isSearchOpen={isSearchOpen}
         handleClickSearchOpen={handleClickSearchOpen}

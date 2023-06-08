@@ -3,10 +3,10 @@
 
 .wrap {
   @include wrap;
-
+  padding: 0 2rem;
   .titleCon {
     @include flex-space-between;
-    padding: 1.6875rem 2rem 1rem 2rem;
+    padding: 1.6875rem 0 1rem;
 
     .title {
       font-size: 1.5rem;
@@ -62,10 +62,11 @@
   .post {
     width: 100%;
     margin-bottom: 2.5rem;
+    cursor: pointer;
 
     .postContents {
       width: 100%;
-      padding: 1.25rem 2rem;
+      padding: 1.25rem 0;
 
       .flexCon {
         display: flex;
@@ -93,25 +94,6 @@
 
       .profile {
         margin-left: 10px;
-      }
-    }
-
-    .buttons {
-      padding-left: 2rem;
-      display: flex;
-
-      .like {
-        @include flex-all-center;
-        width: 4.375rem;
-        height: 2.75rem;
-        margin: 0 12px;
-        border: 1px solid #b3b3b3;
-        border-radius: 5px;
-      }
-
-      .button {
-        @include button-active;
-        width: 66%;
       }
     }
   }

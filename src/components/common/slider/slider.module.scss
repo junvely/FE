@@ -7,12 +7,39 @@
   position: relative;
   overflow: hidden;
 
-  ul {
-    transition: all 0.3s;
+  .like {
+    @include flex-all-center;
+    width: 3rem;
+    height: 2rem;
+    border-radius: 5px;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    z-index: 5;
+
+    svg,
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 
   .slides {
     display: flex;
+    transition: all 0.3s;
+
+    .slide {
+      width: 100%;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        position: absolute;
+        top: 10%;
+      }
+    }
   }
 
   .arrowButtons {

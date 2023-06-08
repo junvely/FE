@@ -7,7 +7,7 @@
 
   .backgroundWrap {
     @include backgroundWrap;
-    background: url('../../../assets/img/introBg2.jpg') 50% / cover no-repeat;
+    background: url('../../../assets/img/introBg.jpg') 50% / cover no-repeat;
 
     .layoutCon {
       @include layout;

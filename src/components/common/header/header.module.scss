@@ -16,8 +16,18 @@
     display: block;
   }
 
+  h1.logo {
+    margin-left: 2rem;
+  }
+
+  .flexCon {
+    width: 20.9%;
+    display: flex;
+  }
+
   .backArrow,
-  .search {
+  .search,
+  .login {
     width: 2.75rem;
     height: 2.75rem;
   }
