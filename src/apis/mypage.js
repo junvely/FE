@@ -36,7 +36,7 @@ const getMyReservations = async () => {
   }
 };
 
-const deleteWithdrawal = async password => {
+const deleteMembership = async password => {
   try {
     const textBlob = new Blob([JSON.stringify(password)], {
       type: 'application/json',
@@ -55,5 +55,5 @@ export {
   getMyReservations,
   getLikedPosts,
   getMyPosts,
-  deleteWithdrawal,
+  deleteMembership,
 };

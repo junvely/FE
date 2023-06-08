@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { deleteWithdrawal, getMypage } from 'apis/mypage';
+import { getMypage } from 'apis/mypage';
 import { Link, useNavigate } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
-import useInput from 'hooks/useInput';
 import styles from './mypage.module.scss';
 import likeNullIcon from '../../assets/svg/likeNull.svg';
 import officeIcon from '../../assets/svg/office.svg';
@@ -27,26 +26,8 @@ function Mypage() {
     },
   });
 
-  const initialState = {
-    password: '',
-  };
-  const [password, setPassword] = useState(initialState);
   // 데이터 조회
   const { data, isLoading, isError } = useQuery('mypage', getMypage);
-
-  // 회원 탈퇴
-  const mutationWithdrawal = useMutation(deleteWithdrawal, {
-    onSuccess: result => {
-      if (result === 200) {
-        removeCookie();
-        alert('탈퇴가 완료되었습니다.');
-        navigate('/main');
-      }
-    },
-    onError: error => {
-      alert('탈퇴가 완료되지 않았습니다. 다시 시도해주세요.');
-    },
-  });
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <div>데이터 처리 중 ERROR가 발생하였습니다.</div>;
@@ -59,15 +40,9 @@ function Mypage() {
     mutationLogout.mutate();
   };
 
-  // 회원 탈퇴 버튼
-  const handleClickWithdrawal = () => {
-    mutationWithdrawal.mutate({
-      password,
-    });
-  };
-
-  const handleInputChange = e => {
-    setPassword(e.target.value);
+  // 회원탈퇴 페이지 이동
+  const handleClickExitLinkBtn = () => {
+    navigate('/exit');
   };
 
   return (
@@ -126,16 +101,10 @@ function Mypage() {
       <button
         type='button'
         className={styles.withdrawal}
-        onClick={handleClickWithdrawal}
+        onClick={handleClickExitLinkBtn}
       >
         <h2>회원탈퇴</h2>
       </button>
-      <input
-        type='password'
-        name='password'
-        placeholder='탈퇴하시려면 비밀번호를 입력해주세요.'
-        onChange={handleInputChange}
-      />
     </div>
   );
 }
