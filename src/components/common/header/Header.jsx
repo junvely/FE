@@ -1,19 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import SearchBar from 'components/common/header/SearchBar';
-import { useState } from 'react';
+import { useContext } from 'react';
 import styles from './header.module.scss';
 import BackArrowIcon from '../../../assets/svg/backArrow.svg';
 import SearchIcon from '../../../assets/svg/serach.svg';
 import LogoIcon from '../../../assets/svg/logo.svg';
 import LoginIcon from '../../../assets/svg/login.svg';
+import { searchToggleContext } from '../../../contexts/SearchToggleContext';
+import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
 
 function Header() {
   const navigate = useNavigate();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  const handleClickSearchOpen = () => {
-    setIsSearchOpen(!isSearchOpen);
-  };
+  const { searchToggleSwitch } = useContext(searchToggleContext);
+  const { resetSearchQuery } = useContext(SearchQueryContext);
 
   return (
     <header className={styles.header}>
@@ -26,7 +25,7 @@ function Header() {
       >
         <img src={BackArrowIcon} alt='goto-back'></img>
       </button>
-      <Link to='/main'>
+      <Link to='/main' onClick={resetSearchQuery}>
         <h1 className={styles.logo}>
           <img src={LogoIcon} alt='goto-back'></img>
         </h1>
@@ -35,7 +34,7 @@ function Header() {
         <button
           type='button'
           className={styles.search}
-          onClick={handleClickSearchOpen}
+          onClick={searchToggleSwitch}
         >
           <img src={SearchIcon} alt='goto-back'></img>
         </button>
@@ -47,10 +46,7 @@ function Header() {
           <img src={LoginIcon} alt='goto-back'></img>
         </button>
       </div>
-      <SearchBar
-        isSearchOpen={isSearchOpen}
-        handleClickSearchOpen={handleClickSearchOpen}
-      />
+      <SearchBar />
     </header>
   );
 }
