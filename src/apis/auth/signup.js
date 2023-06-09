@@ -28,8 +28,8 @@ const addUser = async signupData => {
     console.log('가입 결과', data);
     return data;
   } catch (err) {
-    alert('회원가입이 처리되지 않았습니다. 다시 시도해 주십시오.');
-    throw new Error(err);
+    console.log('회원가입이 처리되지 않았습니다. 다시 시도해 주십시오.');
+    throw err.response.data;
   }
 };
 
