@@ -1,0 +1,221 @@
+import PostInput from 'components/PostInput';
+import { useNavigate } from 'react-router-dom';
+import useForm from 'hooks/useForm';
+import { useState } from 'react';
+import { useMutation } from 'react-query';
+import { postAddPost } from 'apis/posts';
+import styles from './posting.module.scss';
+import AddImageIcon from '../../assets/svg/addImage.svg';
+import RightArrow from '../../assets/svg/addressArrow.svg';
+import SearchLocationPage from '../searchLocation/SearchLocationPage';
+
+function PostingPage() {
+  const navigate = useNavigate();
+  const [location, setLocation] = useState('주소를 입력해주세요');
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+
+  const initialState = {
+    title: '',
+    price: '',
+    capacity: '',
+    content: '',
+    operatingTime: '',
+    contentDetails: ' ',
+    amenities: '',
+    image: '',
+  };
+
+  const [form, handleFormChange, handleImageUpload, resetForm] =
+    useForm(initialState);
+
+  const [preImage, setPreImage] = useState();
+  // const reader = new FileReader();
+
+  const {
+    title,
+    price,
+    capacity,
+    content,
+    operatingTime,
+    contentDetails,
+    amenities,
+    image,
+  } = form;
+
+  const mutation = useMutation(postAddPost, {
+    onSuccess: result => {
+      alert('포스팅 성공');
+      resetForm();
+      navigate('/main');
+    },
+    onError: error => {
+      alert('서버 에러 발생 : 포스팅 실패', error.msg);
+    },
+  });
+
+  const handleClickLocationOpen = () => {
+    setIsLocationOpen(!isLocationOpen);
+  };
+
+  const saveLocation = keyword => {
+    setLocation(keyword);
+  };
+
+  const handleClickSubmitPosting = () => {
+    if (
+      !title ||
+      !price ||
+      !capacity ||
+      !content ||
+      !operatingTime ||
+      !contentDetails ||
+      !amenities
+    ) {
+      alert('입력란을 모두 작성해 주셔야 합니다');
+      return;
+    }
+    if (!image) {
+      alert('사진을 선택해 주세요');
+      return;
+    }
+
+    mutation.mutate({
+      title: form.title,
+      price: Number(form.price),
+      capacity: Number(form.capacity),
+      content: form.content.replace(/\n/g, '\\n'),
+      contentDetails: form.contentDetails.replace(/\n/g, '\\n'),
+      amenities: form.amenities.replace(/\n/g, '\\n'),
+      operatingTime: form.operatingTime,
+      image: form.image,
+      location,
+    });
+  };
+
+  const handleChangeImageUploadBtn = e => {
+    // 이 부분은 기존 코드에서 그대로 사용합니다.
+    handleImageUpload(e);
+
+    // FileReader 객체로부터 이미 데이터를 읽어옵니다.
+    const reader = new FileReader();
+    reader.onload = event => {
+      // 읽어온 이미지 데이터를 base64 형식의 문자열로 변환합니다.
+      const imageUrl = event.target.result;
+      preImage(imageUrl);
+    };
+    reader.readAsDataURL(image); // e.target.files[0] 에 파일 객체가 저장되어 있기 때문입니다.
+  };
+
+  console.log(preImage);
+  console.log(image);
+
+  return (
+    <>
+      <div className={styles.wrap}>
+        <PostInput
+          type='text'
+          name='title'
+          value={title}
+          label='글 제목'
+          placeHolder='글 제목을 입력해 주세요'
+          max='50'
+          onChange={handleFormChange}
+        ></PostInput>
+        <div className={`${styles.inputCon} ${styles.address}`}>
+          <span type='button'>주소</span>
+          <button
+            type='button'
+            name='content'
+            onClick={handleClickLocationOpen}
+          >
+            {location}
+            <img src={RightArrow} alt='address' />
+          </button>
+        </div>
+        <PostInput
+          type='text'
+          name='price'
+          value={price}
+          label='가격'
+          placeHolder='ex. 50000'
+          max='9'
+          onChange={handleFormChange}
+        ></PostInput>
+        <PostInput
+          type='text'
+          name='capacity'
+          value={capacity}
+          label='최대 인원'
+          placeHolder='수용 가능한 인원을 작성해 주세요'
+          max='3'
+          onChange={handleFormChange}
+        ></PostInput>
+        <div className={styles.inputCon}>
+          <span>오피스 소개</span>
+          <textarea
+            name='content'
+            placeholder='오피스 공간에 대해 소개해 주세요'
+            onChange={handleFormChange}
+          >
+            {content}
+          </textarea>
+        </div>
+        <PostInput
+          type='text'
+          name='operatingTime'
+          value={operatingTime}
+          label='운영 시간'
+          placeHolder='ex. 월-금 8시-18시'
+          onChange={handleFormChange}
+        ></PostInput>
+        <div className={styles.inputCon}>
+          <span>추가 안내</span>
+          <textarea
+            name='contentDetails'
+            placeholder='사용 가능 시간, 환불 규정 등'
+            onChange={handleFormChange}
+          ></textarea>
+        </div>
+        <div className={styles.inputCon}>
+          <span>편의 시설</span>
+          <textarea
+            name='amenities'
+            placeholder='ex. 에어컨, 복사/인쇄기, 프로젝터 등'
+            onChange={handleFormChange}
+          ></textarea>
+        </div>
+        <div className={styles.inputCon}>
+          <span>이미지 등록</span>
+          <label htmlFor='image' className={styles.addImage}>
+            {/* <img src={AddImageIcon} alt='add' /> */}
+            <img src={preImage} alt='add' />
+            <input
+              type='file'
+              name='image'
+              id='image'
+              onChange={e => handleChangeImageUploadBtn(e)}
+              className='hidden'
+            />
+          </label>
+        </div>
+        <button
+          type='button'
+          className={styles.button}
+          onClick={handleClickSubmitPosting}
+        >
+          작성 완료
+        </button>
+      </div>
+      <div
+        className={`${styles.locationCon} ${isLocationOpen && styles.slide}`}
+      >
+        <SearchLocationPage
+          locationOpen={handleClickLocationOpen}
+          saveLocation={saveLocation}
+        />
+      </div>
+    </>
+  );
+}
+
+export default PostingPage;

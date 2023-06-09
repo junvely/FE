@@ -1,0 +1,82 @@
+@import './variables';
+
+@mixin backgroundWrap {
+  @include flex-all-center;
+  width: 100%;
+  max-width: 1920px;
+  height: 100vh;
+  overflow: hidden;
+}
+
+@mixin wrap {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+@mixin layout {
+  width: 430px;
+  height: 900px;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: $shadow-wide;
+  border-radius: 5px;
+
+  @include mobile {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
+@mixin flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flex-all-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin button-active {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 2.75rem;
+  color: #fff;
+  background-color: $color-Signature-purple;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #6600b4;
+  }
+}
+
+@mixin button-disable {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 2.75rem;
+  color: #bebebe;
+  background-color: $color-button-disable;
+  border-radius: 5px;
+
+  &:hover {
+    color: #fff;
+    background-color: $color-Signature-purple;
+  }
+}
+
+// media query
+@mixin mobile {
+  @media (max-width: #{$breakpoint-mobile - 1px}) {
+    @content;
+  }
+}
