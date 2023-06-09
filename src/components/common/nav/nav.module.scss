@@ -1,0 +1,55 @@
+@import '../../../styles/scss/variables';
+@import '../../../styles/scss/mixins';
+
+.nav {
+  width: 100%;
+  height: 8%;
+  background-color: #fff;
+  border-top: 1px solid #dbdbdb;
+  box-shadow: 3px 3px 3px 3px rgb(219, 219, 219);
+
+  ul {
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
+
+.nav .post {
+  width: 3.75rem;
+  position: absolute;
+  bottom: 5.875rem;
+  right: 2rem;
+  background-color: #fff;
+  border-radius: 50%;
+  opacity: 0.8;
+  z-index: 20;
+
+  img {
+    padding: 7px;
+    filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
+      brightness(90%) contrast(131%);
+  }
+}
+
+.icon {
+  width: 2.75rem;
+  height: 2.75rem;
+
+  &:hover {
+    filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
+      brightness(90%) contrast(131%);
+  }
+}
+
+.selectedIcon {
+  @extend .icon;
+  filter: invert(19%) sepia(73%) saturate(6774%) hue-rotate(279deg)
+    brightness(90%) contrast(131%);
+}
+
+.logoutIcon {
+  width: 2.1875rem;
+  height: 2.1875rem;
+}

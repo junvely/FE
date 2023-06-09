@@ -1,0 +1,120 @@
+@import '../../../styles/scss/variables';
+@import '../../../styles/scss/mixins';
+
+.header {
+  @include flex-space-between;
+  align-items: center;
+  width: 100%;
+  height: 8.4444%;
+  padding: 0 2rem;
+  background-color: $color-Signature-purple;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  h1.logo {
+    width: 7.6875rem;
+    margin-left: 2rem;
+  }
+
+  .flexCon {
+    width: 5.625rem;
+    display: flex;
+  }
+
+  .backArrow,
+  .search,
+  .login {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .logo {
+    height: 2rem;
+  }
+}
+
+// searchBar
+.searchCon {
+  width: 100%;
+  height: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 30;
+  padding: 0 2rem;
+  background-color: #fff;
+  box-shadow: $shadow-wide;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  transition: all 0.2s ease-in-out;
+
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1.25rem 0;
+
+    input {
+      width: 76%;
+      max-width: 280px;
+      padding: 0.8125rem 0.875rem;
+      line-height: 1.375rem;
+      border: 1px solid #b3b3b3;
+      border-radius: 4px;
+      margin-right: 12px;
+    }
+
+    .submitButton {
+      @include button-active;
+      width: 20%;
+      font-weight: 500;
+    }
+  }
+
+  .locationCon {
+    p {
+      font-weight: 500;
+      line-height: 1.375rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .locationList {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+
+      label {
+        width: 4.1875rem;
+        line-height: 2.6875rem;
+        text-align: center;
+        color: #d8d8d8;
+        border: 1px solid;
+        border-radius: 6px;
+        margin: 0 7px 6px 0;
+        cursor: pointer;
+
+        input[type='radio'] {
+          display: none;
+        }
+      }
+
+      .selected {
+        font-weight: 600;
+        color: $color-Signature-purple;
+        border: 1px solid;
+      }
+    }
+  }
+}
+
+.visible {
+  height: 600px;
+  visibility: visible;
+}
