@@ -60,16 +60,16 @@ function SignupPage() {
       }
     },
     onError: error => {
-      const { errorCode } = error.response.data;
-      if (errorCode.errorCode === 'ExistEmail') {
+      console.log(error.errorCode);
+      if (error.errorCode === 'ExistEmail') {
         alert('이미 등록된 이메일입니다.');
-      } else if (errorCode.errorCode === 'ExistNickname') {
+      } else if (error.errorCode === 'ExistNickname') {
         alert('이미 등록된 닉네임입니다.');
-      } else if (errorCode.errorCode === 'InvalidNicknamePattern') {
+      } else if (error.errorCode === 'InvalidNicknamePattern') {
         alert('닉네임은 최소 2~10글자여야 합니다.');
-      } else if (errorCode.errorCode === 'NotSamePassword') {
+      } else if (error.errorCode === 'NotSamePassword') {
         alert('비밀번호가 서로 일치하지 않습니다.');
-      } else if (errorCode.errorCode === 'InvalidPasswordPattern') {
+      } else if (error.errorCode === 'InvalidPasswordPattern') {
         alert(
           '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
         );
@@ -106,17 +106,17 @@ function SignupPage() {
     const passwordPattern =
       /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&()_])[A-Za-z\d@$!%*?&()_]{8,15}$/;
 
-    if (!nicknamePattern.test(nickname)) {
-      alert('닉네임은 최소 2~10글자여야 합니다.');
-    }
-    if (!passwordPattern.test(password)) {
-      alert(
-        '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
-      );
-    }
-    if (password !== passwordCheck) {
-      alert('비밀번호가 일치하지 않습니다.');
-    }
+    // if (!nicknamePattern.test(nickname)) {
+    //   alert('닉네임은 최소 2~10글자여야 합니다.');
+    // }
+    // if (!passwordPattern.test(password)) {
+    //   alert(
+    //     '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
+    //   );
+    // }
+    // if (password !== passwordCheck) {
+    //   alert('비밀번호가 일치하지 않습니다.');
+    // }
     mutationAddUser.mutate(signupData);
   };
 
