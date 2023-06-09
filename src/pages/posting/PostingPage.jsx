@@ -1,7 +1,7 @@
 import PostInput from 'components/PostInput';
 import { useNavigate } from 'react-router-dom';
 import useForm from 'hooks/useForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { postAddPost } from 'apis/posts';
 import styles from './posting.module.scss';
@@ -27,6 +27,8 @@ function PostingPage() {
 
   const [form, handleFormChange, handleImageUpload, resetForm] =
     useForm(initialState);
+
+  const [preImageUrl, setPreImageUrl] = useState();
 
   const {
     title,
@@ -89,7 +91,23 @@ function PostingPage() {
     });
   };
 
-  console.log(image);
+  const handleChangeImageUploadBtn = async e => {
+    await handleImageUpload(e);
+  };
+
+  // console.log(preImageUrl);
+  // console.log(image);
+
+  useEffect(() => {
+    if (image) {
+      const reader = new FileReader();
+      reader.readAsDataURL(form.image);
+      reader.onload = () => {
+        setPreImageUrl(reader.result);
+      };
+      console.log(form.image);
+    }
+  }, [image]);
 
   return (
     <>
@@ -169,12 +187,12 @@ function PostingPage() {
         <div className={styles.inputCon}>
           <span>이미지 등록</span>
           <label htmlFor='image' className={styles.addImage}>
-            <img src={AddImageIcon} alt='add' />
+            <img src={preImageUrl || AddImageIcon} alt='preview' />
             <input
               type='file'
               name='image'
               id='image'
-              onChange={handleImageUpload}
+              onChange={e => handleChangeImageUploadBtn(e)}
               className='hidden'
             />
           </label>
