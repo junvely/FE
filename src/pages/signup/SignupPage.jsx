@@ -3,6 +3,7 @@ import useForm from 'hooks/useForm';
 import { useState } from 'react';
 import { verifyEmail, addUser, verifyCode } from 'apis/auth/signup';
 import { useNavigate } from 'react-router';
+import FormLabel from 'components/FormLabel';
 import styles from './signup.module.scss';
 
 function SignupPage() {
@@ -55,19 +56,20 @@ function SignupPage() {
     onSuccess: result => {
       if (result.status === 'OK') {
         alert('회원가입이 완료되었습니다.');
+        navigate('/login');
       }
     },
     onError: error => {
-      const { errorCode } = error.response.data;
-      if (errorCode.errorCode === 'ExistEmail') {
+      console.log(error.errorCode);
+      if (error.errorCode === 'ExistEmail') {
         alert('이미 등록된 이메일입니다.');
-      } else if (errorCode.errorCode === 'ExistNickname') {
+      } else if (error.errorCode === 'ExistNickname') {
         alert('이미 등록된 닉네임입니다.');
-      } else if (errorCode.errorCode === 'InvalidNicknamePattern') {
+      } else if (error.errorCode === 'InvalidNicknamePattern') {
         alert('닉네임은 최소 2~10글자여야 합니다.');
-      } else if (errorCode.errorCode === 'NotSamePassword') {
+      } else if (error.errorCode === 'NotSamePassword') {
         alert('비밀번호가 서로 일치하지 않습니다.');
-      } else if (errorCode.errorCode === 'InvalidPasswordPattern') {
+      } else if (error.errorCode === 'InvalidPasswordPattern') {
         alert(
           '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
         );
@@ -104,28 +106,23 @@ function SignupPage() {
     const passwordPattern =
       /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&()_])[A-Za-z\d@$!%*?&()_]{8,15}$/;
 
-    if (!nicknamePattern.test(nickname)) {
-      alert('닉네임은 최소 2~10글자여야 합니다.');
-    }
-    if (!passwordPattern.test(password)) {
-      alert(
-        '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
-      );
-    }
-    if (password !== passwordCheck) {
-      alert('비밀번호가 일치하지 않습니다.');
-    }
+    // if (!nicknamePattern.test(nickname)) {
+    //   alert('닉네임은 최소 2~10글자여야 합니다.');
+    // }
+    // if (!passwordPattern.test(password)) {
+    //   alert(
+    //     '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
+    //   );
+    // }
+    // if (password !== passwordCheck) {
+    //   alert('비밀번호가 일치하지 않습니다.');
+    // }
     mutationAddUser.mutate(signupData);
-    navigate('/main');
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.titleBox}>
-        <span className={styles.line} />
-        <h2 className={styles.title}>회원가입</h2>
-        <span className={styles.line} />
-      </div>
+      <FormLabel>회원가입</FormLabel>
       <div className={styles.inputBox}>
         <input
           type='email'
