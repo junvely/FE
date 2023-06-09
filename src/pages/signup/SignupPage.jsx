@@ -3,6 +3,7 @@ import useForm from 'hooks/useForm';
 import { useState } from 'react';
 import { verifyEmail, addUser, verifyCode } from 'apis/auth/signup';
 import { useNavigate } from 'react-router';
+import FormLabel from 'components/FormLabel';
 import styles from './signup.module.scss';
 
 function SignupPage() {
@@ -121,11 +122,7 @@ function SignupPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.titleBox}>
-        <span className={styles.line} />
-        <h2 className={styles.title}>회원가입</h2>
-        <span className={styles.line} />
-      </div>
+      <FormLabel>회원가입</FormLabel>
       <div className={styles.inputBox}>
         <input
           type='email'
