@@ -1,7 +1,7 @@
 import PostInput from 'components/PostInput';
 import { useNavigate } from 'react-router-dom';
 import useForm from 'hooks/useForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { postAddPost } from 'apis/posts';
 import styles from './posting.module.scss';
@@ -28,8 +28,7 @@ function PostingPage() {
   const [form, handleFormChange, handleImageUpload, resetForm] =
     useForm(initialState);
 
-  const [preImage, setPreImage] = useState();
-  // const reader = new FileReader();
+  const [preImageUrl, setPreImageUrl] = useState();
 
   const {
     title,
@@ -92,22 +91,23 @@ function PostingPage() {
     });
   };
 
-  const handleChangeImageUploadBtn = e => {
-    // 이 부분은 기존 코드에서 그대로 사용합니다.
-    handleImageUpload(e);
-
-    // FileReader 객체로부터 이미 데이터를 읽어옵니다.
-    const reader = new FileReader();
-    reader.onload = event => {
-      // 읽어온 이미지 데이터를 base64 형식의 문자열로 변환합니다.
-      const imageUrl = event.target.result;
-      preImage(imageUrl);
-    };
-    reader.readAsDataURL(image); // e.target.files[0] 에 파일 객체가 저장되어 있기 때문입니다.
+  const handleChangeImageUploadBtn = async e => {
+    await handleImageUpload(e);
   };
 
-  console.log(preImage);
-  console.log(image);
+  // console.log(preImageUrl);
+  // console.log(image);
+
+  useEffect(() => {
+    if (image) {
+      const reader = new FileReader();
+      reader.readAsDataURL(form.image);
+      reader.onload = () => {
+        setPreImageUrl(reader.result);
+      };
+      console.log(form.image);
+    }
+  }, [image]);
 
   return (
     <>
@@ -187,8 +187,7 @@ function PostingPage() {
         <div className={styles.inputCon}>
           <span>이미지 등록</span>
           <label htmlFor='image' className={styles.addImage}>
-            {/* <img src={AddImageIcon} alt='add' /> */}
-            <img src={preImage} alt='add' />
+            <img src={preImageUrl || AddImageIcon} alt='preview' />
             <input
               type='file'
               name='image'
