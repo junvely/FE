@@ -92,3 +92,26 @@
 .map {
   height: 40rem;
 }
+
+.buttonWrap {
+  @include flex-justify-center;
+  margin: 6.5rem auto 9.1875rem;
+}
+
+.buttonWrap {
+  button {
+    margin-right: 1rem;
+    width: 4.75rem;
+    height: 2.75rem;
+    line-height: 44px;
+    border: 1px solid #929292;
+    border-radius: 6px;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+}
+
+.buttonWrap .deleteButton {
+  color: #454545;
+  background-color: #f0f0f0;
+}
