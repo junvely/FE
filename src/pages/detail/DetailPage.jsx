@@ -160,6 +160,14 @@ function DetailPage() {
           <div className={styles.contentBox}>{amenities}</div>
           <h3 className={styles.subTitle}>오시는 길</h3>
           <Map location={location} />
+          <div className={styles.buttonWrap}>
+            <button type='button' className={styles.deleteButton}>
+              삭제
+            </button>
+            <button type='button' className={styles.updateButton}>
+              수정
+            </button>
+          </div>
         </div>
       </div>
     </div>
