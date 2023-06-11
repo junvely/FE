@@ -55,8 +55,7 @@ function MainPage() {
       <div className={styles.titleCon}>
         {isSearched ? (
           <h2 className={styles.searchResult}>
-            {district || '전체'}{' '}
-            <span className='text-[#7c00de]'>{keyword && `'${keyword}'`}</span>{' '}
+            {district || '전체'} <span>{keyword && `'${keyword}'`}</span>{' '}
             검색결과 {(data && data.numberOfElements) || 0}건
           </h2>
         ) : (
