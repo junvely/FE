@@ -26,21 +26,16 @@ const postAddPost = async payload => {
     },
   };
 
-  // console.log(payload.image);
   const formData = new FormData();
-  // const imageBlob = new Blob([payload.imageUrl], { type: 'image/png' });
-  formData.append('imageFile', payload.image);
-
   const sendData = { ...payload };
   delete sendData.image;
-
-  // console.log(sendData);
 
   const blob = new Blob([JSON.stringify(sendData)], {
     type: 'application/json',
   });
 
   formData.append('postRequestDto', blob);
+  formData.append('imageFile', payload.image);
 
   try {
     const { data } = await instance.post(`api/posts`, formData, config);
@@ -50,4 +45,14 @@ const postAddPost = async payload => {
   }
 };
 
-export { getMainPosts, postMainLike, postAddPost };
+const deletePost = async id => {
+  try {
+    const { data } = await instance.delete(`/api/posts/${id}`);
+    return data.message;
+  } catch (error) {
+    console.log(error.message);
+    throw error;
+  }
+};
+
+export { getMainPosts, postMainLike, postAddPost, deletePost };
