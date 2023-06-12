@@ -9,7 +9,7 @@ import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
 
 function Nav() {
   const navigate = useNavigate();
-  const loc = useLocation();
+  const location = useLocation();
   const { resetSearchQuery } = useContext(SearchQueryContext);
 
   const handleHomeClick = () => {
@@ -25,14 +25,24 @@ function Nav() {
               src={homeIcon}
               alt='home'
               className={
-                loc.pathname === '/main' ? styles.selectedIcon : styles.icon
+                location.pathname === '/main'
+                  ? styles.selectedIcon
+                  : styles.icon
               }
             />
           </li>
         </Link>
         <Link to='/chatting'>
           <li>
-            <img src={chattingIcon} alt='chatting' className={styles.icon} />
+            <img
+              src={chattingIcon}
+              alt='chatting'
+              className={
+                location.pathname.startsWith('/chatting')
+                  ? styles.selectedIcon
+                  : styles.icon
+              }
+            />
           </li>
         </Link>
         <Link to='/mypage'>
@@ -41,13 +51,18 @@ function Nav() {
               src={mypageIcon}
               alt='mypage'
               className={
-                loc.pathname === '/mypage' ? styles.selectedIcon : styles.icon
+                location.pathname === '/mypage' ||
+                location.pathname === '/likedposts' ||
+                location.pathname === '/myposts' ||
+                location.pathname === '/myreservations'
+                  ? styles.selectedIcon
+                  : styles.icon
               }
             />
           </li>
         </Link>
       </ul>
-      {loc.pathname === '/main' || loc.pathname === '/detail' ? (
+      {location.pathname === '/main' || location.pathname === '/detail' ? (
         <button
           type='button'
           className={styles.post}
