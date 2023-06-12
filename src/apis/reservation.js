@@ -1,4 +1,4 @@
-import instance from './instance';
+import instance from './instance/instance';
 
 const postMakeReservation = async reservationData => {
   const { postId, startDate, endDate } = reservationData;

@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useLocation } from 'react-router';
+import uuid from 'react-uuid';
 import styles from './slider.module.scss';
 import arrowLeft from '../../../assets/svg/arrowLeft.svg';
 import arrowRight from '../../../assets/svg/arrowRight.svg';
@@ -65,7 +66,7 @@ function Slider({ post }) {
         }}
       >
         {imageList.map((image, idx) => (
-          <li className={styles.slide}>
+          <li key={uuid()} className={styles.slide}>
             <img src={image} alt={`share-office${idx}`}></img>
           </li>
         ))}
@@ -91,6 +92,7 @@ function Slider({ post }) {
         <div>
           {imageList.map((image, idx) => (
             <button
+              key={uuid()}
               type='button'
               className={currentPage === idx ? styles.active : ''}
               id={idx}
