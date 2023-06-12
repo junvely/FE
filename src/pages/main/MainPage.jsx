@@ -35,14 +35,14 @@ function MainPage() {
   };
 
   const updatePostData = () => {
-    if (data.content) {
+    if (data) {
       setPosts(data.content);
     }
   };
 
   useEffect(() => {
     updatePostData();
-  }, [data.content]);
+  }, [data]);
 
   useEffect(() => {
     refetch();

@@ -15,7 +15,7 @@ function ChattingRoomPage() {
   };
 
   // const {} = useForm();
-  const [messages, setMessages] = useState();
+  // const [messages, setMessages] = useState();
 
   stompClient = Stomp.over(() => sock);
   stompClient.connect(
