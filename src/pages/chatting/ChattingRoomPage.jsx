@@ -1,64 +1,69 @@
-import React, { useState } from 'react';
-import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
-import { getCookie } from 'utils/cookies';
-import useForm from 'hooks/useForm';
-
-let stompClient = null;
-const sock = new SockJS('https://api.ohpick.shop/ws');
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { connectClient, getChattingData, sendChat } from '../../apis/chatting';
+import styles from './chatting.module.scss';
 
 function ChattingRoomPage() {
-  const getChattingData = data => {
-    // console.log("data.body*********", data.body); //JSON 형식
-    const newData = JSON.parse(data.body); // 문자열을 파싱하여 JS 객체로 변환
+  const roomId = 1;
+  const sender = '제주오피스';
+  const { data } = useQuery('chatData', () => getChattingData(roomId));
+
+  const [beforeMessages, setBeforeMessages] = useState([]);
+  const [currentMessages, setCurrentMessages] = useState([]);
+  const [chat, setChat] = useState('');
+
+  // 채팅 메세지 변환
+  const jsonParseChat = chatData => {
+    const newData = JSON.parse(chatData.body);
+    console.log('메세지들-----------------------------', beforeMessages);
+    setCurrentMessages(current => [...current, newData]);
+
     console.log('newData=> ', newData);
+    console.log('채팅=> ', newData.message);
   };
 
-  // const {} = useForm();
-  // const [messages, setMessages] = useState();
+  console.log(beforeMessages);
+  const handleChatSubmit = () => {
+    sendChat(roomId, sender, chat);
+  };
 
-  stompClient = Stomp.over(() => sock);
-  stompClient.connect(
-    {
-      header: {
-        access_token: getCookie('access_token'),
-        refresh_token: getCookie('refresh_token'),
-      },
-    },
+  useEffect(() => {
+    connectClient(roomId, jsonParseChat);
+  }, []);
 
-    frame => {
-      console.log('frame= 연결 성공');
-      console.log('frame', frame);
-      stompClient.subscribe('/sub/chat/room/1', getChattingData);
-      stompClient.send(
-        '/pub/chat/message',
-        {},
-        JSON.stringify({
-          roomId: 1,
-          sender: 'Office_A',
-          message: '안녕',
-        }),
-      );
-    },
-  );
+  useEffect(() => {
+    if (data) {
+      setBeforeMessages(data.data);
+    }
+  }, [data]);
 
   return (
-    <div>
-      <div>
+    <div className={styles.container}>
+      {beforeMessages.map(message => (
         <div>
-          <div>
-            <img src='' alt='' />
-          </div>
-          <div>
-            <p>닉네임</p>
-            <div>내용</div>
-          </div>
+          <span>{message.createdAt}</span>
+          <p>{message.sender}</p>
+          <div>{message.message}</div>
         </div>
-      </div>
-      <div>
-        <input type='text' />
-        <button type='submit'>전송</button>
-      </div>
+      ))}
+      <span>-------------------------------------</span>
+      {currentMessages.map(message => (
+        <div>
+          <span>{message.createdAt}</span>
+          <p>{message.sender}</p>
+          <div>{message.message}</div>
+        </div>
+      ))}
+      <form onSubmit={e => e.preventDefault()}>
+        <input
+          type='text'
+          value={chat}
+          onChange={e => setChat(e.target.value)}
+        />
+        <button type='submit' onClick={handleChatSubmit}>
+          전송
+        </button>
+      </form>
     </div>
   );
 }
