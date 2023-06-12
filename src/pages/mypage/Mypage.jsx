@@ -3,7 +3,6 @@ import { useMutation, useQuery } from 'react-query';
 import { getMypage } from 'apis/mypage';
 import { Link, useNavigate } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
-import Modal from 'components/common/modal/Modal';
 import styles from './mypage.module.scss';
 import likeNullIcon from '../../assets/svg/likeNull.svg';
 import officeIcon from '../../assets/svg/office.svg';
