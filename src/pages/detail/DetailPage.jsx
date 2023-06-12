@@ -91,6 +91,8 @@ function DetailPage() {
     }
   };
 
+  console.log(userStatus);
+
   return (
     <div className={styles.container}>
       <Slider post={data.data} />
