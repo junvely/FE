@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { getCookie, removeCookie, setCookie } from '../utils/cookies';
+import { getCookie, removeCookie, setCookie } from '../../utils/cookies';
+import { REACT_APP_SERVER } from '../../utils/keys';
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER,
+  baseURL: REACT_APP_SERVER,
   headers: {
     'Access-Control-Allow-Origin': '*',
   },

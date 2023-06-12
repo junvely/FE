@@ -1,4 +1,4 @@
-const { default: instance } = require('./instance');
+const { default: instance } = require('./instance/instance');
 
 const getMainPosts = async payload => {
   try {

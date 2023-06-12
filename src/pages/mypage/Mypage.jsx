@@ -37,7 +37,10 @@ function Mypage() {
 
   // 로그아웃 버튼
   const handleClickLogoutBtn = () => {
-    mutationLogout.mutate();
+    const isLogout = window.confirm('로그아웃 하시겠습니까?');
+    if (isLogout) {
+      mutationLogout.mutate();
+    }
   };
 
   // 회원탈퇴 페이지 이동
