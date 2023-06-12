@@ -3,6 +3,7 @@ import MainPost from 'components/MainPost';
 import { useQuery } from 'react-query';
 import { getMainPosts } from 'apis/posts';
 import LoadingSpinner from 'components/LoadingSpinner';
+import uuid from 'react-uuid';
 import styles from './main.module.scss';
 import DropDownIcon from '../../assets/svg/toggleDropDown.svg';
 import { SearchQueryContext } from '../../contexts/SearchQueryContext';
@@ -12,7 +13,7 @@ function MainPage() {
 
   const { searchQuery, isSearched, updateSearchQuery, resetSearchQuery } =
     useContext(SearchQueryContext);
-  const { sorting } = searchQuery;
+  const { sorting, district, keyword } = searchQuery;
 
   const { data, isLoading, isError, refetch } = useQuery('mainPosts', () => {
     const result = getMainPosts({
@@ -34,21 +35,19 @@ function MainPage() {
   };
 
   const updatePostData = () => {
-    if (data) {
+    if (data.content) {
       setPosts(data.content);
     }
   };
 
   useEffect(() => {
     updatePostData();
-  }, [data]);
+  }, [data.content]);
 
   useEffect(() => {
     refetch();
     updatePostData();
   }, [searchQuery]);
-
-  const { district, keyword } = searchQuery;
 
   return (
     <div className={styles.wrap}>
@@ -71,31 +70,33 @@ function MainPage() {
           <img
             src={DropDownIcon}
             className={`${styles.toggleIcon} ${
-              isSortingToggleOpen && styles.reverse
+              isSortingToggleOpen ? styles.reverse : undefined
             }`}
             alt='toggle-drop-down'
           ></img>
           <div
             className={`${styles.sortingList} ${
-              !isSortingToggleOpen && styles.hidden
+              !isSortingToggleOpen ? styles.hidden : undefined
             }
             `}
           >
             {sortingList.map(sort => (
-              <button
+              <div
+                key={uuid()}
                 type='button'
-                className={sorting === sort && styles.active}
+                className={sorting === sort ? styles.active : undefined}
                 onClick={handleChangeSortClick}
+                role='presentation'
               >
                 {sort}
-              </button>
+              </div>
             ))}
           </div>
         </button>
       </div>
       {isLoading && <LoadingSpinner />}
       {posts.map(post => (
-        <MainPost key={post.id} post={post} />
+        <MainPost key={uuid()} post={post} />
       ))}
       {data && data.content.length === 0 && (
         <div className={styles.notFound}>
