@@ -30,7 +30,7 @@ function Nav() {
             />
           </li>
         </Link>
-        <Link to='/chattings'>
+        <Link to='/chatting'>
           <li>
             <img src={chattingIcon} alt='chatting' className={styles.icon} />
           </li>

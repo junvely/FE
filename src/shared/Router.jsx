@@ -14,8 +14,9 @@ import LikedPosts from 'pages/mypage/LikedPosts';
 import MyReservations from 'pages/mypage/MyReservations';
 import ReservationSuccessPage from 'pages/reservation/ReservationSuccessPage';
 import ReservationPage from 'pages/reservation/ReservationPage';
-import ChattingPage from 'pages/chatting/ChattingPage';
 import ExitPage from 'pages/exit/ExitPage';
+import ChattingListPage from 'pages/chatting/ChattingListPage';
+import ChattingRoomPage from 'pages/chatting/ChattingRoomPage';
 import PrivateRoutes from './PrivateRoutes';
 
 function Router() {
@@ -36,7 +37,11 @@ function Router() {
               path='/reservationSuccess'
               element={<ReservationSuccessPage />}
             />
-            <Route path='/chattings' element={<ChattingPage />} />
+            <Route path='/chatting' element={<ChattingListPage />}></Route>
+            <Route
+              path='/chatting/room/:roomId'
+              element={<ChattingRoomPage />}
+            />
             <Route path='/exit' element={<ExitPage />} />
           </Route>
           <Route path='/login' element={<LoginPage />} />

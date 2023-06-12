@@ -15,7 +15,7 @@ function LikedPosts() {
   return (
     <div className={styles.pageContainer}>
       {data.data.length === 0 ? (
-        <div>
+        <div className={styles.pageWrap}>
           <div className={styles.pageTitleBox}>
             <h2 className={styles.pageTitle}>
               <img src={likeFullIcon} alt='LikeIcon' />

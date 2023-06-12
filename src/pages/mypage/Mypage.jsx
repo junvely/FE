@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { getMypage } from 'apis/mypage';
 import { Link, useNavigate } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
+import Modal from 'components/common/modal/Modal';
 import styles from './mypage.module.scss';
 import likeNullIcon from '../../assets/svg/likeNull.svg';
 import officeIcon from '../../assets/svg/office.svg';
@@ -14,6 +15,11 @@ import { authLogout } from '../../apis/auth/login';
 import { removeCookie } from '../../utils/cookies';
 
 function Mypage() {
+  // const [modal, setModal] = useState(false);
+  // console.log('🌟 → Mypage → modal:', modal);
+  // const [confirm, setConfirm] = useState(false);
+  // console.log('🌟 → Mypage → confirm:', confirm);
+
   const navigate = useNavigate();
   const { updateLoginStatus } = useContext(AuthContext);
 
@@ -34,6 +40,15 @@ function Mypage() {
 
   const { email, imageUrl, likeCount, nickname, postCount, reserveCount } =
     data.data;
+
+  // 로그아웃 버튼
+  // const handleClickLogoutBtn = () => {
+  //   setModal(true);
+  //   if (confirm) {
+  //     console.log('로그아웃 확인');
+  //     mutationLogout.mutate();
+  //   }
+  // };
 
   // 로그아웃 버튼
   const handleClickLogoutBtn = () => {
@@ -98,6 +113,9 @@ function Mypage() {
               <img src={logoutIcon} alt='로그아웃 아이콘' />
               로그아웃
             </button>
+            {/* <Modal setConfirm={setConfirm} modal={modal} setModal={setModal}>
+              로그아웃 하시겠습니까?
+            </Modal> */}
           </div>
         </div>
       </div>
