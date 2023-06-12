@@ -19,6 +19,10 @@
     .searchResult {
       font-weight: 500;
       padding: 1rem 0;
+
+      span {
+        color: $color-Signature-purple;
+      }
     }
 
     .toggleBtn {
@@ -35,17 +39,16 @@
       }
 
       .sortingList {
-        width: 125px;
-        margin-top: 15px;
-        top: 100%;
+        width: 7.8125rem;
+        position: absolute;
+        top: 70%;
         right: 0;
         background-color: #fff;
         border: 1px solid #e2e0e0;
         border-radius: 6px;
-        position: absolute;
         z-index: 5;
 
-        button {
+        div {
           width: 100%;
           font-weight: 500;
           text-align: left;

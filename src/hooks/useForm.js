@@ -9,7 +9,6 @@ const useForm = initialState => {
   };
 
   const handleFileChange = e => {
-    console.log('hey');
     if (e) {
       const { name, files } = e.target;
       setForm({ ...form, [name]: files[0] });

@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteCancelReservation, getPostDetail } from 'apis/detail';
 import { useNavigate, useParams } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
-import { postMainLike } from 'apis/posts';
+import { deletePost, postMainLike } from 'apis/posts';
 import styles from './detail.module.scss';
 import locationIcon from '../../assets/svg/mapSmall.svg';
 import priceIcon from '../../assets/svg/price.svg';
@@ -17,9 +17,9 @@ import Map from '../../components/common/map/Map';
 import { AuthContext } from '../../contexts/AuthContext';
 
 function DetailPage() {
-  const { postId } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { postId } = useParams();
   const { checkingLogin } = useContext(AuthContext);
 
   // 데이터 가져오기
@@ -31,6 +31,14 @@ function DetailPage() {
   const mutationLikedPost = useMutation(postMainLike, {
     onSuccess: () => {
       queryClient.invalidateQueries('postDetail');
+    },
+  });
+
+  const mutationDeletePost = useMutation(deletePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('mainPosts');
+      alert('게시글이 삭제되었습니다');
+      navigate('/main');
     },
   });
 
@@ -92,6 +100,10 @@ function DetailPage() {
   };
 
   console.log(userStatus);
+
+  const handleDeleteClick = () => {
+    mutationDeletePost.mutate(postId);
+  };
 
   return (
     <div className={styles.container}>
@@ -162,6 +174,18 @@ function DetailPage() {
           <div className={styles.contentBox}>{amenities}</div>
           <h3 className={styles.subTitle}>오시는 길</h3>
           <Map location={location} />
+          <div className={styles.buttonWrap}>
+            <button
+              type='button'
+              className={styles.deleteButton}
+              onClick={handleDeleteClick}
+            >
+              삭제
+            </button>
+            <button type='button' className={styles.updateButton}>
+              수정
+            </button>
+          </div>
         </div>
       </div>
     </div>

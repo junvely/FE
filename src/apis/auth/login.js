@@ -1,4 +1,4 @@
-import instance from 'apis/instance';
+import instance from 'apis/instance/instance';
 
 const authLogin = async payload => {
   try {

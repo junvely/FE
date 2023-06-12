@@ -9,8 +9,7 @@ import Input from '../../components/common/input/Input';
 import FormLabel from '../../components/FormLabel';
 import AirBox from '../../components/common/airBox/AirBox';
 import { AuthContext } from '../../contexts/AuthContext';
-
-const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`;
+import { KAKAO_AUTH_URL } from '../../utils/keys';
 
 function LoginPage() {
   const navigate = useNavigate();
