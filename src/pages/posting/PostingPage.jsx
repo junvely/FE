@@ -1,27 +1,66 @@
 import PostInput from 'components/PostInput';
 import { useNavigate } from 'react-router-dom';
-import useForm from 'hooks/useForm';
 import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
+import useForm from 'hooks/useForm';
 import { postAddPost } from 'apis/posts';
+import uuid from 'react-uuid';
 import styles from './posting.module.scss';
 import AddImageIcon from '../../assets/svg/addImage.svg';
 import RightArrow from '../../assets/svg/addressArrow.svg';
 import SearchLocationPage from '../searchLocation/SearchLocationPage';
 import IncreaseIcon from '../../assets/svg/increase.svg';
 import DecreaseIcon from '../../assets/svg/decrease.svg';
+import SelectOptions from '../../components/SelectOptions';
 
 function PostingPage() {
   const navigate = useNavigate();
   const [location, setLocation] = useState('주소를 입력해주세요');
   const [isLocationOpen, setIsLocationOpen] = useState(false);
+
+  // 운영 시간 옵션
+  const openTimes = ['06 : 00', '07 : 00', '08 : 00', '09 : 00'];
+  const closeTimes = ['18 : 00', '19 : 00', '20 : 00', '21 : 00'];
+  const [openTime, setOpenTime] = useState(openTimes[0]);
+  const [closeTime, setCloseTime] = useState(closeTimes[0]);
+
+  // 휴무 옵션
+  const holidayTypes = ['매주', '격주', '매월'];
+  const [holidayType, setHolidayType] = useState(holidayTypes[0]);
+  const [holidays, setHolidays] = useState({
+    월: false,
+    화: false,
+    수: false,
+    목: false,
+    금: false,
+    토: false,
+    일: false,
+  });
+
+  // 최대 인원
   const [persons, setPersons] = useState(0);
+
+  // 편의시설
+  const [amenityTypes, setAmenityTypes] = useState({
+    에어컨: false,
+    '복사/인쇄기': false,
+    프로젝터: false,
+    도어락: false,
+    콘센트: false,
+    팩스: false,
+    난방기: false,
+    주차: false,
+    정수기: false,
+    개인락커: false,
+    TV: false,
+    화이트보드: false,
+    '인터넷/WIFI': false,
+  });
 
   const initialState = {
     title: '',
     price: '',
     content: '',
-    operatingTime: '',
     contentDetails: ' ',
     amenities: '',
     image: '',
@@ -29,18 +68,8 @@ function PostingPage() {
 
   const [form, handleFormChange, handleImageUpload, resetForm] =
     useForm(initialState);
-
   const [preImageUrl, setPreImageUrl] = useState();
-
-  const {
-    title,
-    price,
-    content,
-    operatingTime,
-    contentDetails,
-    amenities,
-    image,
-  } = form;
+  const { title, price, content, contentDetails, amenities, image } = form;
 
   const mutation = useMutation(postAddPost, {
     onSuccess: result => {
@@ -57,6 +86,10 @@ function PostingPage() {
     setLocation(keyword);
   };
 
+  const handleClickLocationOpen = () => {
+    setIsLocationOpen(!isLocationOpen);
+  };
+
   const handleIncrease = () => {
     if (persons < 50) {
       setPersons(Number(persons) + 1);
@@ -68,8 +101,16 @@ function PostingPage() {
     }
   };
 
-  const handleClickLocationOpen = () => {
-    setIsLocationOpen(!isLocationOpen);
+  const handleHolidayUpdate = e => {
+    const { name, checked } = e.target;
+    const newHoliday = { ...holidays, [name]: checked };
+    setHolidays(newHoliday);
+  };
+
+  const handleAmenityTypesUpdate = e => {
+    const { name, checked } = e.target;
+    const newAmenityTypes = { ...amenityTypes, [name]: checked };
+    setAmenityTypes(newAmenityTypes);
   };
 
   const handleChangeImageUploadBtn = async e => {
@@ -78,14 +119,7 @@ function PostingPage() {
 
   const validation = () => {
     const NumCheck = /^[0-9]+$/;
-    if (
-      !title ||
-      !price ||
-      !content ||
-      !operatingTime ||
-      !contentDetails ||
-      !amenities
-    ) {
+    if (!title || !price || !content || !contentDetails) {
       alert('입력란을 모두 작성해 주셔야 합니다');
       return false;
     }
@@ -94,7 +128,7 @@ function PostingPage() {
       return false;
     }
     if (!NumCheck.test(price)) {
-      alert('가격은 숫자로만 입력해 주세요');
+      alert('가격은 숫자만 입력해 주세요');
       return false;
     }
     if (!image) {
@@ -104,7 +138,45 @@ function PostingPage() {
     return true;
   };
 
+  // 운영 시간 데이터 가공
+  const getOperatingTime = () => {
+    let holidayString = `운영 시간은 ${openTime} ~ ${closeTime}시 까지 입니다. \n휴무일은 `;
+    const holidaysArr = Object.keys(holidays).filter(key => holidays[key]);
+
+    if (holidaysArr.length) {
+      holidayString += `${holidayType} `;
+      holidaysArr.forEach(value => {
+        holidayString += `${value}요일 `;
+      });
+      holidayString += '입니다.';
+      return holidayString;
+    }
+    holidayString += '연중무휴 입니다.';
+    return holidayString;
+  };
+
+  // 편의 시설 데이터 가공
+  const getAmenities = () => {
+    let amenityString = '편의시설은 ';
+    const amenitiesArr = Object.keys(amenityTypes).filter(
+      key => amenityTypes[key],
+    );
+
+    if (amenitiesArr.length) {
+      amenitiesArr.forEach(value => {
+        amenityString += `${value}, `;
+      });
+      amenityString += '등이 구비되어 있습니다.';
+      return amenityString;
+    }
+    amenityString += '따로 구비되어 있지 않습니다.';
+    return amenityString;
+  };
+
   const handleClickSubmitPosting = () => {
+    const operatingTimeValue = getOperatingTime();
+    const amenitiesValue = getAmenities();
+
     if (validation()) {
       mutation.mutate({
         title,
@@ -112,8 +184,8 @@ function PostingPage() {
         capacity: Number(persons),
         content: content.replace(/\n/g, '\\n'),
         contentDetails: contentDetails.replace(/\n/g, '\\n'),
-        amenities: amenities.replace(/\n/g, '\\n'),
-        operatingTime,
+        amenities: amenitiesValue,
+        operatingTime: operatingTimeValue,
         image,
         location,
       });
@@ -127,10 +199,9 @@ function PostingPage() {
       reader.onload = () => {
         setPreImageUrl(reader.result);
       };
-      console.log(form.image);
     }
   }, [image]);
-  console.log(persons);
+
   return (
     <>
       <div className={styles.wrap}>
@@ -143,6 +214,7 @@ function PostingPage() {
           max='50'
           onChange={handleFormChange}
         ></PostInput>
+        {/* 주소 */}
         <div className={`${styles.inputCon} ${styles.address}`}>
           <span type='button'>주소</span>
           <button
@@ -154,6 +226,7 @@ function PostingPage() {
             <img src={RightArrow} alt='address' />
           </button>
         </div>
+        {/* 가격 */}
         <PostInput
           type='text'
           name='price'
@@ -163,6 +236,7 @@ function PostingPage() {
           max='9'
           onChange={handleFormChange}
         ></PostInput>
+        {/* 최대 인원 */}
         <div className={styles.capacity}>
           <span>최대 인원</span>
           <div className={styles.persons}>
@@ -180,40 +254,94 @@ function PostingPage() {
             </button>
           </div>
         </div>
+        {/* 오피스 소개 */}
         <div className={styles.inputCon}>
           <span>오피스 소개</span>
           <textarea
             name='content'
             placeholder='오피스 공간에 대해 소개해 주세요'
             onChange={handleFormChange}
-          >
-            {content}
-          </textarea>
+            value={content}
+          />
         </div>
-        <PostInput
-          type='text'
-          name='operatingTime'
-          value={operatingTime}
-          label='운영 시간'
-          placeHolder='ex. 월-금 8시-18시'
-          onChange={handleFormChange}
-        ></PostInput>
+        {/* 운영 시간 */}
+        <div className={styles.operatingTime}>
+          <span className={styles.title}>운영 시간</span>
+          <div className={styles.operatingCon}>
+            <SelectOptions
+              options={openTimes}
+              selected={openTime}
+              selectedUpdate={setOpenTime}
+            />
+            <span>~</span>
+            <SelectOptions
+              options={closeTimes}
+              selected={closeTime}
+              selectedUpdate={setCloseTime}
+            />
+          </div>
+          <p className={styles.holidayTitle}>
+            *휴무일에 체크해 주세요<span>(연중무휴 경우 체크 x)</span>
+          </p>
+          <div className={styles.holidayCon}>
+            <SelectOptions
+              options={holidayTypes}
+              selected={holidayType}
+              selectedUpdate={setHolidayType}
+            />
+            <div className={styles.selectDays}>
+              {[...Object.keys(holidays)].map(day => (
+                <label
+                  htmlFor={day}
+                  // key={uuid()}
+                  className={`${styles.checkbox} ${
+                    holidays[day] ? styles.checked : undefined
+                  }`}
+                >
+                  <input
+                    type='checkbox'
+                    name={day}
+                    id={day}
+                    onChange={handleHolidayUpdate}
+                  />
+                  {day}
+                </label>
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* 추가 안내 */}
         <div className={styles.inputCon}>
           <span>추가 안내</span>
           <textarea
             name='contentDetails'
             placeholder='사용 가능 시간, 환불 규정 등'
             onChange={handleFormChange}
-          ></textarea>
+          />
         </div>
-        <div className={styles.inputCon}>
-          <span>편의 시설</span>
-          <textarea
-            name='amenities'
-            placeholder='ex. 에어컨, 복사/인쇄기, 프로젝터 등'
-            onChange={handleFormChange}
-          ></textarea>
+        {/* 편의 시설 */}
+        <div className={styles.amenity}>
+          <span className={styles.title}>편의 시설</span>
+          <div className={styles.amenities}>
+            {[...Object.keys(amenityTypes)].map(item => (
+              <label
+                htmlFor={item}
+                className={`${styles.checkbox} ${
+                  amenityTypes[item] ? styles.checked : undefined
+                }`}
+              >
+                <input
+                  type='checkbox'
+                  name={item}
+                  id={item}
+                  onChange={handleAmenityTypesUpdate}
+                />
+                {item}
+              </label>
+            ))}
+          </div>
         </div>
+        {/* 이미지 등록 */}
         <div className={styles.inputCon}>
           <span>이미지 등록</span>
           <label htmlFor='image' className={styles.addImage}>
