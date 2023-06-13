@@ -34,8 +34,8 @@ function LoginPage() {
       const { errorCode } = error;
       if (errorCode === 'NotExistEmail') {
         alert('등록되지 않은 이메일입니다.');
-      } else if (errorCode === 'NotSamePassword') {
-        alert('비밀번호가 일치하지 않습니다.');
+      } else if (errorCode === 'WrongPassword') {
+        alert('비밀번호를 확인해주세요.');
       }
     },
   });
