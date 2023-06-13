@@ -17,7 +17,6 @@ function ChattingRoomPage() {
     const newData = JSON.parse(chatData.body);
     console.log('메세지들-----------------------------', beforeMessages);
     setCurrentMessages(current => [...current, newData]);
-
     console.log('newData=> ', newData);
     console.log('채팅=> ', newData.message);
   };
