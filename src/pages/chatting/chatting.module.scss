@@ -1,3 +1,6 @@
+@import '../../styles/scss/variables';
+@import '../../styles/scss/mixins';
+
 .noData {
   text-align: center;
   padding-top: 3rem;
@@ -5,5 +8,83 @@
 
 .container {
   height: 100%;
+}
+
+.chatContainer {
+  height: 100%;
   overflow-y: auto;
+  padding: 1.25rem 2rem;
+}
+
+.chatComponentMe {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  .profile,
+  .sender {
+    display: none;
+  }
+
+  .message {
+    background-color: #efdaff;
+  }
+}
+
+.chatWrap {
+  display: flex;
+}
+
+.profileBox {
+  min-width: 2.6875rem;
+}
+
+.profile {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.createdAt {
+  text-align: center;
+  color: #6c6c6c;
+  font-size: 0.875rem;
+  margin: 0.25rem 0 1rem;
+}
+
+.createdAtNone {
+  display: none;
+}
+
+.sender {
+  color: #6c6c6c;
+  font-size: 0.875rem;
+  margin-left: 2.6875rem;
+}
+
+.message {
+  background-color: #ececec;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.formStyle {
+  width: 101%;
+  height: 10%;
+  padding: 0;
+  margin: 0;
+
+  textarea {
+    width: 73%;
+    padding: 1.25rem 2.1875rem;
+    resize: none;
+    border: 1px solid #dbdbdb;
+  }
+
+  .submitButton {
+    width: 27%;
+    background-color: $color-Signature-purple;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
 }

@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import styles from './layout.module.scss';
 import Header from '../header/Header';
 import Nav from '../nav/Nav';
@@ -6,6 +6,7 @@ import { SearchQueryProvider } from '../../../contexts/SearchQueryContext';
 import { SearchToggleProvider } from '../../../contexts/SearchToggleContext';
 
 function Layout() {
+  const location = useLocation();
   return (
     <SearchToggleProvider>
       <SearchQueryProvider>
@@ -16,7 +17,7 @@ function Layout() {
               <section className={styles.contents}>
                 <Outlet />
               </section>
-              <Nav />
+              {location.pathname.startsWith('/chatting/room') ? null : <Nav />}
             </div>
           </div>
         </div>
