@@ -99,8 +99,6 @@ function DetailPage() {
     }
   };
 
-  console.log(userStatus);
-
   const handleDeleteClick = () => {
     mutationDeletePost.mutate(postId);
   };
