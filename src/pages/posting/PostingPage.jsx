@@ -8,16 +8,18 @@ import styles from './posting.module.scss';
 import AddImageIcon from '../../assets/svg/addImage.svg';
 import RightArrow from '../../assets/svg/addressArrow.svg';
 import SearchLocationPage from '../searchLocation/SearchLocationPage';
+import IncreaseIcon from '../../assets/svg/increase.svg';
+import DecreaseIcon from '../../assets/svg/decrease.svg';
 
 function PostingPage() {
   const navigate = useNavigate();
   const [location, setLocation] = useState('주소를 입력해주세요');
   const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [persons, setPersons] = useState(0);
 
   const initialState = {
     title: '',
     price: '',
-    capacity: '',
     content: '',
     operatingTime: '',
     contentDetails: ' ',
@@ -33,7 +35,6 @@ function PostingPage() {
   const {
     title,
     price,
-    capacity,
     content,
     operatingTime,
     contentDetails,
@@ -52,51 +53,72 @@ function PostingPage() {
     },
   });
 
-  const handleClickLocationOpen = () => {
-    setIsLocationOpen(!isLocationOpen);
-  };
-
   const saveLocation = keyword => {
     setLocation(keyword);
   };
 
-  const handleClickSubmitPosting = () => {
-    if (
-      !title ||
-      !price ||
-      !capacity ||
-      !content ||
-      !operatingTime ||
-      !contentDetails ||
-      !amenities
-    ) {
-      alert('입력란을 모두 작성해 주셔야 합니다');
-      return;
+  const handleIncrease = () => {
+    if (persons < 50) {
+      setPersons(Number(persons) + 1);
     }
-    if (!image) {
-      alert('사진을 선택해 주세요');
-      return;
+  };
+  const handleDecrease = () => {
+    if (persons > 0) {
+      setPersons(Number(persons) - 1);
     }
+  };
 
-    mutation.mutate({
-      title: form.title,
-      price: Number(form.price),
-      capacity: Number(form.capacity),
-      content: form.content.replace(/\n/g, '\\n'),
-      contentDetails: form.contentDetails.replace(/\n/g, '\\n'),
-      amenities: form.amenities.replace(/\n/g, '\\n'),
-      operatingTime: form.operatingTime,
-      image: form.image,
-      location,
-    });
+  const handleClickLocationOpen = () => {
+    setIsLocationOpen(!isLocationOpen);
   };
 
   const handleChangeImageUploadBtn = async e => {
     await handleImageUpload(e);
   };
 
-  // console.log(preImageUrl);
-  // console.log(image);
+  const validation = () => {
+    const NumCheck = /^[0-9]+$/;
+    if (
+      !title ||
+      !price ||
+      !content ||
+      !operatingTime ||
+      !contentDetails ||
+      !amenities
+    ) {
+      alert('입력란을 모두 작성해 주셔야 합니다');
+      return false;
+    }
+    if (!persons) {
+      alert('인원을 확인해 주세요');
+      return false;
+    }
+    if (!NumCheck.test(price)) {
+      alert('가격은 숫자로만 입력해 주세요');
+      return false;
+    }
+    if (!image) {
+      alert('사진을 선택해 주세요');
+      return false;
+    }
+    return true;
+  };
+
+  const handleClickSubmitPosting = () => {
+    if (validation()) {
+      mutation.mutate({
+        title,
+        price: Number(form.price),
+        capacity: Number(persons),
+        content: content.replace(/\n/g, '\\n'),
+        contentDetails: contentDetails.replace(/\n/g, '\\n'),
+        amenities: amenities.replace(/\n/g, '\\n'),
+        operatingTime,
+        image,
+        location,
+      });
+    }
+  };
 
   useEffect(() => {
     if (image) {
@@ -108,7 +130,7 @@ function PostingPage() {
       console.log(form.image);
     }
   }, [image]);
-
+  console.log(persons);
   return (
     <>
       <div className={styles.wrap}>
@@ -136,20 +158,28 @@ function PostingPage() {
           type='text'
           name='price'
           value={price}
-          label='가격'
+          label='가격/일'
           placeHolder='ex. 50000'
           max='9'
           onChange={handleFormChange}
         ></PostInput>
-        <PostInput
-          type='text'
-          name='capacity'
-          value={capacity}
-          label='최대 인원'
-          placeHolder='수용 가능한 인원을 작성해 주세요'
-          max='3'
-          onChange={handleFormChange}
-        ></PostInput>
+        <div className={styles.capacity}>
+          <span>최대 인원</span>
+          <div className={styles.persons}>
+            <button type='button' onClick={handleDecrease}>
+              <img src={DecreaseIcon} alt='decrease' />
+            </button>
+            <input
+              type='text'
+              value={persons}
+              maxLength='2'
+              onChange={e => setPersons(e.target.value)}
+            />
+            <button type='button' onClick={handleIncrease}>
+              <img src={IncreaseIcon} alt='increase' />
+            </button>
+          </div>
+        </div>
         <div className={styles.inputCon}>
           <span>오피스 소개</span>
           <textarea

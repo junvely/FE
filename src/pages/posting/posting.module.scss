@@ -14,6 +14,34 @@
     margin-top: 5px;
   }
 
+  .capacity {
+    @include flex-space-between;
+    margin-top: 1.875rem;
+
+    span {
+      line-height: 1.375rem;
+      font-weight: 600;
+      display: block;
+    }
+
+    .persons {
+      display: flex;
+      align-items: center;
+
+      input {
+        width: 3rem;
+        border: none;
+        text-align: center;
+        padding: 0 0.6875rem;
+      }
+
+      button {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+
   .inputCon {
     margin-top: 1.25rem;
 
@@ -48,9 +76,9 @@
   .address {
     button {
       @include flex-space-between;
+      @extend .input;
       align-items: center;
       display: flex;
-      @extend .input;
       text-align: left;
       color: #929292;
     }
