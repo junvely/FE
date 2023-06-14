@@ -77,6 +77,7 @@ function ChattingRoomPage() {
           </div>
         )}
         {beforeMessages &&
+          beforeMessages.length !== 0 &&
           beforeMessages.map((message, i) => (
             <div>
               <div
@@ -110,6 +111,7 @@ function ChattingRoomPage() {
             </div>
           ))}
         {currentMessages &&
+          currentMessages.length !== 0 &&
           currentMessages.map((message, i) => (
             <div>
               <div
