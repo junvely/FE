@@ -95,27 +95,29 @@
   .operatingTime {
     .operatingCon {
       @include flex-space-between;
+      line-height: 3rem;
+      margin-top: 4px;
       border: 1px solid #b3b3b3;
       border-radius: 4px;
       overflow: hidden;
-      margin-top: 4px;
-      line-height: 3rem;
 
-      // TimeToggle 컴포넌트
-      select {
-        width: 45.6%;
-        height: 3rem;
-        text-align: center;
-        cursor: pointer;
+      // OperatingTime 컴포넌트
+      .timeCon {
+        @include flex-space-between;
+        width: 100%;
 
-        // select 브라우저별 화살표 없애기
-        -webkit-appearance: none; /* 크롬  */
-        -moz-appearance: none; /* 파이어폭스  */
-        appearance: none;
-
-        option {
-          height: 2rem;
+        div {
+          @include flex-justify-center;
+          width: 45.6%;
+          height: 3rem;
+          text-align: center;
           cursor: pointer;
+
+          input {
+            width: 30px;
+            text-align: center;
+            border: none;
+          }
         }
       }
     }
