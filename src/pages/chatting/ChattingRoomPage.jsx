@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import LoadingSpinner from 'components/LoadingSpinner';
 import {
   connectClient,
