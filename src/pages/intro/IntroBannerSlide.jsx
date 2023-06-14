@@ -10,7 +10,7 @@ import introBannerOutCon from '../../assets/img/introBannerOutCon.png';
 function IntroBannerSlide() {
   const [currentPage, setCurrentPage] = useState(0);
   const slideLength = 4;
-  const [colorChange, setColorChange] = useState(styles.colorBlue);
+  const [bgColorChange, setbgColorChange] = useState(styles.colorBlue);
 
   const handleClickSetCurrentPage = e => {
     setCurrentPage(Number(e.target.id));
@@ -30,19 +30,19 @@ function IntroBannerSlide() {
 
   useEffect(() => {
     if (currentPage === 0) {
-      setColorChange(styles.colorGreen);
+      setbgColorChange(styles.colorGreen);
     } else if (currentPage === 1) {
-      setColorChange(styles.colorPurple);
+      setbgColorChange(styles.colorPurple);
     } else if (currentPage === 2) {
-      setColorChange(styles.colorYellow);
+      setbgColorChange(styles.colorYellow);
     } else if (currentPage === 3) {
-      setColorChange(styles.colorBlue);
+      setbgColorChange(styles.colorBlue);
     }
   }, [currentPage]);
 
   return (
     <div className={styles.sliderWrap}>
-      <div className={`${styles.colorBox} ${colorChange}`} />
+      <div className={`${styles.colorBox} ${bgColorChange}`} />
       <div className={styles.sliderCon}>
         <img
           src={introBannerOutCon}
@@ -59,7 +59,12 @@ function IntroBannerSlide() {
           <li className={`${styles.slide} ${styles.slide1}`}>
             <h3>
               나만의 <br />
-              <span className='text-[#0047FF]'>오피스 공간</span>이
+              <span>오</span>
+              <span>피</span>
+              <span>스</span>
+              <span>공</span>
+              <span>간</span>
+              이
               <br /> 필요하신가요?
             </h3>
             <p>
@@ -71,9 +76,14 @@ function IntroBannerSlide() {
             <h3>
               공유 오피스부터
               <br /> 독립 오피스까지 <br />
-              <span className='text-[#0047FF] text-1xl'>
-                지역별로 다양하게!
-              </span>
+              <span>지</span>
+              <span>역</span>
+              <span>별</span>
+              <span>로</span>
+              <span>&nbsp;다</span>
+              <span>양</span>
+              <span>하</span>
+              <span>게</span>
             </h3>
             <img src={LocationsImage} alt='locations'></img>
           </li>
@@ -94,9 +104,9 @@ function IntroBannerSlide() {
               내 오피스도 <br /> 쉽고 간편하게
               <br /> 올릴 수 있으니까
             </h3>
-            <span type='button' className={styles.post}>
+            <div className={styles.post}>
               <img src={PostIcon} alt='post' />
-            </span>
+            </div>
           </li>
         </ul>
         <div className={styles.sliderButtons}>
