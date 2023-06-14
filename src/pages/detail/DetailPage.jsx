@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import Slider from 'components/common/slider/Slider';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteCancelReservation, getPostDetail } from 'apis/detail';
@@ -69,18 +69,21 @@ function DetailPage() {
   // 채팅 방 생성
   const mutationChatting = useMutation(postMakeChattingRoom, {
     onSuccess: result => {
+      const { userStatus } = data.data;
+      console.log('방 생성한 유저 상태', userStatus);
       console.log('방 생성 결과', result);
       if (result.status === 'OK') {
-        navigate(`/chatting/room/${result.data}`);
+        if (userStatus === 1 || userStatus === 2) {
+          navigate(`/chatting/room/${result.data}`);
+        } else if (userStatus === 3) {
+          navigate('/chatting');
+        }
       }
     },
     onError: error => {
       alert('채팅 방이 생성되지 않았습니다. 다시 시도해주세요.');
     },
   });
-
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <div>데이터 처리 중 ERROR가 발생하였습니다.</div>;
 
   const {
     id,
@@ -95,7 +98,7 @@ function DetailPage() {
     likeStatus,
     likeCount,
     userStatus,
-  } = data.data;
+  } = data.data || {};
 
   // 예약하기 클릭 시 이동
   const handleClickResBtn = () => {
@@ -129,6 +132,8 @@ function DetailPage() {
 
   return (
     <div className={styles.container}>
+      {isLoading && <LoadingSpinner />}
+      {isError && <div>데이터 처리 중 ERROR가 발생하였습니다.</div>}
       <Slider post={data.data} />
       <div className={styles.wrap}>
         <h2 className={styles.title}>{title}</h2>
