@@ -20,6 +20,7 @@ function ChattingListPage() {
         </div>
       )}
       {data &&
+        data.length !== 0 &&
         data.map(list => (
           <Link to={`/chatting/room/${list.roomId}`} key={list.roomId}>
             {console.log(list)}
