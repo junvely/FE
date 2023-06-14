@@ -1,11 +1,80 @@
 @import '../../styles/scss/variables';
 @import '../../styles/scss/mixins';
 
+// 채팅 리스트
 .noData {
   text-align: center;
-  padding-top: 3rem;
+  padding-top: 5rem;
 }
 
+.chatListContainer {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.listWrap {
+  padding: 1.25rem 1.875rem;
+  display: flex;
+  border-bottom: 1px solid $color-line-gray;
+}
+
+.listPhotoFrame {
+  width: 4.5rem;
+  height: 4.5rem;
+  object-fit: cover;
+  overflow: hidden;
+  margin-right: 0.75rem;
+  border-radius: 6px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.listContentWrap {
+  width: 100%;
+  max-width: 17.8125rem;
+  display: flex;
+  justify-content: space-between;
+  // align-items: center;
+  img {
+    width: 2.25rem;
+    height: 100%;
+  }
+}
+
+.listTitleWrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  span {
+    margin-left: 0.625rem;
+    font-size: 0.75rem;
+    color: #929292;
+  }
+}
+
+.listTitle {
+  @include ellipsis;
+  font-weight: 600;
+  margin-bottom: 0.4375rem;
+}
+
+.chatListText {
+  @include multilineEllipsis;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 0.875rem;
+  color: #929292;
+}
+
+.listTextWrap {
+  width: 87%;
+}
+
+// 채팅 룸
 .container {
   height: 100%;
 }
@@ -14,6 +83,31 @@
   height: 100%;
   overflow-y: auto;
   padding: 1.25rem 2rem;
+}
+
+.chatContainerNull {
+  @extend .chatContainer;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4.4375rem 0;
+  img {
+    width: 8.5rem;
+    height: 8.5rem;
+    margin-bottom: 0.875rem;
+  }
+  .noneTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 2.25rem;
+  }
+  p {
+    font-size: 0.875rem;
+  }
+  .noneInfo {
+    color: #929292;
+  }
 }
 
 .chatComponentMe {
@@ -41,6 +135,7 @@
 .profile {
   width: 2.25rem;
   height: 2.25rem;
+  border-radius: 6px;
 }
 
 .createdAt {

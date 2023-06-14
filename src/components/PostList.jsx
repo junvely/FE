@@ -9,12 +9,12 @@ import likeNullIcon from '../assets/svg/likeBlack.svg';
 import profileIcon from '../assets/svg/profileSmall.svg';
 
 function PostList({ post }) {
-  const loc = useLocation();
+  const location = useLocation();
   let formattedStDate = null;
   let formattedEdDate = null;
 
   // 날짜 포맷 변경
-  if (loc.pathname === '/myreservations') {
+  if (location.pathname === '/myreservations') {
     const stDate = new Date(post.startDate);
     formattedStDate =
       stDate && format(stDate, 'yyyy. MM. dd(E)', { locale: ko });
@@ -31,7 +31,7 @@ function PostList({ post }) {
           <img src={post.imageUrl} alt='오피스이미지' />
         </div>
         <div className={styles.listTextWrap}>
-          {loc.pathname === '/myreservations' && (
+          {location.pathname === '/myreservations' && (
             <div>
               <p className={styles.listTitle}>{post.title}</p>
               <p className={styles.resListText}>{post.location}</p>
@@ -40,7 +40,8 @@ function PostList({ post }) {
               </p>
             </div>
           )}
-          {(loc.pathname === '/likedposts' || loc.pathname === '/myposts') && (
+          {(location.pathname === '/likedposts' ||
+            location.pathname === '/myposts') && (
             <div>
               <p className={styles.listTitle}>{post.title}</p>
               <p className={styles.listText}>
@@ -63,12 +64,6 @@ function PostList({ post }) {
                   최대 {post.capacity}명
                 </p>
               </div>
-            </div>
-          )}
-          {loc.pathname === '/chattings' && (
-            <div>
-              <p className={styles.listTitle}>{post.nickname}</p>
-              <div>테스트 중입니다.</div>
             </div>
           )}
         </div>
