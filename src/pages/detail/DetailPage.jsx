@@ -35,8 +35,10 @@ function DetailPage() {
     },
   });
 
-  const { data1 } = useQuery('chatList', () => postMakeChattingRoom(postId));
-  console.log(data1);
+  // 채팅 방 생성
+  const { data: makeRoomData } = useQuery('makeChattingRoom', () =>
+    postMakeChattingRoom(postId),
+  );
 
   const mutationDeletePost = useMutation(deletePost, {
     onSuccess: () => {
@@ -67,7 +69,7 @@ function DetailPage() {
   // 채팅 방 생성
   const mutationChatting = useMutation(postMakeChattingRoom, {
     onSuccess: result => {
-      console.log(result);
+      console.log('방 생성 결과', result);
       if (result.status === 'OK') {
         navigate(`/chatting/room/${result.data}`);
       }
