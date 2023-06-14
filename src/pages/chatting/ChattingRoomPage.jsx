@@ -61,6 +61,13 @@ function ChattingRoomPage() {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [beforeMessages, currentMessages]);
 
+  useEffect(() => {
+    return () => {
+      console.log('언마운트 시 연결 해제');
+      disconnectClient();
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       {isLoading && <LoadingSpinner />}
