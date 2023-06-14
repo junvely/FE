@@ -1,15 +1,45 @@
-import React from 'react';
-import PostList from 'components/PostList';
 import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getChattingList } from 'apis/chatting';
+import LoadingSpinner from 'components/LoadingSpinner';
+import { useEffect } from 'react';
 import styles from './chatting.module.scss';
+import rightArrow from '../../assets/svg/chatListRightArrow.svg';
 
 function ChattingListPage() {
-  const post = { nickname: '테스트' };
+  const { isLoading, isError, data } = useQuery('chatList', getChattingList);
+  console.log(data);
+
   return (
-    <div>
-      <Link to='/chatting/room/1'>채팅룸1</Link>
-      <div className={styles.noData}>서비스 준비 중입니다.</div>
-      {/* <PostList post={post} /> */}
+    <div className={styles.chatListContainer}>
+      {isLoading && <LoadingSpinner />}
+      {isError && <div>데이터 처리 중 ERROR가 발생하였습니다.</div>}
+      {data && data.length === 0 && (
+        <div>
+          <div className={styles.noData}>생성된 채팅 방이 없습니다.</div>
+        </div>
+      )}
+      {data &&
+        data.map(list => (
+          <Link to={`/chatting/room/${list.roomId}`} key={list.roomId}>
+            {console.log(list)}
+            <div className={styles.listWrap}>
+              <div className={styles.listPhotoFrame}>
+                <img src={list.postImage} alt='오피스이미지' />
+              </div>
+              <div className={styles.listContentWrap}>
+                <div className={styles.listTextWrap}>
+                  <div className={styles.listTitleWrap}>
+                    <p className={styles.listTitle}>{list.title}</p>
+                    <span>{list.createdAt}</span>
+                  </div>
+                  <p className={styles.chatListText}>{list.message}</p>
+                </div>
+                <img src={rightArrow} alt='오른쪽 화살표' />
+              </div>
+            </div>
+          </Link>
+        ))}
     </div>
   );
 }

@@ -35,7 +35,7 @@ const sendChat = (roomId, sender, message) => {
   );
 };
 
-// 채팅데이터 가져오기
+// 채팅 데이터 가져오기
 const getChattingData = async roomId => {
   try {
     const { data } = await instance.get(`/api/chat/room/${roomId}`);
@@ -45,4 +45,39 @@ const getChattingData = async roomId => {
   }
 };
 
-export { getChattingData, connectClient, sendChat };
+// 채팅 목록 가져오기
+const getChattingList = async () => {
+  try {
+    const { data } = await instance.get(`/api/chat/room`);
+    return data.data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+// 채팅 방 만들기
+const postMakeChattingRoom = async postId => {
+  try {
+    const { data } = await instance.post(`/api/chat/room/${postId}`);
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+// 연결 종료
+const disconnectClient = () => {
+  if (stompClient !== null) {
+    stompClient.disconnect();
+    console.log('연결 종료');
+  }
+};
+
+export {
+  getChattingData,
+  connectClient,
+  sendChat,
+  getChattingList,
+  postMakeChattingRoom,
+  disconnectClient,
+};

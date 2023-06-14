@@ -5,6 +5,7 @@ import { deleteCancelReservation, getPostDetail } from 'apis/detail';
 import { useNavigate, useParams } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { deletePost, postMainLike } from 'apis/posts';
+import { postMakeChattingRoom } from 'apis/chatting';
 import styles from './detail.module.scss';
 import locationIcon from '../../assets/svg/mapSmall.svg';
 import priceIcon from '../../assets/svg/price.svg';
@@ -34,6 +35,9 @@ function DetailPage() {
     },
   });
 
+  const { data1 } = useQuery('chatList', () => postMakeChattingRoom(postId));
+  console.log(data1);
+
   const mutationDeletePost = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries('mainPosts');
@@ -57,6 +61,19 @@ function DetailPage() {
       if (errorCode === 'NotExistPost') {
         alert('존재하지 않는 게시글 입니다.');
       }
+    },
+  });
+
+  // 채팅 방 생성
+  const mutationChatting = useMutation(postMakeChattingRoom, {
+    onSuccess: result => {
+      console.log(result);
+      if (result.status === 'OK') {
+        navigate(`/chatting/room/${result.data}`);
+      }
+    },
+    onError: error => {
+      alert('채팅 방이 생성되지 않았습니다. 다시 시도해주세요.');
     },
   });
 
@@ -103,6 +120,11 @@ function DetailPage() {
     mutationDeletePost.mutate(postId);
   };
 
+  const handleClickChattingBtn = () => {
+    mutationChatting.mutate(postId);
+    // navigate('/chatting');
+  };
+
   return (
     <div className={styles.container}>
       <Slider post={data.data} />
@@ -121,7 +143,11 @@ function DetailPage() {
                 className={styles.likeIcon}
               />
             </button>
-            <button type='button' className={styles.chattingButton}>
+            <button
+              type='button'
+              className={styles.chattingButton}
+              onClick={handleClickChattingBtn}
+            >
               <img
                 src={chattingIcon}
                 alt='chattingButton'

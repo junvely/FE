@@ -74,6 +74,20 @@
   }
 }
 
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin multilineEllipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 // media query
 @mixin mobile {
   @media (max-width: #{$breakpoint-mobile - 1px}) {
