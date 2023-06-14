@@ -85,21 +85,6 @@ function DetailPage() {
     },
   });
 
-  // const {
-  //   id,
-  //   title,
-  //   location,
-  //   price,
-  //   capacity,
-  //   content,
-  //   operatingTime,
-  //   contentDetails,
-  //   amenities,
-  //   likeStatus,
-  //   likeCount,
-  //   userStatus,
-  // } = data.data;
-
   // 예약하기 클릭 시 이동
   const handleClickResBtn = () => {
     if (data.data.userStatus === 0) {
