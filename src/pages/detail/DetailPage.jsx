@@ -13,9 +13,10 @@ import locationIcon from '../../assets/svg/mapSmall.svg';
 import priceIcon from '../../assets/svg/price.svg';
 import likeSmallIcon from '../../assets/svg/likeSmall.svg';
 import profileSmallIcon from '../../assets/svg/profileSmall.svg';
-import likeNullIcon from '../../assets/svg/likeNull.svg';
+import likeNullIcon from '../../assets/svg/likeBlack.svg';
 import likeFullIcon from '../../assets/svg/likefull.svg';
 import chattingIcon from '../../assets/svg/chatting.svg';
+import profileImage from '../../assets/img/profileDefault.png';
 import Map from '../../components/common/map/Map';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -38,6 +39,7 @@ function DetailPage() {
     },
   });
 
+  // 포스트 삭제
   const mutationDeletePost = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries('mainPosts');
@@ -118,6 +120,7 @@ function DetailPage() {
   };
 
   console.log(data && data.data.userStatus);
+  console.log(data && data.data);
 
   return (
     <div className={styles.container}>
@@ -128,8 +131,15 @@ function DetailPage() {
           <Slider post={data.data} />
           <div className={styles.wrap}>
             <h2 className={styles.title}>{data.data.title}</h2>
-            {data.data.userStatus === 3 ? null : (
-              <div className={styles.buttonBox}>
+            <div className={styles.buttonBox}>
+              <div className={styles.profileBox}>
+                <img src={profileImage} alt='프로필 이미지' />
+                <div>
+                  <p className={styles.host}>호스트</p>
+                  <p>{data.data.nickname}</p>
+                </div>
+              </div>
+              <div>
                 <button
                   type='button'
                   className={styles.likeButton}
@@ -152,16 +162,16 @@ function DetailPage() {
                     className={styles.chattingIcon}
                   />
                 </button>
-                <button
-                  type='button'
-                  alt='reservationButton'
-                  className={styles.reservationButton}
-                  onClick={handleClickResBtn}
-                >
-                  {data.data.userStatus === 2 ? '예약취소' : '예약하기'}
-                </button>
               </div>
-            )}
+            </div>
+            <button
+              type='button'
+              alt='reservationButton'
+              className={styles.reservationButton}
+              onClick={handleClickResBtn}
+            >
+              예약하기
+            </button>
             <div className={styles.infobox}>
               <p className={styles.paragraph}>
                 <img src={locationIcon} alt='location' />
