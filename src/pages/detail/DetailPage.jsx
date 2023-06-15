@@ -35,15 +35,10 @@ function DetailPage() {
     },
   });
 
-  // 채팅 방 생성
-  const { data: makeRoomData } = useQuery('makeChattingRoom', () =>
-    postMakeChattingRoom(postId),
-  );
-
   const mutationDeletePost = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries('mainPosts');
-      alert('게시글이 삭제되었습니다');
+      alert('게시글이 삭제되었습니다.');
       navigate('/main');
     },
   });
@@ -113,6 +108,8 @@ function DetailPage() {
   const handleClickChattingBtn = () => {
     mutationChatting.mutate(postId);
   };
+
+  console.log(data && data.data.userStatus);
 
   return (
     <div className={styles.container}>
@@ -196,16 +193,20 @@ function DetailPage() {
               <h3 className={styles.subTitle}>오시는 길</h3>
               <Map location={data.data.location} />
               <div className={styles.buttonWrap}>
-                <button
-                  type='button'
-                  className={styles.deleteButton}
-                  onClick={handleDeleteClick}
-                >
-                  삭제
-                </button>
-                <button type='button' className={styles.updateButton}>
-                  수정
-                </button>
+                {data.data.userStatus === 3 && (
+                  <div>
+                    <button
+                      type='button'
+                      className={styles.deleteButton}
+                      onClick={handleDeleteClick}
+                    >
+                      삭제
+                    </button>
+                    <button type='button' className={styles.updateButton}>
+                      수정
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
