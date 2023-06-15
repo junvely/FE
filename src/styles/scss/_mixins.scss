@@ -95,12 +95,6 @@
   }
 }
 
-@mixin mobile-small {
-  @media (max-width: #{$breakpoint-mobile-small - 1px}) {
-    @content;
-  }
-}
-
 // animation
 // text 효과 애니메이션
 @mixin text-animation {
@@ -164,6 +158,24 @@
       top: 0;
       visibility: visible;
       opacity: 1;
+    }
+  }
+}
+
+// fade-out 애니메이션
+@mixin fade-out-animation {
+  position: absolute;
+  display: inline-block;
+  animation: fade-out 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+
+  @keyframes fade-out {
+    0% {
+    }
+    100% {
+      visibility: hidden;
+      opacity: 0;
     }
   }
 }
