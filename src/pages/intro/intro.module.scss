@@ -36,6 +36,36 @@ $color-yellow: #ffedbf;
       justify-content: flex-start;
       align-items: center;
 
+      .startBanner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        background-color: #7c00de;
+        transition: all 0.3s;
+        cursor: pointer;
+
+        img {
+          width: 47%;
+          margin: 15.625rem auto 0;
+        }
+
+        span {
+          display: block;
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #fff;
+          text-align: center;
+          margin-top: 5%;
+        }
+      }
+
+      .start {
+        @include fade-out-animation;
+      }
+
       .logo {
         width: 47%;
         margin: 7% auto 1.1875rem;
