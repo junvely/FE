@@ -110,47 +110,52 @@ function DetailPage() {
           <Slider post={data.data} />
           <div className={styles.wrap}>
             <h2 className={styles.title}>{data.data.title}</h2>
-            <div className={styles.buttonBox}>
-              <div className={styles.profileBox}>
-                <img src={profileImage} alt='프로필 이미지' />
-                <div>
-                  <p className={styles.host}>호스트</p>
-                  <p>{data.data.nickname}</p>
-                </div>
-              </div>
+            {data.data.userStatus === 3 ? null : (
               <div>
+                <div className={styles.buttonBox}>
+                  <div className={styles.profileBox}>
+                    <img src={profileImage} alt='프로필 이미지' />
+                    <div>
+                      <p className={styles.host}>호스트</p>
+                      <p>{data.data.nickname}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      type='button'
+                      className={styles.likeButton}
+                      onClick={handleClickLikeBtn}
+                    >
+                      <img
+                        src={data.data.likeStatus ? likeFullIcon : likeNullIcon}
+                        alt='likeButton'
+                        className={styles.likeIcon}
+                      />
+                    </button>
+                    <button
+                      type='button'
+                      className={styles.chattingButton}
+                      onClick={handleClickChattingBtn}
+                    >
+                      <img
+                        src={chattingIcon}
+                        alt='chattingButton'
+                        className={styles.chattingIcon}
+                      />
+                    </button>
+                  </div>
+                </div>
                 <button
                   type='button'
-                  className={styles.likeButton}
-                  onClick={handleClickLikeBtn}
+                  alt='reservationButton'
+                  className={styles.reservationButton}
+                  onClick={handleClickResBtn}
                 >
-                  <img
-                    src={data.data.likeStatus ? likeFullIcon : likeNullIcon}
-                    alt='likeButton'
-                    className={styles.likeIcon}
-                  />
-                </button>
-                <button
-                  type='button'
-                  className={styles.chattingButton}
-                  onClick={handleClickChattingBtn}
-                >
-                  <img
-                    src={chattingIcon}
-                    alt='chattingButton'
-                    className={styles.chattingIcon}
-                  />
+                  예약하기
                 </button>
               </div>
-            </div>
-            <button
-              type='button'
-              alt='reservationButton'
-              className={styles.reservationButton}
-              onClick={handleClickResBtn}
-            >
-              예약하기
-            </button>
+            )}
+
             <div className={styles.infobox}>
               <p className={styles.paragraph}>
                 <img src={locationIcon} alt='location' />
