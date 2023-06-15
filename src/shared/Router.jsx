@@ -34,7 +34,7 @@ function Router() {
             <Route path='/myreservations' element={<MyReservations />} />
             <Route path='/reservation' element={<ReservationPage />} />
             <Route
-              path='/reservationSuccess'
+              path='/reservationSuccess/:postId'
               element={<ReservationSuccessPage />}
             />
             <Route path='/chatting' element={<ChattingListPage />}></Route>

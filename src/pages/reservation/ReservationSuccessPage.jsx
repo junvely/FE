@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { getReservationSuccess } from 'apis/reservation';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -12,9 +12,8 @@ import Map from '../../components/common/map/Map';
 
 function ReservationSuccessPage() {
   const navigate = useNavigate();
-  // postId 가져오기
-  const loc = useLocation();
-  const { postId } = { ...loc.state };
+  const { postId } = useParams();
+  console.log(postId);
 
   // 데이터 조회
   const { data, isLoading, isError } = useQuery('reservationSuccess', () =>
@@ -43,7 +42,7 @@ function ReservationSuccessPage() {
       <div className={styles.resSuccessTextWrap}>
         <div className={styles.resSuccessTextBox}>
           <p className={styles.resSuccessText}>예약이 완료되었습니다.</p>
-          <p>오피스 담당자가 24시간 내로 채팅을 보내드릴 예정입니다.</p>
+          <p>오피스 담당자가 결제 정보를 채팅으로 보내드릴 예정입니다.</p>
         </div>
       </div>
       <div className={styles.resSuccessMapBox}>
