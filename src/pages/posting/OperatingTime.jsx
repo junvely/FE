@@ -12,7 +12,7 @@ function OperatingTime({ time, setTime }) {
         name='hour'
         value={time.hour}
         max={24}
-        maxLength={2}
+        maxLength='2'
         onChange={handleGetTime}
       />
       <span>:</span>
@@ -20,7 +20,7 @@ function OperatingTime({ time, setTime }) {
         type='text'
         name='minute'
         value={time.minute}
-        maxLength={2}
+        maxLength='2'
         onChange={handleGetTime}
       />
     </div>
