@@ -10,6 +10,10 @@
   @include mobile {
     font-size: 14px;
   }
+
+  @include mobile-small {
+    font-size: 10px;
+  }
 }
 
 *,
@@ -23,7 +27,6 @@ html {
 }
 
 body {
-  // min-width: 320px;
   background-color: $color-Signature-blue;
 }
 
