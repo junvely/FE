@@ -139,41 +139,6 @@ function PostingPage() {
     await handleImageUpload(e);
   };
 
-  // 운영 시간 데이터 가공
-  const getOperatingTime = () => {
-    let operatingTimeString = `운영 시간은 ${openTime.hour} : ${openTime.minute} ~ ${closeTime.hour} : ${closeTime.minute}시 까지 입니다. \n휴무일은 `;
-    const checkedHolidays = Object.keys(holidays).filter(key => holidays[key]);
-
-    if (checkedHolidays.length) {
-      operatingTimeString += `${holidayType} `;
-      checkedHolidays.forEach(holiday => {
-        operatingTimeString += `${holiday}요일 `;
-      });
-      operatingTimeString += '입니다.';
-      return operatingTimeString;
-    }
-    operatingTimeString += '연중무휴 입니다.';
-    return operatingTimeString;
-  };
-
-  // 편의 시설 데이터 가공
-  const getAmenities = () => {
-    let amenityString = '편의시설은 ';
-    const checkedAmenities = Object.keys(amenityList).filter(
-      key => amenityList[key],
-    );
-
-    if (checkedAmenities.length) {
-      checkedAmenities.forEach(value => {
-        amenityString += `${value}, `;
-      });
-      amenityString += '등이 구비되어 있습니다.';
-      return amenityString;
-    }
-    amenityString += '따로 구비되어 있지 않습니다.';
-    return amenityString;
-  };
-
   const validation = () => {
     const numCheck = /^[0-9]+$/;
     if (!title || !price || !content || !contentDetails) {
@@ -199,9 +164,6 @@ function PostingPage() {
   };
 
   const handleClickSubmitPosting = () => {
-    const operatingTimeData = getOperatingTime();
-    const amenitiesData = getAmenities();
-
     if (validation()) {
       mutation.mutate({
         title,
@@ -209,8 +171,8 @@ function PostingPage() {
         capacity: Number(persons),
         content: content.replace(/\n/g, '\\n'),
         contentDetails: contentDetails.replace(/\n/g, '\\n'),
-        amenities: amenitiesData,
-        operatingTime: operatingTimeData,
+        amenities: amenityList,
+        operatingTime: { openTime, closeTime, holidayTypes, holidays },
         image,
         location,
       });
