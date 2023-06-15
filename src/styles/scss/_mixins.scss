@@ -95,6 +95,12 @@
   }
 }
 
+@mixin mobile-small {
+  @media (max-width: #{$breakpoint-mobile-small - 1px}) {
+    @content;
+  }
+}
+
 // animation
 // text 효과 애니메이션
 @mixin text-animation {
