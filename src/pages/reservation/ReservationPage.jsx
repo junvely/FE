@@ -34,7 +34,16 @@ function ReservationPage() {
       }
     },
     onError: error => {
-      alert('예약이 완료되지 않았습니다. 다시 시도해주세요.');
+      const { errorCode } = error.response.data;
+      if (errorCode === 'InvalidDate') {
+        alert('예약할 수 없는 날짜입니다.');
+      }
+      if (errorCode === 'ExistReserveDate') {
+        alert('이미 예약이 된 날짜입니다.');
+      }
+      if (errorCode === 'NotExistPost') {
+        alert('존재하지 않는 게시글입니다.');
+      }
     },
   });
 
