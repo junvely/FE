@@ -30,7 +30,7 @@ function ReservationPage() {
     onSuccess: result => {
       if (result.status === 'OK') {
         alert('예약이 완료되었습니다.');
-        navigate('/reservationSuccess', { state: { postId } });
+        navigate(`/reservationSuccess/${postId}`);
       }
     },
     onError: error => {

@@ -12,14 +12,13 @@ function MyReservations() {
     getMyReservations,
   );
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <div>데이터 처리 중 ERROR가 발생하였습니다.</div>;
-
-  console.log(data.data);
+  console.log(data && data.data);
 
   return (
     <div className={styles.pageContainer}>
-      {data.data.length === 0 ? (
+      {isLoading && <LoadingSpinner />}
+      {isError && <div>데이터 처리 중 ERROR가 발생하였습니다.</div>}
+      {data && data.data.length === 0 && (
         <div className={styles.pageWrap}>
           <div className={styles.pageTitleBox}>
             <h2 className={styles.pageTitle}>
@@ -29,7 +28,8 @@ function MyReservations() {
           </div>
           <div className={styles.noData}>데이터가 없습니다.</div>
         </div>
-      ) : (
+      )}
+      {data && data.data.length !== 0 && (
         <div className={styles.pageWrap}>
           <div className={styles.pageTitleBox}>
             <h2 className={styles.pageTitle}>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import useForm from 'hooks/useForm';
 import { postAddPost } from 'apis/posts';
-import { getPostDetail } from 'apis/detail';
+import getPostDetail from 'apis/detail';
 import { useRecoilState } from 'recoil';
 import editingState from 'recoil/atom';
 import SearchLocationPage from '../searchLocation/SearchLocationPage';

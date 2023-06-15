@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteCancelReservation } from 'apis/reservation';
 import styles from '../pages/mypage/mypage.module.scss';
 import locationIcon from '../assets/svg/location.svg';
 import priceIcon from '../assets/svg/price2.svg';
@@ -10,6 +12,9 @@ import profileIcon from '../assets/svg/profileSmall.svg';
 
 function PostList({ post }) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   let formattedStDate = null;
   let formattedEdDate = null;
 
@@ -24,50 +29,98 @@ function PostList({ post }) {
       edDate && format(edDate, 'yyyy. MM. dd(E)', { locale: ko });
   }
 
+  // 예약 취소
+  const mutationDeleteReservation = useMutation(deleteCancelReservation, {
+    onSuccess: result => {
+      if (result.status === 'OK') {
+        queryClient.invalidateQueries('myReservations');
+        alert('예약이 취소되었습니다.');
+      }
+    },
+    onError: error => {
+      const { errorCode } = error.response.data;
+      if (errorCode === 'NotReserved') {
+        alert('예약 취소는 예약자만 가능합니다.');
+      }
+      if (errorCode === 'NotExistPost') {
+        alert('존재하지 않는 게시글 입니다.');
+      }
+    },
+  });
+
+  const handleClickCancel = e => {
+    e.preventDefault();
+    mutationDeleteReservation.mutate(post.id);
+  };
+
+  const handleClickConfirm = e => {
+    e.preventDefault();
+    navigate(`/reservationSuccess/${post.id}`);
+  };
+
   return (
     <Link to={`/detail/${post.id}`}>
-      <div className={styles.listWrap}>
-        <div className={styles.listPhotoFrame}>
-          <img src={post.imageUrl} alt='오피스이미지' />
-        </div>
-        <div className={styles.listTextWrap}>
-          {location.pathname === '/myreservations' && (
+      {location.pathname === '/myreservations' && (
+        <div className={styles.listWrap}>
+          <div className={styles.resListPhotoFrame}>
+            <img src={post.imageUrl} alt='오피스이미지' />
+          </div>
+          <div className={styles.listTextWrap}>
+            <p className={styles.resListTitle}>{post.title}</p>
+            <p className={styles.resListText}>{post.location}</p>
+            <p className={styles.resListDate}>
+              {formattedStDate} ~ {` ${formattedEdDate}`}
+            </p>
             <div>
-              <p className={styles.listTitle}>{post.title}</p>
-              <p className={styles.resListText}>{post.location}</p>
-              <p className={styles.resListText}>
-                {formattedStDate} ~ {` ${formattedEdDate}`}
+              <button
+                type='button'
+                className={styles.resBtn}
+                onClick={e => handleClickCancel(e)}
+              >
+                예약취소
+              </button>
+              <button
+                type='button'
+                className={styles.resBtn}
+                onClick={e => handleClickConfirm(e)}
+              >
+                예약확인
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {(location.pathname === '/likedposts' ||
+        location.pathname === '/myposts') && (
+        <div className={styles.listWrap}>
+          <div className={styles.listPhotoFrame}>
+            <img src={post.imageUrl} alt='오피스이미지' />
+          </div>
+          <div className={styles.listTextWrap}>
+            <p className={styles.listTitle}>{post.title}</p>
+            <p className={styles.listText}>
+              <img src={locationIcon} alt='위치 아이콘' /> {post.location}
+            </p>
+            <p className={styles.listText}>
+              <img src={priceIcon} alt='금액 아이콘' />
+              <span className={styles.priceText}>
+                {post.price.toLocaleString()}
+              </span>
+              &nbsp;원/일
+            </p>
+            <div className={styles.listFlexWrap}>
+              <p className={styles.listText}>
+                <img src={likeNullIcon} alt='좋아요 아이콘' />
+                {post.likeCount}
+              </p>
+              <p className={styles.capaText}>
+                <img src={profileIcon} alt='인원수 아이콘' />
+                최대 {post.capacity}명
               </p>
             </div>
-          )}
-          {(location.pathname === '/likedposts' ||
-            location.pathname === '/myposts') && (
-            <div>
-              <p className={styles.listTitle}>{post.title}</p>
-              <p className={styles.listText}>
-                <img src={locationIcon} alt='위치 아이콘' /> {post.location}
-              </p>
-              <p className={styles.listText}>
-                <img src={priceIcon} alt='금액 아이콘' />
-                <span className={styles.priceText}>
-                  {post.price.toLocaleString()}
-                </span>
-                &nbsp;원/일
-              </p>
-              <div className={styles.listFlexWrap}>
-                <p className={styles.listText}>
-                  <img src={likeNullIcon} alt='좋아요 아이콘' />
-                  {post.likeCount}
-                </p>
-                <p className={styles.capaText}>
-                  <img src={profileIcon} alt='인원수 아이콘' />
-                  최대 {post.capacity}명
-                </p>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </Link>
   );
 }

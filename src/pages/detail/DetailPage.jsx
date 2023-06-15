@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Slider from 'components/common/slider/Slider';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteCancelReservation, getPostDetail } from 'apis/detail';
+import getPostDetail from 'apis/detail';
 import { useNavigate, useParams } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { deletePost, postMainLike } from 'apis/posts';
@@ -48,24 +48,6 @@ function DetailPage() {
     },
   });
 
-  // 예약 취소
-  const mutationDeleteReservation = useMutation(deleteCancelReservation, {
-    onSuccess: result => {
-      if (result.status === 'OK') {
-        alert('예약이 취소되었습니다.');
-      }
-    },
-    onError: error => {
-      const { errorCode } = error.response.data;
-      if (errorCode === 'NotReserved') {
-        alert('예약 취소는 예약자만 가능합니다.');
-      }
-      if (errorCode === 'NotExistPost') {
-        alert('존재하지 않는 게시글 입니다.');
-      }
-    },
-  });
-
   // 채팅 방 생성
   const mutationChatting = useMutation(postMakeChattingRoom, {
     onSuccess: result => {
@@ -91,11 +73,8 @@ function DetailPage() {
       alert('로그인이 필요한 기능입니다.');
       navigate('/login');
     }
-    if (data.data.userStatus === 1) {
+    if (data.data.userStatus === 1 || data.data.userStatus === 2) {
       navigate('/reservation', { state: { postId } });
-    }
-    if (data.data.userStatus === 2) {
-      mutationDeleteReservation.mutate(postId);
     }
   };
 
