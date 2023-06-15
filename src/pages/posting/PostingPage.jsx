@@ -160,12 +160,15 @@ function PostingPage() {
       alert('입력란을 모두 작성해 주셔야 합니다');
       return false;
     }
-    if (!numCheck.test(price)) {
-      alert('가격은 숫자만 입력해 주세요');
-      return false;
-    }
-    if (!persons) {
-      alert('인원을 확인해 주세요');
+    if (
+      !numCheck.test(price) ||
+      !numCheck.test(persons) ||
+      !numCheck.test(openTime.hour) ||
+      !numCheck.test(openTime.minute) ||
+      !numCheck.test(closeTime.hour) ||
+      !numCheck.test(closeTime.minute)
+    ) {
+      alert('가격, 인원, 운영 시간은 숫자로 입력해 주세요');
       return false;
     }
     if (!image) {

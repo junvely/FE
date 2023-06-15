@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import uuid from 'react-uuid';
 import styles from './intro.module.scss';
 import arrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 import arrowRightIcon from '../../assets/svg/arrowRight.svg';
@@ -59,11 +60,9 @@ function IntroBannerSlide() {
           <li className={`${styles.slide} ${styles.slide1}`}>
             <h3>
               나만의 <br />
-              <span>오</span>
-              <span>피</span>
-              <span>스</span>
-              <span>공</span>
-              <span>간</span>
+              {['오', '피', '스', '공', '간'].map(string => (
+                <span key={uuid()}>{string}</span>
+              ))}
               이
               <br /> 필요하신가요?
             </h3>
@@ -76,14 +75,11 @@ function IntroBannerSlide() {
             <h3>
               공유 오피스부터
               <br /> 독립 오피스까지 <br />
-              <span>지</span>
-              <span>역</span>
-              <span>별</span>
-              <span>로</span>
-              <span>&nbsp;다</span>
-              <span>양</span>
-              <span>하</span>
-              <span>게</span>
+              {['지', '역', '별', '로 ', ' 다', '양', '하', '게'].map(
+                string => (
+                  <span key={uuid()}>{string}</span>
+                ),
+              )}
             </h3>
             <img src={LocationsImage} alt='locations'></img>
           </li>
