@@ -1,9 +1,12 @@
 import PostInput from 'components/PostInput';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import useForm from 'hooks/useForm';
 import { postAddPost } from 'apis/posts';
+import { getPostDetail } from 'apis/detail';
+import { useRecoilState } from 'recoil';
+import editingState from 'recoil/atom';
 import SearchLocationPage from '../searchLocation/SearchLocationPage';
 import SelectOptions from '../../components/SelectOptions';
 import OperatingTime from './OperatingTime';
@@ -17,6 +20,9 @@ function PostingPage() {
   const navigate = useNavigate();
   const [location, setLocation] = useState('주소를 입력해주세요');
   const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const locationValue = useLocation();
+  const { postId } = { ...locationValue.state };
+  const [isEditing, setIsEditing] = useRecoilState(editingState);
 
   // 운영 시간
   const initialTime = {
@@ -68,10 +74,23 @@ function PostingPage() {
     image: '',
   };
 
-  const [form, handleFormChange, handleImageUpload, resetForm] =
+  const [form, handleFormChange, handleImageUpload, resetForm, setForm] =
     useForm(initialState);
   const [preImageUrl, setPreImageUrl] = useState();
   const { title, price, content, contentDetails, image } = form;
+
+  // 수정 할 데이터 가져오기
+  const { data, isLoading, isError } = useQuery(
+    'postDetail',
+    () => getPostDetail(postId),
+    {
+      onSuccess: response => {
+        console.log('데이터 가져옴!! ', response.data);
+        setForm(response.data);
+      },
+      enabled: isEditing,
+    },
+  );
 
   const mutation = useMutation(postAddPost, {
     onSuccess: () => {
@@ -207,6 +226,14 @@ function PostingPage() {
     }
   }, [image]);
 
+  useEffect(() => {
+    if (isEditing) {
+      setLocation(location || '주소를 입력해주세요');
+    } else {
+      setLocation('주소를 입력해주세요');
+    }
+  }, [isEditing, data]);
+
   return (
     <>
       <div className={styles.wrap}>
@@ -314,6 +341,7 @@ function PostingPage() {
           <span>추가 안내</span>
           <textarea
             name='contentDetails'
+            value={contentDetails}
             placeholder='사용 가능 시간, 환불 규정 등'
             onChange={handleFormChange}
           />
