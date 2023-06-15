@@ -12,6 +12,7 @@ import AddImageIcon from '../../assets/svg/addImage.svg';
 import RightArrow from '../../assets/svg/addressArrow.svg';
 import IncreaseIcon from '../../assets/svg/increase.svg';
 import DecreaseIcon from '../../assets/svg/decrease.svg';
+import XBoxIcon from '../../assets/svg/xBox.svg';
 
 function PostingPage() {
   const navigate = useNavigate();
@@ -344,7 +345,24 @@ function PostingPage() {
         <div className={styles.inputCon}>
           <span>이미지 등록</span>
           <label htmlFor='image' className={styles.addImage}>
-            <img src={preImageUrl || AddImageIcon} alt='preview' />
+            {preImageUrl ? (
+              <>
+                <img
+                  src={preImageUrl}
+                  alt='preview'
+                  className={styles.preImageUrl}
+                />
+                <button
+                  type='button'
+                  className={styles.imgDelete}
+                  onClick={() => console.log('delete')}
+                >
+                  <img src={XBoxIcon} alt='img-delete' />
+                </button>
+              </>
+            ) : (
+              <img src={AddImageIcon} alt='preview' />
+            )}
             <input
               type='file'
               name='image'
