@@ -6,7 +6,6 @@ const verifyEmail = async validEmail => {
     console.log('이메일 전송 결과', data);
     return data;
   } catch (err) {
-    alert('이메일 전송에 실패했습니다.');
     throw err.response.data;
   }
 };

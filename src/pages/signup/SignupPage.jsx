@@ -21,19 +21,24 @@ function SignupPage() {
   const [passwordCheckMessage, setPasswordCheckMessage] = useState('');
   const [codeMessage, setCodeMessage] = useState('');
 
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isEmailDisabled, setIsEmailDisabled] = useState(false);
+  const [isCodeDisabled, setIsCodeDisabled] = useState(false);
 
   // 이메일로 메일 전송
   const mutationEmailCheck = useMutation(verifyEmail, {
     onSuccess: result => {
       if (result.status === 'OK') {
         alert('메일이 전송되었습니다.');
+        setIsEmailDisabled(true);
       }
     },
     onError: error => {
-      const { errorCode } = error.response.data;
+      const { errorCode } = error;
       if (errorCode === 'InvalidEmailPattern') {
         alert('유효하지 않은 이메일 형식입니다.');
+      }
+      if (errorCode === 'ExistEmail') {
+        alert('이미 등록된 이메일입니다.');
       }
       if (errorCode === 'EmailSendFailed') {
         alert('이메일 전송에 실패하였습니다.');
@@ -46,11 +51,11 @@ function SignupPage() {
     onSuccess: result => {
       if (result.status === 'OK') {
         alert('이메일 인증이 완료되었습니다.');
-        setIsDisabled(true);
+        setIsCodeDisabled(true);
       }
     },
     onError: error => {
-      const { errorCode } = error.response.data;
+      const { errorCode } = error;
       if (errorCode === 'WrongEmailCode') {
         alert('유효하지 않은 코드 입니다.');
       }
@@ -66,20 +71,20 @@ function SignupPage() {
       }
     },
     onError: error => {
-      console.log(error.errorCode);
-      if (error.errorCode === 'ExistEmail') {
+      const { errorCode } = error;
+      if (errorCode === 'ExistEmail') {
         alert('이미 등록된 이메일입니다.');
-      } else if (error.errorCode === 'AlreadyUsingEmail(Kakao)') {
+      } else if (errorCode === 'AlreadyUsingEmail(Kakao)') {
         alert('이미 카카오 계정으로 가입된 아이디입니다.');
-      } else if (error.errorCode === 'ExistNickname') {
+      } else if (errorCode === 'ExistNickname') {
         alert('이미 등록된 닉네임입니다.');
-      } else if (error.errorCode === 'WrongEmail') {
+      } else if (errorCode === 'WrongEmail') {
         alert('인증을 요청한 이메일이 아닙니다.');
-      } else if (error.errorCode === 'InvalidNicknamePattern') {
+      } else if (errorCode === 'InvalidNicknamePattern') {
         alert('닉네임은 2~10글자로 설정해주세요.');
-      } else if (error.errorCode === 'NotSamePassword') {
+      } else if (errorCode === 'NotSamePassword') {
         alert('비밀번호가 서로 일치하지 않습니다.');
-      } else if (error.errorCode === 'InvalidPasswordPattern') {
+      } else if (errorCode === 'InvalidPasswordPattern') {
         alert(
           '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
         );
@@ -150,6 +155,12 @@ function SignupPage() {
     mutationEmailCheck.mutate(validEmail);
   };
 
+  const handleEmailReCheckBtn = () => {
+    const validEmail = { email };
+    mutationEmailCheck.mutate(validEmail);
+    setIsCodeDisabled(false);
+  };
+
   // 코드 유효성 검사
   const handleCodeCheckBtnClick = () => {
     if (!code) {
@@ -176,6 +187,7 @@ function SignupPage() {
             type='email'
             name='email'
             value={email}
+            readOnly={isEmailDisabled}
             placeholder='이메일을 입력해주세요.'
             className={styles.emailInput}
             onChange={handleEmailChange}
@@ -184,14 +196,17 @@ function SignupPage() {
         </div>
         <button
           type='button'
-          className={styles.sendButton}
+          disabled={isEmailDisabled}
+          className={
+            isEmailDisabled ? styles.disabledButton : styles.sendButton
+          }
           onClick={handleEmailCheckBtnClick}
         >
           인증코드 발송
         </button>
         <p className={styles.reRequest}>
           인증 코드가 안 오셨나요?
-          <button type='button' onClick={handleEmailCheckBtnClick}>
+          <button type='button' onClick={handleEmailReCheckBtn}>
             다시 보내기
           </button>
         </p>
@@ -200,6 +215,7 @@ function SignupPage() {
             type='text'
             name='code'
             value={code}
+            readOnly={isCodeDisabled}
             placeholder='인증코드를 입력해주세요.'
             className={styles.sendInput}
             onChange={handleCodeChange}
@@ -208,8 +224,8 @@ function SignupPage() {
         </div>
         <button
           type='button'
-          disabled={isDisabled}
-          className={styles.buttons}
+          disabled={isCodeDisabled}
+          className={isCodeDisabled ? styles.disabledButton : styles.buttons}
           onClick={handleCodeCheckBtnClick}
         >
           확인
