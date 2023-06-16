@@ -7,6 +7,7 @@ import { postAddPost } from 'apis/posts';
 import { getPostDetail } from 'apis/detail';
 import { useRecoilState } from 'recoil';
 import editingState from 'recoil/atom';
+import uuid from 'react-uuid';
 import SearchLocationPage from '../searchLocation/SearchLocationPage';
 import SelectOptions from '../../components/SelectOptions';
 import OperatingTime from './OperatingTime';
@@ -36,35 +37,123 @@ function PostingPage() {
   // 휴무 옵션/체크리스트
   const holidayTypes = ['매주', '격주', '매월'];
   const [holidayType, setHolidayType] = useState(holidayTypes[0]);
-  const [holidays, setHolidays] = useState({
-    월: false,
-    화: false,
-    수: false,
-    목: false,
-    금: false,
-    토: false,
-    일: false,
-  });
+  const [holidays, setHolidays] = useState([
+    {
+      key: 'isMon',
+      label: '월',
+      checked: false,
+    },
+    {
+      key: 'isTue',
+      label: '화',
+      checked: false,
+    },
+    {
+      key: 'isWed',
+      label: '수',
+      checked: false,
+    },
+    {
+      key: 'isThu',
+      label: '목',
+      checked: false,
+    },
+    {
+      key: 'isFri',
+      label: '금',
+      checked: false,
+    },
+    {
+      key: 'isSat',
+      label: '토',
+      checked: false,
+    },
+    {
+      key: 'isSun',
+      label: '일',
+      checked: false,
+    },
+  ]);
+
+  // setAmenityList(prevAmenityList => {
+  //   const updatedAmenityList = { ...prevAmenityList };
+  //   Object.keys(updatedAmenityList).forEach(key => {
+  //     updatedAmenityList[key].checked = server[key].checked; // 변경하고자 하는 값을 여기에 설정
+  //   });
+  //   return updatedAmenityList;
+  // });
 
   // 최대 인원
   const [persons, setPersons] = useState(0);
 
   // 편의시설 체크리스트
-  const [amenityList, setAmenityList] = useState({
-    에어컨: false,
-    '복사/인쇄기': false,
-    프로젝터: false,
-    도어락: false,
-    콘센트: false,
-    팩스: false,
-    난방기: false,
-    주차: false,
-    정수기: false,
-    개인락커: false,
-    TV: false,
-    화이트보드: false,
-    '인터넷/WIFI': false,
-  });
+  const [amenityList, setAmenityList] = useState([
+    {
+      key: 'isAircon',
+      label: '에어컨',
+      checked: false,
+    },
+    {
+      key: 'isCopierPrinter',
+      label: '복사/인쇄기',
+      checked: false,
+    },
+    {
+      key: 'isProjector',
+      label: '프로젝터',
+      checked: false,
+    },
+    {
+      key: 'isDoorLock',
+      label: '도어락',
+      checked: false,
+    },
+    {
+      key: 'isPowerOutlet',
+      label: '콘센트',
+      checked: false,
+    },
+    {
+      key: 'isFax',
+      label: '팩스',
+      checked: false,
+    },
+    {
+      key: 'isHeater',
+      label: '난방기',
+      checked: false,
+    },
+    {
+      key: 'isParking',
+      label: '주차',
+      checked: false,
+    },
+    {
+      key: 'isWaterPurifier',
+      label: '정수기',
+      checked: false,
+    },
+    {
+      key: 'isPersonalLocker',
+      label: '개인락커',
+      checked: false,
+    },
+    {
+      key: 'isTV',
+      label: 'TV',
+      checked: false,
+    },
+    {
+      key: 'isWhiteBoard',
+      label: '화이트보드',
+      checked: false,
+    },
+    {
+      key: 'isInternetWiFi',
+      label: '인터넷/WIFI',
+      checked: false,
+    },
+  ]);
 
   // 포스팅 입력폼 전체
   const initialState = {
@@ -125,18 +214,61 @@ function PostingPage() {
 
   const handleHolidayUpdate = e => {
     const { name, checked } = e.target;
-    const newHoliday = { ...holidays, [name]: checked };
+    const newHoliday = holidays.map(day => {
+      if (day.key === name) {
+        return {
+          ...day,
+          checked,
+        };
+      }
+      return day;
+    });
     setHolidays(newHoliday);
   };
 
   const handleAmenitiesUpdate = e => {
     const { name, checked } = e.target;
-    const newAmenityList = { ...amenityList, [name]: checked };
+    const newAmenityList = amenityList.map(amenity => {
+      if (amenity.key === name) {
+        return {
+          ...amenity,
+          checked,
+        };
+      }
+      return amenity;
+    });
     setAmenityList(newAmenityList);
   };
 
   const handleChangeImageUpload = async e => {
     await handleImageUpload(e);
+  };
+
+  // 운영 시간 데이터 형식 가공
+  const getOperatingTime = () => {
+    const newHolidaysData = {};
+    holidays.forEach(day => {
+      newHolidaysData[day.key] = day.checked;
+    });
+
+    const newOperatingTime = {
+      openTime: openTime.hour + openTime.minute,
+      closeTime: closeTime.hour + closeTime.minute,
+      holidayTypes: holidayType,
+      holidays: newHolidaysData,
+    };
+
+    return newOperatingTime;
+  };
+
+  // 편의 시설 데이터 형식 가공
+  const getAmenities = () => {
+    const newAmenitiesData = {};
+    amenityList.forEach(amenity => {
+      newAmenitiesData[amenity.key] = amenity.checked;
+    });
+
+    return newAmenitiesData;
   };
 
   const validation = () => {
@@ -164,6 +296,10 @@ function PostingPage() {
   };
 
   const handleClickSubmitPosting = () => {
+    const operatingTimeData = getOperatingTime();
+    const amenitiesData = getAmenities();
+
+    console.log('operatingTimeData', operatingTimeData, amenitiesData);
     if (validation()) {
       mutation.mutate({
         title,
@@ -171,8 +307,8 @@ function PostingPage() {
         capacity: Number(persons),
         content: content.replace(/\n/g, '\\n'),
         contentDetails: contentDetails.replace(/\n/g, '\\n'),
-        amenities: amenityList,
-        operatingTime: { openTime, closeTime, holidayTypes, holidays },
+        amenities: amenitiesData,
+        operatingTime: operatingTimeData,
         image,
         location,
       });
@@ -279,21 +415,21 @@ function PostingPage() {
               selectedUpdate={setHolidayType}
             />
             <div className={styles.selectDays}>
-              {[...Object.keys(holidays)].map(day => (
+              {holidays.map(day => (
                 <label
-                  htmlFor={day}
+                  htmlFor={day.key}
                   // key={uuid()}
                   className={`${styles.checkbox} ${
-                    holidays[day] ? styles.checked : undefined
+                    day.checked ? styles.checked : undefined
                   }`}
                 >
                   <input
                     type='checkbox'
-                    name={day}
-                    id={day}
+                    name={day.key}
+                    id={day.key}
                     onChange={handleHolidayUpdate}
                   />
-                  {day}
+                  {day.label}
                 </label>
               ))}
             </div>
@@ -313,20 +449,20 @@ function PostingPage() {
         <div className={styles.amenity}>
           <span className={styles.title}>편의 시설</span>
           <div className={styles.amenities}>
-            {[...Object.keys(amenityList)].map(item => (
+            {amenityList.map(amenity => (
               <label
-                htmlFor={item}
+                htmlFor={amenity.key}
                 className={`${styles.checkbox} ${
-                  amenityList[item] ? styles.checked : undefined
+                  amenity.checked ? styles.checked : undefined
                 }`}
               >
                 <input
                   type='checkbox'
-                  name={item}
-                  id={item}
+                  name={amenity.key}
+                  id={amenity.key}
                   onChange={handleAmenitiesUpdate}
                 />
-                {item}
+                {amenity.label}
               </label>
             ))}
           </div>
