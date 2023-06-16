@@ -161,13 +161,14 @@ function PostingPage() {
     price: '',
     content: '',
     contentDetails: ' ',
-    image: '',
+    // image: '',
   };
 
   const [form, handleFormChange, handleImageUpload, resetForm, setForm] =
     useForm(initialState);
-  const [preImageUrl, setPreImageUrl] = useState();
-  const { title, price, content, contentDetails, image } = form;
+  const [image, setImage] = useState([]);
+  const [preImageUrl, setPreImageUrl] = useState([]);
+  const { title, price, content, contentDetails } = form;
 
   // 수정 할 데이터 가져오기
   const { data, isLoading, isError } = useQuery(
@@ -240,9 +241,9 @@ function PostingPage() {
     setAmenityList(newAmenityList);
   };
 
-  const handleChangeImageUpload = async e => {
-    await handleImageUpload(e);
-  };
+  // const handleChangeImageUpload = async e => {
+  //   await handleImageUpload(e);
+  // };
 
   // 운영 시간 데이터 형식 가공
   const getOperatingTime = () => {
@@ -315,15 +316,39 @@ function PostingPage() {
     }
   };
 
-  useEffect(() => {
-    if (image) {
-      const reader = new FileReader();
-      reader.readAsDataURL(form.image);
-      reader.onload = () => {
-        setPreImageUrl(reader.result);
-      };
+  const handleChangeImageUpload = e => {
+    if (image.length >= 3) {
+      alert('최대 3장의 이미지만 업로드 할 수 있습니다.');
+      return;
     }
-  }, [image]);
+
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const newImage = {
+        imageURL: reader.result,
+        file,
+      };
+
+      setPreImageUrl([...preImageUrl, newImage.imageURL]);
+      setImage([...image, newImage]);
+      console.log(image);
+    };
+  };
+
+  // useEffect(() => {
+  //   if (image) {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(form.image);
+  //     reader.onload = () => {
+  //       setPreImageUrl(reader.result);
+  //     };
+  //   }
+  // }, [image]);
 
   useEffect(() => {
     if (isEditing) {
@@ -470,33 +495,23 @@ function PostingPage() {
         {/* 이미지 등록 */}
         <div className={styles.inputCon}>
           <span>이미지 등록</span>
-          <label htmlFor='image' className={styles.addImage}>
-            {preImageUrl ? (
-              <>
+          <div className={styles.labelWrap}>
+            {Array.from({ length: image.length + 1 }).map((_, index) => (
+              <label htmlFor={`image${index}`} className={styles.addImage}>
                 <img
-                  src={preImageUrl}
+                  src={(preImageUrl && preImageUrl[index]) || AddImageIcon}
                   alt='preview'
-                  className={styles.preImageUrl}
                 />
-                <button
-                  type='button'
-                  className={styles.imgDelete}
-                  onClick={() => console.log('delete')}
-                >
-                  <img src={XBoxIcon} alt='img-delete' />
-                </button>
-              </>
-            ) : (
-              <img src={AddImageIcon} alt='preview' />
-            )}
-            <input
-              type='file'
-              name='image'
-              id='image'
-              onChange={e => handleChangeImageUpload(e)}
-              className='hidden'
-            />
-          </label>
+                <input
+                  type='file'
+                  name={`image${index}`}
+                  id={`image${index}`}
+                  onChange={e => handleChangeImageUpload(e, index)}
+                  className='hidden'
+                />
+              </label>
+            ))}
+          </div>
         </div>
         <button
           type='button'
