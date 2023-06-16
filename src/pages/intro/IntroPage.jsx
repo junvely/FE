@@ -7,19 +7,13 @@ import PeoplesImage from '../../assets/svg/introPeoples.svg';
 import IntroBannerSlide from './IntroBannerSlide';
 
 function IntroPage() {
-  const [start, setStart] = useState(false);
-
   return (
     <div className={styles.wrap}>
       <div className={styles.backgroundWrap}>
         <div className={styles.layoutCon}>
-          <div
-            className={`${styles.startBanner} ${start && styles.start}`}
-            onClick={() => setStart(true)}
-            role='presentation'
-          >
+          <div className={styles.startBanner}>
             <img src={IntroStartIcon} alt='start' />
-            <span>CLICK!</span>
+            {/* <span>CLICK!</span> */}
           </div>
           <h1 className={styles.logo}>
             <img src={LogoIcon} alt='logo' />

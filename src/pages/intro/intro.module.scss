@@ -37,6 +37,8 @@ $color-yellow: #ffedbf;
       align-items: center;
 
       .startBanner {
+        @include fade-out-animation;
+        animation-delay: 2.5s;
         position: absolute;
         top: 0;
         left: 0;
@@ -66,10 +68,6 @@ $color-yellow: #ffedbf;
           text-shadow: 0 2px 0 #242424;
           margin-top: 15%;
         }
-      }
-
-      .start {
-        @include fade-out-animation;
       }
 
       .logo {
