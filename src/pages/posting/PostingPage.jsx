@@ -1,15 +1,15 @@
-import PostInput from 'components/PostInput';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import useForm from 'hooks/useForm';
-import { postAddPost } from 'apis/posts';
-import getPostDetail from 'apis/detail';
 import { useRecoilState } from 'recoil';
 import editingState from 'recoil/atom';
+import { postAddPost } from 'apis/posts';
+import getPostDetail from 'apis/detail';
+import PostInput from 'components/PostInput';
+import OperatingTime from './OperatingTime';
 import SearchLocationPage from '../searchLocation/SearchLocationPage';
 import SelectOptions from '../../components/SelectOptions';
-import OperatingTime from './OperatingTime';
 import styles from './posting.module.scss';
 import AddImageIcon from '../../assets/svg/addImage.svg';
 import RightArrow from '../../assets/svg/addressArrow.svg';
@@ -43,11 +43,9 @@ function PostingPage() {
   const [persons, setPersons] = useState(0);
   // 편의시설 체크리스트
   const [amenityList, setAmenityList] = useState(amenityCheckList);
-
-  const [form, handleFormChange, handleImageUpload, resetForm, setForm] =
-    useForm(initialState);
-  const [image, setImage] = useState([]);
-  const [preImageUrl, setPreImageUrl] = useState([]);
+  // 포스팅 폼
+  const [form, handleFormChange, resetForm, setForm] = useForm(initialState);
+  const [imageList, setImageList] = useState([]);
   const { title, price, content, contentDetails } = form;
 
   // 수정 할 데이터 가져오기
@@ -56,7 +54,6 @@ function PostingPage() {
     () => getPostDetail(postId),
     {
       onSuccess: response => {
-        console.log('데이터 가져옴!! ', response.data);
         setForm(response.data);
       },
       enabled: isEditing,
@@ -121,10 +118,6 @@ function PostingPage() {
     setAmenityList(newAmenityList);
   };
 
-  // const handleChangeImageUpload = async e => {
-  //   await handleImageUpload(e);
-  // };
-
   // 운영 시간 데이터 형식 가공
   const getOperatingTime = () => {
     const newHolidaysData = {};
@@ -169,7 +162,7 @@ function PostingPage() {
       alert('가격, 인원, 운영 시간은 숫자로 입력해 주세요');
       return false;
     }
-    if (!image) {
+    if (!imageList.length) {
       alert('사진을 선택해 주세요');
       return false;
     }
@@ -189,14 +182,14 @@ function PostingPage() {
         contentDetails: contentDetails.replace(/\n/g, '\\n'),
         amenities: amenitiesData,
         operatingTime: operatingTimeData,
-        image,
+        imageList,
         location,
       });
     }
   };
 
   const handleChangeImageUpload = e => {
-    if (image.length >= 3) {
+    if (imageList.length >= 3) {
       alert('최대 3장의 이미지만 업로드 할 수 있습니다.');
       return;
     }
@@ -213,21 +206,16 @@ function PostingPage() {
         file,
       };
 
-      setPreImageUrl([...preImageUrl, newImage.imageURL]);
-      setImage([...image, newImage]);
-      console.log(image);
+      setImageList([...imageList, newImage]);
     };
   };
 
-  // useEffect(() => {
-  //   if (image) {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(form.image);
-  //     reader.onload = () => {
-  //       setPreImageUrl(reader.result);
-  //     };
-  //   }
-  // }, [image]);
+  const handleImageDelete = idx => {
+    const deletedImageList = imageList.filter(
+      (image, listIndex) => listIndex !== idx,
+    );
+    setImageList(deletedImageList);
+  };
 
   useEffect(() => {
     if (isEditing) {
@@ -375,21 +363,34 @@ function PostingPage() {
         <div className={styles.inputCon}>
           <span>이미지 등록</span>
           <div className={styles.labelWrap}>
-            {Array.from({ length: image.length + 1 }).map((_, index) => (
-              <label htmlFor={`image${index}`} className={styles.addImage}>
+            {imageList.map((img, idx) => (
+              <div className={styles.addImage}>
                 <img
-                  src={(preImageUrl && preImageUrl[index]) || AddImageIcon}
+                  src={(imageList && img.imageURL) || AddImageIcon}
                   alt='preview'
+                  className={styles.imagePreview}
                 />
+                <button
+                  type='button'
+                  className={styles.imgDelete}
+                  onClick={() => handleImageDelete(idx)}
+                >
+                  <img src={XBoxIcon} alt='img-delete' />
+                </button>
+              </div>
+            ))}
+            {imageList.length < 3 && (
+              <label htmlFor='imgUpload' className={styles.addImage}>
+                <img src={AddImageIcon} alt='preview' />
                 <input
                   type='file'
-                  name={`image${index}`}
-                  id={`image${index}`}
-                  onChange={e => handleChangeImageUpload(e, index)}
+                  name='imgUpload'
+                  id='imgUpload'
+                  onChange={e => handleChangeImageUpload(e)}
                   className='hidden'
                 />
               </label>
-            ))}
+            )}
           </div>
         </div>
         <button

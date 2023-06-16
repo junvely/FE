@@ -28,22 +28,20 @@ const postAddPost = async payload => {
 
   const formData = new FormData();
   const sendData = { ...payload };
-  delete sendData.image;
+  delete sendData.imageList;
 
-  const blob = new Blob([JSON.stringify(sendData)], {
+  const postBlob = new Blob([JSON.stringify(sendData)], {
     type: 'application/json',
   });
 
-  console.log(payload.image);
-
-  const imageBlob = new Blob([JSON.stringify(payload.image)], {
-    type: 'application/json',
+  // 멀티 이미지 Blob
+  formData.append('postRequestDto', postBlob);
+  payload.imageList.forEach(image => {
+    const imageBlob = new Blob([image], {
+      type: image.type,
+    });
+    formData.append('imageFile', imageBlob);
   });
-
-  console.log(imageBlob);
-
-  formData.append('postRequestDto', blob);
-  formData.append('imageFile', imageBlob);
 
   try {
     const { data } = await instance.post(`api/posts`, formData, config);

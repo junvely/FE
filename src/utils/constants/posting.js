@@ -11,7 +11,7 @@ export const initialState = {
   price: '',
   content: '',
   contentDetails: ' ',
-  image: '',
+  imageList: '',
 };
 
 // constants
