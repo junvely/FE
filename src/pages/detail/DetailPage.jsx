@@ -98,6 +98,51 @@ function DetailPage() {
     navigate('/posting', { state: { postId } });
   };
 
+  // 편의시설 포맷팅
+  const amenities =
+    data &&
+    Object.keys(data.data.amenities).filter(
+      key => data.data.amenities[key] === true,
+    );
+
+  const amenitiesList = {
+    isAircon: '에어컨',
+    isCopierPrinter: '복사 / 인쇄기',
+    isDoorLock: '도어락',
+    isFax: '팩스',
+    isHeater: '난방기',
+    isInternetWiFi: '인터넷 / WIFI',
+    isParking: '주차',
+    isPersonalLocker: '개인락커',
+    isPowerOutlet: '콘센트',
+    isProjector: '프로젝터',
+    isTV: 'TV',
+    isWaterPurifier: '정수기',
+    isWhiteBoard: '화이트보드',
+  };
+
+  // 운영시간 포맷팅
+  const formattedTime = time => {
+    return `${time.slice(0, 2)}:${time.slice(2, 4)}`;
+  };
+
+  // 휴일 포맷팅
+  const holidays =
+    data &&
+    Object.keys(data.data.operatingTime.holidays).filter(
+      key => data.data.operatingTime.holidays[key] === true,
+    );
+
+  const dayList = {
+    isMon: '월',
+    isTue: '화',
+    isWed: '수',
+    isThu: '목',
+    isFri: '금',
+    isSat: '토',
+    isSun: '일',
+  };
+
   console.log(data && data.data.userStatus);
   console.log(data && data.data);
 
@@ -155,7 +200,6 @@ function DetailPage() {
                 </button>
               </div>
             )}
-
             <div className={styles.infobox}>
               <p className={styles.paragraph}>
                 <img src={locationIcon} alt='location' />
@@ -185,13 +229,34 @@ function DetailPage() {
               <h3 className={styles.subTitle}>오피스 소개</h3>
               <div className={styles.contentBox}>{data.data.content}</div>
               <h3 className={styles.subTitle}>운영 시간</h3>
-              <div className={styles.contentBox}>{data.data.operatingTime}</div>
+              <div className={styles.contentBox}>
+                <p>
+                  {`운영 시간은 ${formattedTime(
+                    data.data.operatingTime.openTime,
+                  )}`}{' '}
+                  ~
+                  {` ${formattedTime(
+                    data.data.operatingTime.closeTime,
+                  )} 입니다.`}
+                </p>
+                <p>
+                  휴일은
+                  {` ${
+                    holidays.length === 0
+                      ? '연중무휴'
+                      : data.data.operatingTime.holidayTypes &&
+                        holidays.map(day => dayList[day]).join(', ')
+                  } 입니다.`}
+                </p>
+              </div>
               <h3 className={styles.subTitle}>추가 안내</h3>
               <div className={styles.contentBox}>
                 {data.data.contentDetails}
               </div>
               <h3 className={styles.subTitle}>편의시설</h3>
-              <div className={styles.contentBox}>{data.data.amenities}</div>
+              <div className={styles.contentBox}>
+                {amenities.map(item => amenitiesList[item]).join(', ')}
+              </div>
               <h3 className={styles.subTitle}>오시는 길</h3>
               <Map location={data.data.location} />
               <div className={styles.buttonWrap}>
