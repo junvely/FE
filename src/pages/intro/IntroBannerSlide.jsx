@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import uuid from 'react-uuid';
 import styles from './intro.module.scss';
 import arrowLeftIcon from '../../assets/svg/arrowLeft.svg';
 import arrowRightIcon from '../../assets/svg/arrowRight.svg';
-import PostIcon from '../../assets/svg/bigPost.svg';
-import LocationsImage from '../../assets/svg/locationList.svg';
-import ChatImage from '../../assets/svg/chat.svg';
-import introBannerOutCon from '../../assets/img/introBannerOutCon.png';
+import SlideImage1 from '../../assets/svg/introSlide1.svg';
+import SlideImage2 from '../../assets/svg/introSlide2.svg';
+import SlideImage3 from '../../assets/svg/introSlide3.svg';
+import SlideImage4 from '../../assets/svg/introSlide4.svg';
 
 function IntroBannerSlide() {
   const [currentPage, setCurrentPage] = useState(0);
   const slideLength = 4;
-  const [bgColorChange, setbgColorChange] = useState(styles.colorBlue);
 
   const handleClickSetCurrentPage = e => {
     setCurrentPage(Number(e.target.id));
@@ -29,27 +28,9 @@ function IntroBannerSlide() {
     }
   };
 
-  useEffect(() => {
-    if (currentPage === 0) {
-      setbgColorChange(styles.colorGreen);
-    } else if (currentPage === 1) {
-      setbgColorChange(styles.colorPurple);
-    } else if (currentPage === 2) {
-      setbgColorChange(styles.colorYellow);
-    } else if (currentPage === 3) {
-      setbgColorChange(styles.colorBlue);
-    }
-  }, [currentPage]);
-
   return (
     <div className={styles.sliderWrap}>
-      <div className={`${styles.colorBox} ${bgColorChange}`} />
       <div className={styles.sliderCon}>
-        <img
-          src={introBannerOutCon}
-          alt='banner-out-con'
-          className={styles.bannerCon}
-        ></img>
         <ul
           className={styles.slides}
           style={{
@@ -58,6 +39,7 @@ function IntroBannerSlide() {
           }}
         >
           <li className={`${styles.slide} ${styles.slide1}`}>
+            <img src={SlideImage1} alt='slide1' />
             <h3>
               나만의 <br />
               {['오', '피', '스', '공', '간'].map(string => (
@@ -72,6 +54,7 @@ function IntroBannerSlide() {
             </p>
           </li>
           <li className={`${styles.slide} ${styles.slide2}`}>
+            <img src={SlideImage2} alt='slide2' />
             <h3>
               공유 오피스부터
               <br /> 독립 오피스까지 <br />
@@ -81,28 +64,32 @@ function IntroBannerSlide() {
                 ),
               )}
             </h3>
-            <img src={LocationsImage} alt='locations'></img>
           </li>
           <li className={`${styles.slide} ${styles.slide3}`}>
+            <img src={SlideImage3} alt='slide3' />
             <h3>
               호스트에게 문의는
               <br />
-              채팅으로 간편하게
+              {['채', '팅', '으', '로', '간', '편', '하', '게'].map(string => (
+                <span key={uuid()}>{string}</span>
+              ))}
             </h3>
-            <img src={ChatImage} alt='chat' />
             <p>
               일정 예약부터 <br />
               채팅까지 한번에!
             </p>
           </li>
           <li className={`${styles.slide} ${styles.slide4}`}>
+            <img src={SlideImage4} alt='slide4' />
             <h3>
-              내 오피스도 <br /> 쉽고 간편하게
-              <br /> 올릴 수 있으니까
+              {['내', '오', '피', '스'].map(string => (
+                <span key={uuid()}>{string}</span>
+              ))}
+              도
+              <br /> 쉽고 간편하게
+              <br /> 올릴 수 있어요!
             </h3>
-            <div className={styles.post}>
-              <img src={PostIcon} alt='post' />
-            </div>
+            <p>지금 사용해 보세요</p>
           </li>
         </ul>
         <div className={styles.sliderButtons}>
