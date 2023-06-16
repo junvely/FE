@@ -12,7 +12,7 @@ import { searchToggleContext } from '../../../contexts/SearchToggleContext';
 import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { authLogout } from '../../../apis/auth/login';
-import { removeCookie } from '../../../utils/cookies';
+import { removeCookie } from '../../../utils/helpers/cookies';
 
 function Header() {
   const navigate = useNavigate();

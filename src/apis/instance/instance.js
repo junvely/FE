@@ -1,6 +1,10 @@
 import axios from 'axios';
-import { getCookie, removeCookie, setCookie } from '../../utils/cookies';
-import { REACT_APP_SERVER } from '../../utils/keys';
+import {
+  getCookie,
+  removeCookie,
+  setCookie,
+} from '../../utils/helpers/cookies';
+import { REACT_APP_SERVER } from '../../utils/constants/keys';
 
 const instance = axios.create({
   baseURL: REACT_APP_SERVER,

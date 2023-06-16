@@ -11,7 +11,7 @@ import logoutIcon from '../../assets/svg/logout.svg';
 import profileDefault from '../../assets/img/profileDefault.png';
 import { AuthContext } from '../../contexts/AuthContext';
 import { authLogout } from '../../apis/auth/login';
-import { removeCookie } from '../../utils/cookies';
+import { removeCookie } from '../../utils/helpers/cookies';
 
 function Mypage() {
   // const [modal, setModal] = useState(false);

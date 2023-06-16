@@ -1,6 +1,6 @@
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
-import { getCookie } from 'utils/cookies';
+import { getCookie } from 'utils/helpers/cookies';
 import instance from './instance/instance';
 
 let stompClient = null;

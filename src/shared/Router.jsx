@@ -18,6 +18,7 @@ import ExitPage from 'pages/exit/ExitPage';
 import ChattingListPage from 'pages/chatting/ChattingListPage';
 import ChattingRoomPage from 'pages/chatting/ChattingRoomPage';
 import PrivateRoutes from './PrivateRoutes';
+import EditPage from '../pages/edit/EditPage';
 
 function Router() {
   return (
@@ -28,6 +29,7 @@ function Router() {
           <Route path='/main' element={<MainPage />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/posting' element={<PostingPage />} />
+            <Route path='/edit' element={<EditPage />} />
             <Route path='/mypage' element={<Mypage />} />
             <Route path='/likedposts' element={<LikedPosts />} />
             <Route path='/myposts' element={<MyPostsPage />} />
