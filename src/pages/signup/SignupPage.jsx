@@ -1,23 +1,26 @@
 import { useMutation } from 'react-query';
-import useForm from 'hooks/useForm';
 import { useState } from 'react';
 import { verifyEmail, addUser, verifyCode } from 'apis/auth/signup';
 import { useNavigate } from 'react-router';
 import FormLabel from 'components/FormLabel';
+import Input from 'components/common/input/Input';
 import styles from './signup.module.scss';
 
 function SignupPage() {
   const navigate = useNavigate();
-  const initialState = {
-    email: '',
-    nickname: '',
-    password: '',
-    passwordCheck: '',
-    code: '',
-  };
 
-  const [form, handleFormChange] = useForm(initialState);
-  const { email, nickname, password, passwordCheck, code } = form;
+  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
+  const [code, setCode] = useState('');
+
+  const [emailMessage, setEmailMessage] = useState('');
+  const [nicknameMessage, setNicknameMessage] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState('');
+  const [passwordCheckMessage, setPasswordCheckMessage] = useState('');
+  const [codeMessage, setCodeMessage] = useState('');
+
   const [isDisabled, setIsDisabled] = useState(false);
 
   // 이메일로 메일 전송
@@ -29,8 +32,11 @@ function SignupPage() {
     },
     onError: error => {
       const { errorCode } = error.response.data;
-      if (errorCode === 'InvalidEmail') {
+      if (errorCode === 'InvalidEmailPattern') {
         alert('유효하지 않은 이메일 형식입니다.');
+      }
+      if (errorCode === 'EmailSendFailed') {
+        alert('이메일 전송에 실패하였습니다.');
       }
     },
   });
@@ -63,10 +69,14 @@ function SignupPage() {
       console.log(error.errorCode);
       if (error.errorCode === 'ExistEmail') {
         alert('이미 등록된 이메일입니다.');
+      } else if (error.errorCode === 'AlreadyUsingEmail(Kakao)') {
+        alert('이미 카카오 계정으로 가입된 아이디입니다.');
       } else if (error.errorCode === 'ExistNickname') {
         alert('이미 등록된 닉네임입니다.');
+      } else if (error.errorCode === 'WrongEmail') {
+        alert('인증을 요청한 이메일이 아닙니다.');
       } else if (error.errorCode === 'InvalidNicknamePattern') {
-        alert('닉네임은 최소 2~10글자여야 합니다.');
+        alert('닉네임은 2~10글자로 설정해주세요.');
       } else if (error.errorCode === 'NotSamePassword') {
         alert('비밀번호가 서로 일치하지 않습니다.');
       } else if (error.errorCode === 'InvalidPasswordPattern') {
@@ -77,22 +87,73 @@ function SignupPage() {
     },
   });
 
-  // 이메일, 닉네임, 비밀번호 유효성 검사
-  const handleEmailCheckBtnClick = () => {
+  // 이메일 유효성 검사
+  const handleEmailChange = e => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (emailPattern.test(email)) {
-      const validEmail = { email };
-      mutationEmailCheck.mutate(validEmail);
+    setEmail(e.target.value);
+    if (e.target.value.length === 0 || e.target.value.length === undefined) {
+      setEmailMessage('');
+    } else if (emailPattern.test(email)) {
+      setEmailMessage('');
     } else {
-      alert('올바른 이메일 형식을 입력하세요.');
+      setEmailMessage('유효하지 않은 이메일 형식입니다.');
     }
   };
 
-  // 코드 빈 칸 검사
+  const handleCodeChange = e => {
+    setCode(e.target.value);
+  };
+
+  // 비밀번호 유효성 검사
+  const handlePasswordChange = e => {
+    const passwordPattern =
+      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&()_])[A-Za-z\d@$!%*?&()_]{8,15}$/;
+    setPassword(e.target.value);
+    if (e.target.value.length === 0 || e.target.value.length === undefined) {
+      setPasswordMessage('');
+    } else if (passwordPattern.test(e.target.value)) {
+      setPasswordMessage('');
+    } else {
+      setPasswordMessage(
+        '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
+      );
+    }
+  };
+
+  // 비밀번호 확인 유효성검사
+  const handlePasswordCheckChange = e => {
+    setPasswordCheck(e.target.value);
+    if (e.target.value.length === 0 || e.target.value.length === undefined) {
+      setPasswordCheckMessage('');
+    } else if (password === e.target.value) {
+      setPasswordCheckMessage('');
+    } else {
+      setPasswordCheckMessage('비밀번호가 일치하지 않습니다.');
+    }
+  };
+
+  // 닉네임 유효성 검사
+  const handleNicknameChange = e => {
+    const nicknamePattern = /^.{2,10}$/;
+    setNickname(e.target.value);
+    if (e.target.value.length === 0 || e.target.value.length === undefined) {
+      setNicknameMessage('');
+    } else if (nicknamePattern.test(e.target.value)) {
+      setNicknameMessage('');
+    } else {
+      setNicknameMessage('닉네임은 최소 2~10글자여야 합니다.');
+    }
+  };
+
+  const handleEmailCheckBtnClick = () => {
+    const validEmail = { email };
+    mutationEmailCheck.mutate(validEmail);
+  };
+
+  // 코드 유효성 검사
   const handleCodeCheckBtnClick = () => {
     if (!code) {
-      alert('코드를 입력해주세요.');
+      setCodeMessage('코드를 입력해주세요.');
       return;
     }
     const codeData = { email, code };
@@ -102,21 +163,7 @@ function SignupPage() {
   // 가입하기
   const handleSignupBtnClick = () => {
     const signupData = { email, nickname, password, passwordCheck };
-    const nicknamePattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
-    const passwordPattern =
-      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&()_])[A-Za-z\d@$!%*?&()_]{8,15}$/;
-
-    // if (!nicknamePattern.test(nickname)) {
-    //   alert('닉네임은 최소 2~10글자여야 합니다.');
-    // }
-    // if (!passwordPattern.test(password)) {
-    //   alert(
-    //     '비밀번호는 8-15자리, 최소 하나의 영어 대소문자, 숫자, 특수문자(@$!%*?&()_)를 포함해야 합니다.',
-    //   );
-    // }
-    // if (password !== passwordCheck) {
-    //   alert('비밀번호가 일치하지 않습니다.');
-    // }
+    console.log(signupData);
     mutationAddUser.mutate(signupData);
   };
 
@@ -124,14 +171,17 @@ function SignupPage() {
     <div className={styles.container}>
       <FormLabel>회원가입</FormLabel>
       <div className={styles.inputBox}>
-        <input
-          type='email'
-          name='email'
-          value={email}
-          placeholder='이메일을 입력해주세요.'
-          className={styles.emailInput}
-          onChange={handleFormChange}
-        />
+        <div className={styles.standard}>
+          <Input
+            type='email'
+            name='email'
+            value={email}
+            placeholder='이메일을 입력해주세요.'
+            className={styles.emailInput}
+            onChange={handleEmailChange}
+          />
+          <p className={styles.message}>{emailMessage}</p>
+        </div>
         <button
           type='button'
           className={styles.sendButton}
@@ -145,14 +195,17 @@ function SignupPage() {
             다시 보내기
           </button>
         </p>
-        <input
-          type='text'
-          name='code'
-          value={code}
-          placeholder='인증코드를 입력해주세요.'
-          className={styles.sendInput}
-          onChange={handleFormChange}
-        />
+        <div className={styles.standard}>
+          <Input
+            type='text'
+            name='code'
+            value={code}
+            placeholder='인증코드를 입력해주세요.'
+            className={styles.sendInput}
+            onChange={handleCodeChange}
+          />
+          <p className={styles.message}>{codeMessage}</p>
+        </div>
         <button
           type='button'
           disabled={isDisabled}
@@ -161,30 +214,39 @@ function SignupPage() {
         >
           확인
         </button>
-        <input
-          type='password'
-          name='password'
-          value={password}
-          placeholder='비밀번호 8-15자리 / 영문, 숫자, 특수문자 포함'
-          className={styles.input}
-          onChange={handleFormChange}
-        />
-        <input
-          type='password'
-          name='passwordCheck'
-          value={passwordCheck}
-          placeholder='비밀번호를 확인해주세요.'
-          className={styles.input}
-          onChange={handleFormChange}
-        />
-        <input
-          type='text'
-          name='nickname'
-          value={nickname}
-          placeholder='닉네임을 입력해주세요.'
-          className={styles.input}
-          onChange={handleFormChange}
-        />
+        <div className={passwordMessage ? styles.pwStandard : styles.standard}>
+          <Input
+            type='password'
+            name='password'
+            value={password}
+            placeholder='비밀번호 8-15자리 / 영문, 숫자, 특수문자 포함'
+            className={styles.input}
+            onChange={handlePasswordChange}
+          />
+          <p className={styles.pwMessage}>{passwordMessage}</p>
+        </div>
+        <div className={styles.standard}>
+          <Input
+            type='password'
+            name='passwordCheck'
+            value={passwordCheck}
+            placeholder='비밀번호를 확인해주세요.'
+            className={styles.input}
+            onChange={handlePasswordCheckChange}
+          />
+          <p className={styles.message}>{passwordCheckMessage}</p>
+        </div>
+        <div className={styles.standard}>
+          <Input
+            type='text'
+            name='nickname'
+            value={nickname}
+            placeholder='닉네임을 입력해주세요.'
+            className={styles.input}
+            onChange={handleNicknameChange}
+          />
+          <p className={styles.message}>{nicknameMessage}</p>
+        </div>
         <button
           type='submit'
           className={`${styles.buttons} ${styles.btn}`}

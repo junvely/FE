@@ -7,7 +7,7 @@ const verifyEmail = async validEmail => {
     return data;
   } catch (err) {
     alert('이메일 전송에 실패했습니다.');
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
@@ -18,7 +18,7 @@ const verifyCode = async codeData => {
     return data;
   } catch (err) {
     alert('유효하지 않은 코드입니다.');
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
