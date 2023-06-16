@@ -121,26 +121,6 @@
   }
 }
 
-// 배경색 애니메이션
-@mixin background-animation {
-  position: relative;
-  display: inline-block;
-  animation: bgColors 5s infinite;
-  animation-iteration-count: infinite;
-
-  @keyframes bgColors {
-    25% {
-      background-color: #9ad9d7;
-    }
-    50% {
-      background-color: #bfd9ff;
-    }
-    75% {
-      background-color: #bfc6ff;
-    }
-  }
-}
-
 // 밑에서 올라오는 애니메이션
 @mixin float-animation {
   position: relative;
