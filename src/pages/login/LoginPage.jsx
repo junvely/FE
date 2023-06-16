@@ -9,7 +9,7 @@ import Input from '../../components/common/input/Input';
 import FormLabel from '../../components/FormLabel';
 import AirBox from '../../components/common/airBox/AirBox';
 import { AuthContext } from '../../contexts/AuthContext';
-import { KAKAO_AUTH_URL } from '../../utils/keys';
+import { KAKAO_AUTH_URL } from '../../utils/constants/keys';
 
 function LoginPage() {
   const navigate = useNavigate();

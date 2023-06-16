@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { deleteMembership } from 'apis/mypage';
 import { useMutation } from 'react-query';
-import { removeCookie } from 'utils/cookies';
+import { removeCookie } from 'utils/helpers/cookies';
 import { useNavigate } from 'react-router';
 import styles from './exit.module.scss';
 

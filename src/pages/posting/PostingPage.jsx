@@ -7,7 +7,6 @@ import { postAddPost } from 'apis/posts';
 import getPostDetail from 'apis/detail';
 import { useRecoilState } from 'recoil';
 import editingState from 'recoil/atom';
-import uuid from 'react-uuid';
 import SearchLocationPage from '../searchLocation/SearchLocationPage';
 import SelectOptions from '../../components/SelectOptions';
 import OperatingTime from './OperatingTime';
@@ -17,153 +16,34 @@ import RightArrow from '../../assets/svg/addressArrow.svg';
 import IncreaseIcon from '../../assets/svg/increase.svg';
 import DecreaseIcon from '../../assets/svg/decrease.svg';
 import XBoxIcon from '../../assets/svg/xBox.svg';
+import {
+  amenityCheckList,
+  holidayCheckList,
+  holidayTypes,
+  initialState,
+  initialTime,
+} from '../../utils/constants/posting';
 
 function PostingPage() {
   const navigate = useNavigate();
-  const [location, setLocation] = useState('주소를 입력해주세요');
-  const [isLocationOpen, setIsLocationOpen] = useState(false);
   const locationValue = useLocation();
   const { postId } = { ...locationValue.state };
   const [isEditing, setIsEditing] = useRecoilState(editingState);
 
+  // 주소
+  const [location, setLocation] = useState('주소를 입력해주세요');
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
   // 운영 시간
-  const initialTime = {
-    hour: '00',
-    minute: '00',
-  };
   const [openTime, setOpenTime] = useState(initialTime);
   const [closeTime, setCloseTime] = useState(initialTime);
-
   // 휴무 옵션/체크리스트
-  const holidayTypes = ['매주', '격주', '매월'];
   const [holidayType, setHolidayType] = useState(holidayTypes[0]);
-  const [holidays, setHolidays] = useState([
-    {
-      key: 'isMon',
-      label: '월',
-      checked: false,
-    },
-    {
-      key: 'isTue',
-      label: '화',
-      checked: false,
-    },
-    {
-      key: 'isWed',
-      label: '수',
-      checked: false,
-    },
-    {
-      key: 'isThu',
-      label: '목',
-      checked: false,
-    },
-    {
-      key: 'isFri',
-      label: '금',
-      checked: false,
-    },
-    {
-      key: 'isSat',
-      label: '토',
-      checked: false,
-    },
-    {
-      key: 'isSun',
-      label: '일',
-      checked: false,
-    },
-  ]);
-
-  // setAmenityList(prevAmenityList => {
-  //   const updatedAmenityList = { ...prevAmenityList };
-  //   Object.keys(updatedAmenityList).forEach(key => {
-  //     updatedAmenityList[key].checked = server[key].checked; // 변경하고자 하는 값을 여기에 설정
-  //   });
-  //   return updatedAmenityList;
-  // });
-
+  const [holidays, setHolidays] = useState(holidayCheckList);
   // 최대 인원
   const [persons, setPersons] = useState(0);
-
   // 편의시설 체크리스트
-  const [amenityList, setAmenityList] = useState([
-    {
-      key: 'isAircon',
-      label: '에어컨',
-      checked: false,
-    },
-    {
-      key: 'isCopierPrinter',
-      label: '복사/인쇄기',
-      checked: false,
-    },
-    {
-      key: 'isProjector',
-      label: '프로젝터',
-      checked: false,
-    },
-    {
-      key: 'isDoorLock',
-      label: '도어락',
-      checked: false,
-    },
-    {
-      key: 'isPowerOutlet',
-      label: '콘센트',
-      checked: false,
-    },
-    {
-      key: 'isFax',
-      label: '팩스',
-      checked: false,
-    },
-    {
-      key: 'isHeater',
-      label: '난방기',
-      checked: false,
-    },
-    {
-      key: 'isParking',
-      label: '주차',
-      checked: false,
-    },
-    {
-      key: 'isWaterPurifier',
-      label: '정수기',
-      checked: false,
-    },
-    {
-      key: 'isPersonalLocker',
-      label: '개인락커',
-      checked: false,
-    },
-    {
-      key: 'isTV',
-      label: 'TV',
-      checked: false,
-    },
-    {
-      key: 'isWhiteBoard',
-      label: '화이트보드',
-      checked: false,
-    },
-    {
-      key: 'isInternetWiFi',
-      label: '인터넷/WIFI',
-      checked: false,
-    },
-  ]);
-
-  // 포스팅 입력폼 전체
-  const initialState = {
-    title: '',
-    price: '',
-    content: '',
-    contentDetails: ' ',
-    image: '',
-  };
-
+  const [amenityList, setAmenityList] = useState(amenityCheckList);
+  // 포스팅 입력폼
   const [form, handleFormChange, handleImageUpload, resetForm, setForm] =
     useForm(initialState);
   const [preImageUrl, setPreImageUrl] = useState();
@@ -299,7 +179,6 @@ function PostingPage() {
     const operatingTimeData = getOperatingTime();
     const amenitiesData = getAmenities();
 
-    console.log('operatingTimeData', operatingTimeData, amenitiesData);
     if (validation()) {
       mutation.mutate({
         title,

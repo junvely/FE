@@ -19,7 +19,7 @@
 
       .startBanner {
         @include fade-out-animation;
-        animation-delay: 2.5s;
+        animation-delay: 2s;
         position: absolute;
         top: 0;
         left: 0;
