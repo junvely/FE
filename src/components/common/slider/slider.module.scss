@@ -32,12 +32,14 @@
     .slide {
       width: 100%;
       position: relative;
+      object-fit: cover;
 
       img {
         width: 100%;
         height: auto;
         display: block;
         position: absolute;
+        object-fit: cover;
         top: 10%;
       }
     }

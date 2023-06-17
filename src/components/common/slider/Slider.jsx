@@ -13,6 +13,8 @@ import { AuthContext } from '../../../contexts/AuthContext';
 function Slider({ post }) {
   const location = useLocation();
   const { pathname } = location;
+  const isMain = pathname.includes('main');
+  const isMyPost = post.userStatus === 3;
 
   const [currentPage, setCurrentPage] = useState(0);
   const images = post.postImages || post.imageUrl;
@@ -65,12 +67,11 @@ function Slider({ post }) {
       >
         {images.map((image, idx) => (
           <li key={uuid()} className={styles.slide}>
-            {console.log('image uRLL------------------------', image)}
             <img src={image} alt={`share-office${idx}`}></img>
           </li>
         ))}
       </ul>
-      {!pathname.includes('detail') && (
+      {isMain && !isMyPost && (
         <button type='button' className={styles.like} onClick={handleLikeClick}>
           {likeStatus ? (
             <img src={LikeFullIcon} alt='like-full-icon'></img>
