@@ -46,6 +46,12 @@ function DetailPage() {
       alert('게시글이 삭제되었습니다.');
       navigate('/main');
     },
+    onError: error => {
+      const { errorCode } = error;
+      if (errorCode === 'UnfinishedReservationExist') {
+        alert('완료되지 않은 예약 내역이 존재하여 게시글 삭제가 불가합니다');
+      }
+    },
   });
 
   // 채팅 방 생성
@@ -86,7 +92,10 @@ function DetailPage() {
   };
 
   const handleDeleteClick = () => {
-    mutationDeletePost.mutate(postId);
+    const isDelete = window.confirm('글을 삭제 하시겠습니까?');
+    if (isDelete) {
+      mutationDeletePost.mutate(postId);
+    }
   };
 
   const handleClickChattingBtn = () => {
