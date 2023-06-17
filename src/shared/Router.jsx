@@ -29,7 +29,7 @@ function Router() {
           <Route path='/main' element={<MainPage />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/posting' element={<PostingPage />} />
-            <Route path='/edit' element={<EditPage />} />
+            <Route path='/edit/:postId' element={<EditPage />} />
             <Route path='/mypage' element={<Mypage />} />
             <Route path='/likedposts' element={<LikedPosts />} />
             <Route path='/myposts' element={<MyPostsPage />} />

@@ -1,7 +1,8 @@
-import React from 'react';
+import PostingPage from 'pages/posting/PostingPage';
+import { useParams } from 'react-router';
 
 function EditPage() {
-  return <div>EditPage</div>;
+  return <PostingPage />;
 }
 
 export default EditPage;

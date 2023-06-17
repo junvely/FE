@@ -1,10 +1,8 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import useForm from 'hooks/useForm';
-import { useRecoilState } from 'recoil';
-import editingState from 'recoil/atom';
-import { postAddPost } from 'apis/posts';
+import { postAddPost, putEditPost } from 'apis/posts';
 import getPostDetail from 'apis/detail';
 import PostInput from 'components/PostInput';
 import OperatingTime from './OperatingTime';
@@ -26,9 +24,10 @@ import {
 
 function PostingPage() {
   const navigate = useNavigate();
-  const locationValue = useLocation();
-  const { postId } = { ...locationValue.state };
-  const [isEditing, setIsEditing] = useRecoilState(editingState);
+  const path = useLocation();
+  const param = useParams();
+  const { postId } = param;
+  const editMode = path.pathname.startsWith('/edit');
 
   // 주소
   const [location, setLocation] = useState('주소를 입력해주세요');
@@ -55,14 +54,29 @@ function PostingPage() {
     {
       onSuccess: response => {
         setForm(response.data);
+        setLocation(response.data.location);
+        setPersons(response.data.capacity);
+        setImageList(response.data.imageUrl);
+        setHolidayType(response.data.operatingTime.holidayTypes);
       },
-      enabled: isEditing,
+      enabled: editMode,
     },
   );
 
   const mutation = useMutation(postAddPost, {
     onSuccess: () => {
       alert('포스팅 성공');
+      resetForm();
+      navigate('/main');
+    },
+    onError: error => {
+      alert('서버 에러 발생 : 포스팅 실패', error.msg);
+    },
+  });
+
+  const mutationEdit = useMutation(putEditPost, {
+    onSuccess: () => {
+      alert('포스팅 수정 완료');
       resetForm();
       navigate('/main');
     },
@@ -188,6 +202,27 @@ function PostingPage() {
     }
   };
 
+  const handleClickEditPosting = () => {
+    const operatingTimeData = getOperatingTime();
+    const amenitiesData = getAmenities();
+
+    if (validation()) {
+      mutationEdit.mutate({
+        postId,
+        title,
+        price: Number(form.price),
+        capacity: Number(persons),
+        content: content.replace(/\n/g, '\\n'),
+        contentDetails: contentDetails.replace(/\n/g, '\\n'),
+        amenities: amenitiesData,
+        operatingTime: operatingTimeData,
+        imageList,
+        location,
+      });
+    }
+  };
+
+  // 멀티 이미지 업로드
   const handleChangeImageUpload = e => {
     if (imageList.length >= 3) {
       alert('최대 3장의 이미지만 업로드 할 수 있습니다.');
@@ -210,6 +245,7 @@ function PostingPage() {
     };
   };
 
+  // 이미지 삭제
   const handleImageDelete = idx => {
     const deletedImageList = imageList.filter(
       (image, listIndex) => listIndex !== idx,
@@ -217,13 +253,27 @@ function PostingPage() {
     setImageList(deletedImageList);
   };
 
-  useEffect(() => {
-    if (isEditing) {
-      setLocation(location || '주소를 입력해주세요');
-    } else {
-      setLocation('주소를 입력해주세요');
-    }
-  }, [isEditing, data]);
+  // 수정할 데이터
+  const editAmenityList = amenityCheckList.map(item => {
+    return { ...item, checked: data && data.data.amenities[item.key] };
+  });
+
+  const editOpenTime = {
+    hour: data && data.data.operatingTime.openTime.slice(0, 2),
+    minute: data && data.data.operatingTime.openTime.slice(2, 4),
+  };
+
+  const editCloseTime = {
+    hour: data && data.data.operatingTime.closeTime.slice(0, 2),
+    minute: data && data.data.operatingTime.closeTime.slice(2, 4),
+  };
+
+  const editHolidayList = holidayCheckList.map(item => {
+    return {
+      ...item,
+      checked: data && data.data.operatingTime.holidays[item.key],
+    };
+  });
 
   return (
     <>
@@ -292,9 +342,15 @@ function PostingPage() {
           <span className={styles.title}>운영 시간</span>
           <div className={styles.operatingCon}>
             <div className={styles.timeCon}>
-              <OperatingTime time={openTime} setTime={setOpenTime} />
+              <OperatingTime
+                time={editMode ? editOpenTime : openTime}
+                setTime={setOpenTime}
+              />
               <span>~</span>
-              <OperatingTime time={closeTime} setTime={setCloseTime} />
+              <OperatingTime
+                time={editMode ? editCloseTime : closeTime}
+                setTime={setCloseTime}
+              />
             </div>
           </div>
           <p className={styles.holidayTitle}>
@@ -307,7 +363,7 @@ function PostingPage() {
               selectedUpdate={setHolidayType}
             />
             <div className={styles.selectDays}>
-              {holidays.map(day => (
+              {(editMode ? editHolidayList : holidays).map(day => (
                 <label
                   htmlFor={day.key}
                   // key={uuid()}
@@ -341,7 +397,7 @@ function PostingPage() {
         <div className={styles.amenity}>
           <span className={styles.title}>편의 시설</span>
           <div className={styles.amenities}>
-            {amenityList.map(amenity => (
+            {(editMode ? editAmenityList : amenityList).map(amenity => (
               <label
                 htmlFor={amenity.key}
                 className={`${styles.checkbox} ${
@@ -366,7 +422,7 @@ function PostingPage() {
             {imageList.map((img, idx) => (
               <div className={styles.addImage}>
                 <img
-                  src={(imageList && img.imageURL) || AddImageIcon}
+                  src={(imageList && img.imageURL) || imageList[idx]}
                   alt='preview'
                   className={styles.imagePreview}
                 />
@@ -397,7 +453,7 @@ function PostingPage() {
         <button
           type='button'
           className={styles.button}
-          onClick={handleClickSubmitPosting}
+          onClick={editMode ? handleClickEditPosting : handleClickSubmitPosting}
         >
           작성 완료
         </button>
