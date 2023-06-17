@@ -14,11 +14,9 @@ function Slider({ post }) {
   const location = useLocation();
   const { pathname } = location;
 
-  const images = post.postImage || post.imageUrl;
-  const imageList = Array.isArray(images) ? images : [images, images, images];
-
   const [currentPage, setCurrentPage] = useState(0);
-  const slideLength = imageList.length;
+  const images = post.postImages || post.imageUrl;
+  const slideLength = images.length;
 
   const { checkingLogin } = useContext(AuthContext);
   const queryClient = useQueryClient();
@@ -65,8 +63,9 @@ function Slider({ post }) {
           transform: `translateX(-${currentPage * (100 / slideLength)}%)`,
         }}
       >
-        {imageList.map((image, idx) => (
+        {images.map((image, idx) => (
           <li key={uuid()} className={styles.slide}>
+            {console.log('image uRLL------------------------', image)}
             <img src={image} alt={`share-office${idx}`}></img>
           </li>
         ))}
@@ -90,7 +89,7 @@ function Slider({ post }) {
       </div>
       <div className={styles.sliderButtons}>
         <div>
-          {imageList.map((image, idx) => (
+          {images.map((image, idx) => (
             <button
               key={uuid()}
               type='button'

@@ -388,6 +388,7 @@ function PostingPage() {
                   id='imgUpload'
                   onChange={e => handleChangeImageUpload(e)}
                   className='hidden'
+                  accept='image/*'
                 />
               </label>
             )}
