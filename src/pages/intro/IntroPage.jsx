@@ -16,7 +16,7 @@ function IntroPage() {
             <img src={LogoIcon} alt='logo' />
           </h1>
           <IntroBannerSlide />
-          <Link to='/login' className={styles.skipButton}>
+          <Link to='/login' className={styles.loginButton}>
             회원가입 / 로그인
           </Link>
           <Link to='/main' className={styles.passButton}>
