@@ -35,7 +35,7 @@ function ReservationPage() {
       }
     },
     onError: error => {
-      const { errorCode } = error.response.data;
+      const { errorCode } = error;
       if (errorCode === 'InvalidDate') {
         alert('예약할 수 없는 날짜입니다.');
       }
