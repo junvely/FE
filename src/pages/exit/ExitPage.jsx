@@ -22,7 +22,13 @@ function ExitPage() {
       }
     },
     onError: error => {
-      alert('탈퇴가 완료되지 않았습니다. 다시 시도해주세요.');
+      const { errorCode } = error;
+      if (errorCode === 'UnfinishedReservationExist') {
+        alert('완료되지 않은 예약이 존재하여 회원탈퇴가 불가합니다.');
+      }
+      if (errorCode === 'MyPostUnfinishedReservationExist') {
+        alert('나의 게시물에 완료되지 않은 예약이 있어 회원탈퇴가 불가합니다.');
+      }
     },
   });
 
