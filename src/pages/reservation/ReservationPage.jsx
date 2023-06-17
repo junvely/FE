@@ -29,8 +29,9 @@ function ReservationPage() {
   const mutationReservation = useMutation(postMakeReservation, {
     onSuccess: result => {
       if (result.status === 'OK') {
+        const reservationId = result.data;
         alert('예약이 완료되었습니다.');
-        navigate(`/reservationSuccess/${postId}`);
+        navigate(`/reservationSuccess/${postId}/${reservationId}`);
       }
     },
     onError: error => {

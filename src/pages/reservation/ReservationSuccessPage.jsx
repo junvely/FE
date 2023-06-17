@@ -13,11 +13,11 @@ import Map from '../../components/common/map/Map';
 function ReservationSuccessPage() {
   const navigate = useNavigate();
   const { postId } = useParams();
-  console.log(postId);
+  const { reservationId } = useParams();
 
   // 데이터 조회
   const { data, isLoading, isError } = useQuery('reservationSuccess', () =>
-    getReservationSuccess(postId),
+    getReservationSuccess(postId, reservationId),
   );
 
   if (isLoading) return <LoadingSpinner />;

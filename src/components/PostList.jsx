@@ -50,16 +50,17 @@ function PostList({ post }) {
 
   const handleClickCancel = e => {
     e.preventDefault();
-    mutationDeleteReservation.mutate(post.id);
+    const ids = { postId: post.postId, reservationId: post.reservationId };
+    mutationDeleteReservation.mutate(ids);
   };
 
   const handleClickConfirm = e => {
     e.preventDefault();
-    navigate(`/reservationSuccess/${post.id}`);
+    navigate(`/reservationSuccess/${post.postId}/${post.reservationId}`);
   };
 
   return (
-    <Link to={`/detail/${post.id}`}>
+    <Link to={`/detail/${post.postId}`}>
       {location.pathname === '/myreservations' && (
         <div className={styles.listWrap}>
           <div className={styles.resListPhotoFrame}>
