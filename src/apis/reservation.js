@@ -7,8 +7,8 @@ const postMakeReservation = async reservationData => {
   try {
     const { data } = await instance.post(`/api/posts/${postId}/reserve`, dates);
     return data;
-  } catch (error) {
-    throw new Error(error);
+  } catch (err) {
+    throw err.response.data;
   }
 };
 
@@ -19,7 +19,7 @@ const getReservationSuccess = async (postId, reservationId) => {
     );
     return data;
   } catch (err) {
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
@@ -30,7 +30,7 @@ const deleteCancelReservation = async ids => {
     );
     return data;
   } catch (err) {
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
@@ -40,7 +40,7 @@ const getReservationList = async postId => {
     const { data } = await instance.get(`/api/posts/${postId}/reserved`);
     return data;
   } catch (err) {
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
