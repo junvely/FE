@@ -39,7 +39,7 @@ const postAddPost = async payload => {
     const imageBlob = new Blob([image.file], {
       type: image.type,
     });
-    formData.append('imageFile', imageBlob);
+    formData.append('imageFile', imageBlob, image.file.name || image);
   });
 
   try {
