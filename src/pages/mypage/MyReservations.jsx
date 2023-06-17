@@ -39,7 +39,7 @@ function MyReservations() {
           </div>
           <div className={styles.pageDataWrap}>
             {data.data &&
-              data.data.map(post => <PostList key={post.id} post={post} />)}
+              data.data.map(post => <PostList key={post.postId} post={post} />)}
           </div>
         </div>
       )}
