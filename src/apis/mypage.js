@@ -5,7 +5,7 @@ const getMypage = async () => {
     const { data } = await instance.get(`/api/mypage`);
     return data;
   } catch (err) {
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
@@ -14,7 +14,7 @@ const getLikedPosts = async () => {
     const { data } = await instance.get('/api/mypage/mylikes');
     return data;
   } catch (err) {
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
@@ -23,7 +23,7 @@ const getMyPosts = async () => {
     const { data } = await instance.get('/api/mypage/myposts');
     return data;
   } catch (err) {
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
@@ -32,7 +32,7 @@ const getMyReservations = async () => {
     const { data } = await instance.get('/api/mypage/myreserves');
     return data;
   } catch (err) {
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
@@ -46,7 +46,7 @@ const deleteMembership = async password => {
     });
     return status;
   } catch (err) {
-    throw new Error(err);
+    throw err.response.data;
   }
 };
 
