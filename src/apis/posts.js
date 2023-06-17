@@ -37,10 +37,10 @@ const postAddPost = async payload => {
   // 멀티 이미지 Blob
   formData.append('postRequestDto', postBlob);
   payload.imageList.forEach(image => {
-    const imageBlob = new Blob([image], {
-      type: image.type,
+    const imageBlob = new Blob([image.file], {
+      type: image.type || '',
     });
-    formData.append('imageFile', imageBlob);
+    formData.append('imageFile', imageBlob, image.file.name || image);
   });
 
   try {
