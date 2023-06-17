@@ -56,7 +56,7 @@ const deletePost = async id => {
     return data.message;
   } catch (error) {
     console.log(error.message);
-    throw error;
+    throw error.response.data;
   }
 };
 
