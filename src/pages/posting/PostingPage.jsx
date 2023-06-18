@@ -207,18 +207,20 @@ function PostingPage() {
     const amenitiesData = getAmenities();
 
     if (validation()) {
-      mutationEdit.mutate({
-        postId,
-        title,
-        price: Number(form.price),
-        capacity: Number(persons),
-        content: content.replace(/\n/g, '\\n'),
-        contentDetails: contentDetails.replace(/\n/g, '\\n'),
-        amenities: amenitiesData,
-        operatingTime: operatingTimeData,
-        imageList,
-        location,
-      });
+      alert('준비중인 기능입니다.');
+      navigate('/main');
+      // mutationEdit.mutate({
+      //   postId,
+      //   title,
+      //   price: Number(form.price),
+      //   capacity: Number(persons),
+      //   content: content.replace(/\n/g, '\\n'),
+      //   contentDetails: contentDetails.replace(/\n/g, '\\n'),
+      //   amenities: amenitiesData,
+      //   operatingTime: operatingTimeData,
+      //   imageList,
+      //   location,
+      // });
     }
   };
 
