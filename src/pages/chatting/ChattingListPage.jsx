@@ -2,13 +2,11 @@ import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getChattingList } from 'apis/chatting';
 import LoadingSpinner from 'components/LoadingSpinner';
-import { useEffect } from 'react';
 import styles from './chatting.module.scss';
 import rightArrow from '../../assets/svg/chatListRightArrow.svg';
 
 function ChattingListPage() {
   const { isLoading, isError, data } = useQuery('chatList', getChattingList);
-  console.log(data);
 
   return (
     <div className={styles.chatListContainer}>
