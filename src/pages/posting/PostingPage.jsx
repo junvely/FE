@@ -20,7 +20,7 @@ import {
   holidayTypes,
   initialState,
   initialTime,
-} from '../../utils/constants/posting';
+} from '../../utils/constants/constants';
 
 function PostingPage() {
   const navigate = useNavigate();

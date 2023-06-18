@@ -1,53 +1,97 @@
-import { useContext, useEffect, useState } from 'react';
-import MainPost from 'components/MainPost';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getMainPosts } from 'apis/posts';
+import MainPost from 'components/MainPost';
 import LoadingSpinner from 'components/LoadingSpinner';
 import uuid from 'react-uuid';
+import { SearchQueryContext } from '../../contexts/SearchQueryContext';
+import { sortingList } from '../../utils/constants/constants';
 import styles from './main.module.scss';
 import DropDownIcon from '../../assets/svg/toggleDropDown.svg';
-import { SearchQueryContext } from '../../contexts/SearchQueryContext';
 
 function MainPage() {
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [displayObserv, setDisplayObserv] = useState(false);
+  const observRef = useRef(null);
+  const preventRef = useRef(true);
+  const endRef = useRef(false);
 
   const { searchQuery, isSearched, updateSearchQuery, resetSearchQuery } =
     useContext(SearchQueryContext);
   const { sorting, district, keyword } = searchQuery;
 
-  const { data, isLoading, isError, refetch } = useQuery('mainPosts', () => {
-    const result = getMainPosts({
-      ...searchQuery,
-      sorting: sorting === '최신 순' ? '최근 게시물 순' : sorting,
-    });
-    return result;
-  });
-
+  const { data, isLoading, isError, refetch } = useQuery(
+    'mainPosts',
+    () => {
+      const result = getMainPosts(searchQuery);
+      return result;
+    },
+    {
+      onSuccess: postsData => {
+        setDisplayObserv(true);
+        if (page === 1) {
+          console.log('page=1');
+          setPosts(postsData.content);
+        } else if (postsData.last) {
+          setDisplayObserv(false);
+          endRef.current = true;
+        } else {
+          console.log('page=2,3 postsData');
+          preventRef.current = true;
+          setPosts(prev => [...prev, ...postsData.content]);
+        }
+      },
+    },
+  );
+  console.log(searchQuery);
   const [isSortingToggleOpen, setIsSortingToggleOpen] = useState(false);
-  const sortingList = ['인기순', '최신 순', '낮은 가격 순', '높은 가격 순'];
 
   const handleOpenToggleClick = () => {
     setIsSortingToggleOpen(!isSortingToggleOpen);
   };
 
   const handleChangeSortClick = e => {
-    updateSearchQuery({ ...searchQuery, sorting: e.target.innerText });
+    setPage(1);
+    updateSearchQuery({
+      ...searchQuery,
+      page,
+      sorting:
+        e.target.innerText === '최신 순'
+          ? '최근 게시물 순'
+          : e.target.innerText,
+    });
   };
 
-  const updatePostData = () => {
-    if (data) {
-      setPosts(data.content);
+  const handleObserver = entries => {
+    const target = entries[0];
+    if (!endRef.current && target.isIntersecting && preventRef.current) {
+      preventRef.current = false;
+      console.log('일어남');
+      setPage(curr => curr + 1);
     }
   };
 
   useEffect(() => {
-    updatePostData();
-  }, [data]);
+    updateSearchQuery({
+      ...searchQuery,
+      page,
+    });
+  }, [page]);
 
   useEffect(() => {
     refetch();
-    updatePostData();
   }, [searchQuery]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 0.5,
+    });
+    if (observRef.current) observer.observe(observRef.current);
+    return () => {
+      observer.disconnect();
+    };
+  }, [handleObserver, observRef.current]);
 
   return (
     <div className={styles.wrap}>
@@ -66,7 +110,7 @@ function MainPage() {
           className={styles.toggleBtn}
           onClick={handleOpenToggleClick}
         >
-          {sorting}
+          {sorting === '최근 게시물 순' ? '최신 순' : sorting}
           <img
             src={DropDownIcon}
             className={`${styles.toggleIcon} ${
@@ -94,10 +138,16 @@ function MainPage() {
           </div>
         </button>
       </div>
+      {posts.map((post, index) =>
+        index === posts.length - 1 && displayObserv ? (
+          <div ref={observRef} style={{ height: '1rem' }}>
+            {/* <LoadingSpinner /> */}
+          </div>
+        ) : (
+          <MainPost key={uuid()} post={post} />
+        ),
+      )}
       {isLoading && <LoadingSpinner />}
-      {posts.map(post => (
-        <MainPost key={uuid()} post={post} />
-      ))}
       {data && data.content.length === 0 && (
         <div className={styles.notFound}>
           <p>검색 결과가 존재하지 않습니다.</p>

@@ -1,10 +1,17 @@
-// initialState
+// [MainPage]
+export const sortingList = [
+  '인기순',
+  '최신 순',
+  '낮은 가격 순',
+  '높은 가격 순',
+];
+
+// [PostingPage]
 // 운영시간
 export const initialTime = {
   hour: '00',
   minute: '00',
 };
-
 // 포스팅 입력폼
 export const initialState = {
   title: '',
@@ -14,9 +21,7 @@ export const initialState = {
   imageList: '',
 };
 
-// constants
 export const holidayTypes = ['매주', '격주', '매월'];
-
 export const holidayCheckList = [
   {
     key: 'isMon',
