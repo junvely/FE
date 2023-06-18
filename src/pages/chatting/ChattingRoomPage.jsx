@@ -20,14 +20,11 @@ function ChattingRoomPage() {
     getChattingData(roomId),
   );
 
-  // console.log(data && data);
-
   const [beforeMessages, setBeforeMessages] = useState([]);
   const [currentMessages, setCurrentMessages] = useState([]);
   const [chat, setChat] = useState('');
 
   const sender = data && data.data.member;
-  console.log('발신자!!!!!', sender);
 
   const handleChatSubmit = () => {
     if (!chat) {
@@ -42,9 +39,7 @@ function ChattingRoomPage() {
   const jsonParseChat = chatData => {
     const newData = JSON.parse(chatData.body);
     setCurrentMessages(current => [...current, newData]);
-    console.log('newData=> ', newData);
   };
-  console.log('메세지들-----------------------------', beforeMessages);
 
   useEffect(() => {
     connectClient(roomId, jsonParseChat);
@@ -63,7 +58,6 @@ function ChattingRoomPage() {
 
   useEffect(() => {
     return () => {
-      console.log('언마운트 시 연결 해제');
       disconnectClient();
     };
   }, []);
@@ -154,7 +148,7 @@ function ChattingRoomPage() {
           ))}
       </div>
       <form onSubmit={e => e.preventDefault()} className={styles.formStyle}>
-        <textarea
+        <input
           type='text'
           value={chat}
           placeholder='메세지를 입력하세요.'
