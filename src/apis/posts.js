@@ -60,4 +60,39 @@ const deletePost = async id => {
   }
 };
 
-export { getMainPosts, postMainLike, postAddPost, deletePost };
+const putEditPost = async payload => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  const formData = new FormData();
+  const sendData = { ...payload };
+  delete sendData.imageList;
+
+  const postBlob = new Blob([JSON.stringify(sendData)], {
+    type: 'application/json',
+  });
+
+  formData.append('postRequestDto', postBlob);
+  payload.imageList.forEach(image => {
+    const imageBlob = new Blob([image.file], {
+      type: image.type,
+    });
+    formData.append('imageFile', imageBlob);
+  });
+
+  try {
+    const { data } = await instance.put(
+      `/api/posts/${payload.postId}`,
+      formData,
+      config,
+    );
+    return data.message;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export { getMainPosts, postMainLike, postAddPost, deletePost, putEditPost };

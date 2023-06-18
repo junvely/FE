@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Slider from 'components/common/slider/Slider';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import getPostDetail from 'apis/detail';
@@ -104,7 +104,7 @@ function DetailPage() {
 
   const handleUpdateClick = () => {
     setIsEditing(true);
-    navigate('/posting', { state: { postId } });
+    navigate(`/edit/${postId}`);
   };
 
   // 편의시설 포맷팅
@@ -152,8 +152,8 @@ function DetailPage() {
     isSun: '일',
   };
 
-  console.log(data && data.data.userStatus);
-  console.log(data && data.data);
+  // console.log(data && data.data.userStatus);
+  // console.log(data && data.data);
 
   return (
     <div className={styles.container}>
@@ -242,7 +242,7 @@ function DetailPage() {
                 <p>
                   {`운영 시간은 ${formattedTime(
                     data.data.operatingTime.openTime,
-                  )}`}{' '}
+                  )}`}
                   ~
                   {` ${formattedTime(
                     data.data.operatingTime.closeTime,
