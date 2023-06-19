@@ -20,7 +20,7 @@ import {
   holidayTypes,
   initialState,
   initialTime,
-} from '../../utils/constants/posting';
+} from '../../utils/constants/constants';
 
 function PostingPage() {
   const navigate = useNavigate();
@@ -290,7 +290,7 @@ function PostingPage() {
           value={title}
           label='글 제목'
           placeHolder='글 제목을 입력해 주세요'
-          max='50'
+          max='40'
           onChange={handleFormChange}
         ></PostInput>
         {/* 주소 */}
@@ -339,6 +339,7 @@ function PostingPage() {
           <textarea
             name='content'
             placeholder='오피스 공간에 대해 소개해 주세요'
+            maxLength={100}
             onChange={handleFormChange}
             value={content}
           />
@@ -395,6 +396,7 @@ function PostingPage() {
           <textarea
             name='contentDetails'
             value={contentDetails}
+            maxLength={100}
             placeholder='사용 가능 시간, 환불 규정 등'
             onChange={handleFormChange}
           />

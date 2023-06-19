@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router';
 import styles from './header.module.scss';
 import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
 import { searchToggleContext } from '../../../contexts/SearchToggleContext';
+import { locations } from '../../../utils/constants/constants';
 
 function SearchBar() {
   const navigate = useNavigate();
@@ -15,26 +16,6 @@ function SearchBar() {
 
   const [input, handleInputChange, resetInput] = useInput('');
   const [district, setDistrict] = useState('전체');
-  const locations = [
-    '전체',
-    '서울',
-    '경기',
-    '인천',
-    '강원',
-    '충남',
-    '대전',
-    '충북',
-    '세종',
-    '부산',
-    '울산',
-    '대구',
-    '경북',
-    '경남',
-    '전남',
-    '광주',
-    '전북',
-    '제주',
-  ];
 
   const handleClickSelectLocation = e => {
     setDistrict(e.target.value);
@@ -44,9 +25,12 @@ function SearchBar() {
     navigate('/main');
     updateSearchQuery({
       ...searchQuery,
+      page: 0,
       keyword: input,
       district: district === '전체' ? null : district,
     });
+    console.log('1. 검색됨:', district);
+    // 검색 후 초기화
     resetInput();
     setDistrict('전체');
     searchToggleSwitch();

@@ -4,8 +4,8 @@ const SearchQueryContext = createContext();
 
 function SearchQueryProvider({ children }) {
   const initialQuery = {
-    page: '',
-    size: '',
+    page: 0,
+    size: 10,
     keyword: '',
     sorting: '인기순',
     district: '',
@@ -16,7 +16,10 @@ function SearchQueryProvider({ children }) {
 
   const updateSearchQuery = newPayload => {
     setSearchQuery(newPayload);
-    setIsSearched(true);
+
+    if (newPayload.keyword || newPayload.district) {
+      setIsSearched(true);
+    }
   };
 
   const resetSearchQuery = () => {

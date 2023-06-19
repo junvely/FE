@@ -17,8 +17,8 @@ function Slider({ post }) {
   const isMyPost = post.userStatus === 3;
 
   const [currentPage, setCurrentPage] = useState(0);
-  const images = post.postImages || post.imageUrl;
-  const slideLength = images.length;
+  const images = post && (post.postImages || post.imageUrl);
+  const slideLength = images && images.length;
 
   const { checkingLogin } = useContext(AuthContext);
   const queryClient = useQueryClient();
@@ -65,11 +65,12 @@ function Slider({ post }) {
           transform: `translateX(-${currentPage * (100 / slideLength)}%)`,
         }}
       >
-        {images.map((image, idx) => (
-          <li key={uuid()} className={styles.slide}>
-            <img src={image} alt={`share-office${idx}`}></img>
-          </li>
-        ))}
+        {images &&
+          images.map((image, idx) => (
+            <li key={uuid()} className={styles.slide}>
+              <img src={image} alt={`share-office${idx}`}></img>
+            </li>
+          ))}
       </ul>
       {isMain && !isMyPost && (
         <button type='button' className={styles.like} onClick={handleLikeClick}>
@@ -90,16 +91,17 @@ function Slider({ post }) {
       </div>
       <div className={styles.sliderButtons}>
         <div>
-          {images.map((image, idx) => (
-            <button
-              key={uuid()}
-              type='button'
-              className={currentPage === idx ? styles.active : ''}
-              id={idx}
-              aria-label='goto-page'
-              onClick={handleClickSetCurrentPage}
-            />
-          ))}
+          {images &&
+            images.map((image, idx) => (
+              <button
+                key={uuid()}
+                type='button'
+                className={currentPage === idx ? styles.active : ''}
+                id={idx}
+                aria-label='goto-page'
+                onClick={handleClickSetCurrentPage}
+              />
+            ))}
         </div>
       </div>
     </div>
