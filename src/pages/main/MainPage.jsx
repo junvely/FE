@@ -11,11 +11,12 @@ import DropDownIcon from '../../assets/svg/toggleDropDown.svg';
 
 function MainPage() {
   const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [displayObserv, setDisplayObserv] = useState(false);
-  const observRef = useRef(null);
-  const preventRef = useRef(true);
-  const endRef = useRef(false);
+  const [sort, setSort] = useState('인기순');
+  const [currPage, setCurrPage] = useState(0);
+  const observRef = useRef(null); // 옵저버 ref
+  const preventRef = useRef(true); // 중복 방지 옵션
+  const endRef = useRef(false); // 마지막 페이지면 옵저버 끄는 옵션
+  const [displayObserv, setDisplayObserv] = useState(false); // 옵저버 display
 
   const { searchQuery, isSearched, updateSearchQuery, resetSearchQuery } =
     useContext(SearchQueryContext);
@@ -29,22 +30,25 @@ function MainPage() {
     },
     {
       onSuccess: postsData => {
-        setDisplayObserv(true);
-        if (page === 1) {
-          console.log('page=1');
-          setPosts(postsData.content);
-        } else if (postsData.last) {
-          setDisplayObserv(false);
-          endRef.current = true;
+        const { first, last, content } = postsData;
+        preventRef.current = true; // 데이터 성공 시 다시 옵저버 실행 조건 true
+
+        if (first) {
+          setDisplayObserv(true); // 첫 페이지면 옵저버 버튼 생성(첫 로드 시 옵저버 실행 방지 위해 데이터 받은 후 보이게 설정)
+          setCurrPage(0);
+          setPosts(content);
+          endRef.current = false;
+        } else if (!first && last) {
+          setDisplayObserv(false); // 마지막 페이지 시 옵저버 버튼 숨김
+          endRef.current = true; // 마지막 페이지면 옵저버 실행 옵션 끄기
         } else {
-          console.log('page=2,3 postsData');
-          preventRef.current = true;
-          setPosts(prev => [...prev, ...postsData.content]);
+          setDisplayObserv(true);
+          setPosts(prev => [...prev, ...content]);
         }
       },
     },
   );
-  console.log(searchQuery);
+
   const [isSortingToggleOpen, setIsSortingToggleOpen] = useState(false);
 
   const handleOpenToggleClick = () => {
@@ -52,46 +56,45 @@ function MainPage() {
   };
 
   const handleChangeSortClick = e => {
-    setPage(1);
-    updateSearchQuery({
-      ...searchQuery,
-      page,
-      sorting:
-        e.target.innerText === '최신 순'
-          ? '최근 게시물 순'
-          : e.target.innerText,
-    });
+    const getSort =
+      e.target.innerText === '최신 순' ? '최근 게시물 순' : e.target.innerText;
+    setCurrPage(0);
+    setSort(getSort);
   };
 
+  // 옵저버 실행
   const handleObserver = entries => {
     const target = entries[0];
+    // 옵저버 중복 실행 방지 위해 한번 실행 후 데이터 성공시 까지 preventRef.current 옵션 false설정
     if (!endRef.current && target.isIntersecting && preventRef.current) {
       preventRef.current = false;
-      console.log('일어남');
-      setPage(curr => curr + 1);
+      setCurrPage(curr => curr + 1);
     }
   };
 
   useEffect(() => {
     updateSearchQuery({
       ...searchQuery,
-      page,
+      page: currPage,
+      sorting: sort,
     });
-  }, [page]);
+  }, [currPage, sort]);
 
   useEffect(() => {
     refetch();
   }, [searchQuery]);
 
   useEffect(() => {
+    // 옵저버 생성, 연결
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 0.5,
+      threshold: 0,
+      rootMargin: '100px',
     });
     if (observRef.current) observer.observe(observRef.current);
     return () => {
       observer.disconnect();
     };
-  }, [handleObserver, observRef.current]);
+  }, [handleObserver]);
 
   return (
     <div className={styles.wrap}>
@@ -99,7 +102,7 @@ function MainPage() {
         {isSearched ? (
           <h2 className={styles.searchResult}>
             {district || '전체'} <span>{keyword && `'${keyword}'`}</span>{' '}
-            검색결과 {(data && data.numberOfElements) || 0}건
+            검색결과 {(data && data.totalElements) || 0}건
           </h2>
         ) : (
           <h2 className={styles.title}>오늘의 Pick!</h2>
@@ -124,15 +127,15 @@ function MainPage() {
             }
             `}
           >
-            {sortingList.map(sort => (
+            {sortingList.map(sortList => (
               <div
                 key={uuid()}
                 type='button'
-                className={sorting === sort ? styles.active : undefined}
+                className={sorting === sortList ? styles.active : undefined}
                 onClick={handleChangeSortClick}
                 role='presentation'
               >
-                {sort}
+                {sortList}
               </div>
             ))}
           </div>
@@ -140,15 +143,15 @@ function MainPage() {
       </div>
       {posts.map((post, index) =>
         index === posts.length - 1 && displayObserv ? (
-          <div ref={observRef} style={{ height: '1rem' }}>
-            {/* <LoadingSpinner /> */}
+          <div key={post.id} ref={observRef} style={{ height: '2rem' }}>
+            <LoadingSpinner />
           </div>
         ) : (
           <MainPost key={uuid()} post={post} />
         ),
       )}
       {isLoading && <LoadingSpinner />}
-      {data && data.content.length === 0 && (
+      {data && posts.length === 0 && (
         <div className={styles.notFound}>
           <p>검색 결과가 존재하지 않습니다.</p>
           <button type='button' onClick={resetSearchQuery}>

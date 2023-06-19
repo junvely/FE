@@ -6,12 +6,29 @@ export const sortingList = [
   '높은 가격 순',
 ];
 
+// [SearchBar]
+export const locations = [
+  '전체',
+  '서울',
+  '경기',
+  '인천',
+  '강원',
+  '충남',
+  '대전',
+  '충북',
+  '세종',
+  '부산',
+  '울산',
+  '대구',
+  '경북',
+  '경남',
+  '전남',
+  '광주',
+  '전북',
+  '제주',
+];
+
 // [PostingPage]
-// 운영시간
-export const initialTime = {
-  hour: '00',
-  minute: '00',
-};
 // 포스팅 입력폼
 export const initialState = {
   title: '',
@@ -20,7 +37,12 @@ export const initialState = {
   contentDetails: ' ',
   imageList: '',
 };
-
+// 운영시간
+export const initialTime = {
+  hour: '00',
+  minute: '00',
+};
+// 휴일
 export const holidayTypes = ['매주', '격주', '매월'];
 export const holidayCheckList = [
   {
