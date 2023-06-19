@@ -108,6 +108,7 @@ function SearchLocationPage({ locationOpen, saveLocation }) {
           e.preventDefault();
           requestCurrentPageData();
         }}
+        className={styles.serchLocation}
       >
         <input
           type='text'

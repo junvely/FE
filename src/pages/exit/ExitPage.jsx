@@ -32,6 +32,15 @@ function ExitPage() {
       if (errorCode === 'MyPostUnfinishedReservationExist') {
         alert('나의 게시물에 완료되지 않은 예약이 있어 회원탈퇴가 불가합니다.');
       }
+      if (errorCode === 'InvalidToken') {
+        alert('토큰이 만료됐거나 유효하지 않습니다.');
+      }
+      if (errorCode === 'WrongPassword') {
+        alert('비밀번호를 확인해주세요.');
+      }
+      if (errorCode === 'Error') {
+        alert('탈퇴가 완료되지 않았습니다. 다시 시도해주세요.');
+      }
     },
   });
 
@@ -62,6 +71,12 @@ function ExitPage() {
         />
         <p className={styles.caution}>
           회원 탈퇴 시, 내 예약 정보 및 개인 정보가 모두 삭제됩니다.
+        </p>
+        <p className={styles.kakaoExit}>
+          카카오 로그인의 경우, 비밀번호 대신 이메일 앞에{' '}
+        </p>
+        <p className={styles.kakaoExit}>
+          &apos;kakao_&apos;를 붙여주세요. ex) kakao_email@email.com
         </p>
       </div>
       <div>

@@ -58,15 +58,17 @@ function Mypage() {
       <div>
         <div className={styles.profile}>
           <h2 className={styles.title}>내 정보</h2>
-          <div className={styles.profileBox}>
-            <div className={styles.photoFrame}>
-              <img src={imageUrl || profileDefault} alt='프로필사진' />
+          <Link to='/profile'>
+            <div className={styles.profileBox}>
+              <div className={styles.photoFrame}>
+                <img src={imageUrl || profileDefault} alt='프로필사진' />
+              </div>
+              <div className={styles.profileText}>
+                <p className={styles.nickname}>{nickname}</p>
+                <p>{email}</p>
+              </div>
             </div>
-            <div className={styles.profileText}>
-              <p className={styles.nickname}>{nickname}</p>
-              <p>{email}</p>
-            </div>
-          </div>
+          </Link>
         </div>
         <div className={styles.linkBox}>
           <div>
