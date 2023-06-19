@@ -99,7 +99,9 @@ function DetailPage() {
   };
 
   const handleClickChattingBtn = () => {
-    mutationChatting.mutate(postId);
+    if (checkingLogin()) {
+      mutationChatting.mutate(postId);
+    }
   };
 
   const handleUpdateClick = () => {

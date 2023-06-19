@@ -2,13 +2,11 @@ import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getChattingList } from 'apis/chatting';
 import LoadingSpinner from 'components/LoadingSpinner';
-import { useEffect } from 'react';
 import styles from './chatting.module.scss';
 import rightArrow from '../../assets/svg/chatListRightArrow.svg';
 
 function ChattingListPage() {
   const { isLoading, isError, data } = useQuery('chatList', getChattingList);
-  console.log(data);
 
   return (
     <div className={styles.chatListContainer}>
@@ -23,7 +21,6 @@ function ChattingListPage() {
         data.length !== 0 &&
         data.map(list => (
           <Link to={`/chatting/room/${list.roomId}`} key={list.roomId}>
-            {console.log(list)}
             <div className={styles.listWrap}>
               <div className={styles.listPhotoFrame}>
                 <img src={list.postImage} alt='오피스이미지' />

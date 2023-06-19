@@ -41,15 +41,6 @@ function Mypage() {
     data.data;
 
   // 로그아웃 버튼
-  // const handleClickLogoutBtn = () => {
-  //   setModal(true);
-  //   if (confirm) {
-  //     console.log('로그아웃 확인');
-  //     mutationLogout.mutate();
-  //   }
-  // };
-
-  // 로그아웃 버튼
   const handleClickLogoutBtn = () => {
     const isLogout = window.confirm('로그아웃 하시겠습니까?');
     if (isLogout) {
