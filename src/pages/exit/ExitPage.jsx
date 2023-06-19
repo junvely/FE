@@ -25,7 +25,6 @@ function ExitPage() {
       }
     },
     onError: error => {
-      console.log(error.errorCode);
       const { errorCode } = error;
       if (errorCode === 'UnfinishedReservationExist') {
         alert('완료되지 않은 예약이 존재하여 회원탈퇴가 불가합니다.');
@@ -38,6 +37,9 @@ function ExitPage() {
       }
       if (errorCode === 'WrongPassword') {
         alert('비밀번호를 확인해주세요.');
+      }
+      if (errorCode === 'Error') {
+        alert('탈퇴가 완료되지 않았습니다. 다시 시도해주세요.');
       }
     },
   });
