@@ -25,12 +25,19 @@ function ExitPage() {
       }
     },
     onError: error => {
+      console.log(error.errorCode);
       const { errorCode } = error;
       if (errorCode === 'UnfinishedReservationExist') {
         alert('완료되지 않은 예약이 존재하여 회원탈퇴가 불가합니다.');
       }
       if (errorCode === 'MyPostUnfinishedReservationExist') {
         alert('나의 게시물에 완료되지 않은 예약이 있어 회원탈퇴가 불가합니다.');
+      }
+      if (errorCode === 'InvalidToken') {
+        alert('토큰이 만료됐거나 유효하지 않습니다.');
+      }
+      if (errorCode === 'WrongPassword') {
+        alert('비밀번호를 확인해주세요.');
       }
     },
   });
