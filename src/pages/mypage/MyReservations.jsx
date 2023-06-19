@@ -12,8 +12,6 @@ function MyReservations() {
     getMyReservations,
   );
 
-  console.log(data && data.data);
-
   return (
     <div className={styles.pageContainer}>
       {isLoading && <LoadingSpinner />}

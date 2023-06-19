@@ -22,6 +22,8 @@ function Header() {
 
   const mutationLogout = useMutation(authLogout, {
     onSuccess: () => {
+      removeCookie();
+      updateLoginStatus();
       alert('로그아웃 처리 되었습니다');
       navigate('/main');
     },
@@ -30,8 +32,6 @@ function Header() {
   const handleLogoutClick = () => {
     const isLogout = window.confirm('로그아웃 하시겠습니까?');
     if (isLogout) {
-      removeCookie();
-      updateLoginStatus();
       mutationLogout.mutate();
     }
   };

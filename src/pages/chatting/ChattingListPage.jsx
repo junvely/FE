@@ -21,7 +21,6 @@ function ChattingListPage() {
         data.length !== 0 &&
         data.map(list => (
           <Link to={`/chatting/room/${list.roomId}`} key={list.roomId}>
-            {console.log(list)}
             <div className={styles.listWrap}>
               <div className={styles.listPhotoFrame}>
                 <img src={list.postImage} alt='오피스이미지' />
