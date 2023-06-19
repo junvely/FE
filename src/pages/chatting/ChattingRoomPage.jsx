@@ -20,7 +20,7 @@ function ChattingRoomPage() {
     getChattingData(roomId),
   );
 
-  // console.log(data && data);
+  console.log(data && data);
 
   const [beforeMessages, setBeforeMessages] = useState([]);
   const [currentMessages, setCurrentMessages] = useState([]);
@@ -142,7 +142,7 @@ function ChattingRoomPage() {
                 <div className={styles.chatWrap}>
                   <div className={styles.profileBox}>
                     <img
-                      src={message.postImage}
+                      src={message.imageUrl}
                       alt='프로필 이미지'
                       className={styles.profile}
                     />
