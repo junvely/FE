@@ -69,7 +69,6 @@ const postMakeChattingRoom = async postId => {
 const disconnectClient = () => {
   if (stompClient !== null) {
     stompClient.disconnect();
-    console.log('연결 종료');
   }
 };
 
