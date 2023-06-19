@@ -164,20 +164,22 @@
 }
 
 .formStyle {
-  width: 100%;
   height: 10%;
   padding: 0;
-  margin-bottom: 10px;
+  margin: 0 0.625rem 0.625rem;
+  display: flex;
 
   input {
-    width: 73%;
+    height: 100%;
     padding: 1.25rem 2.1875rem;
     resize: none;
     border: 1px solid #dbdbdb;
+    margin-right: 0.625rem;
   }
 
   .submitButton {
     width: 27%;
+    height: 100%;
     background-color: $color-Signature-purple;
     color: #fff;
     font-size: 1.25rem;
