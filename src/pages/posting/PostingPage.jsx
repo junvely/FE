@@ -70,7 +70,11 @@ function PostingPage() {
       navigate('/main');
     },
     onError: error => {
-      alert('서버 에러 발생 : 포스팅 실패', error.msg);
+      if (error === 'Maximum upload size exceeded') {
+        alert('이미지 용량 사이즈를 초과하였습니다!');
+      } else {
+        alert('서버 에러 발생 : 포스팅 실패', error.msg);
+      }
     },
   });
 

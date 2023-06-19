@@ -46,7 +46,7 @@ const postAddPost = async payload => {
     const { data } = await instance.post(`api/posts`, formData, config);
     return data.message;
   } catch (error) {
-    throw new Error(error);
+    throw error.response.data;
   }
 };
 
