@@ -34,14 +34,17 @@ function SignupPage() {
     },
     onError: error => {
       const { errorCode } = error;
-      if (errorCode === 'InvalidEmailPattern') {
-        alert('유효하지 않은 이메일 형식입니다.');
-      }
       if (errorCode === 'ExistEmail') {
         alert('이미 등록된 이메일입니다.');
       }
+      if (errorCode === 'InvalidEmailPattern') {
+        alert('유효하지 않은 이메일 형식입니다.');
+      }
       if (errorCode === 'EmailSendFailed') {
         alert('이메일 전송에 실패하였습니다.');
+      }
+      if (errorCode === 'AlreadyUsingEmail(Kakao)') {
+        alert('이미 카카오 계정으로 가입된 아이디입니다.');
       }
     },
   });
@@ -74,8 +77,6 @@ function SignupPage() {
       const { errorCode } = error;
       if (errorCode === 'ExistEmail') {
         alert('이미 등록된 이메일입니다.');
-      } else if (errorCode === 'AlreadyUsingEmail(Kakao)') {
-        alert('이미 카카오 계정으로 가입된 아이디입니다.');
       } else if (errorCode === 'ExistNickname') {
         alert('이미 등록된 닉네임입니다.');
       } else if (errorCode === 'WrongEmail') {
