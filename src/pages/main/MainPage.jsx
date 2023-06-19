@@ -14,7 +14,6 @@ function MainPage() {
   const [sort, setSort] = useState('인기순');
   const [currPage, setCurrPage] = useState(0);
 
-
   const { searchQuery, isSearched, updateSearchQuery, resetSearchQuery } =
     useContext(SearchQueryContext);
   const { sorting, district, keyword } = searchQuery;
