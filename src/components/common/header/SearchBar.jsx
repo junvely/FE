@@ -1,6 +1,7 @@
 import useInput from 'hooks/useInput';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import uuid from 'react-uuid';
 import styles from './header.module.scss';
 import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
 import { searchToggleContext } from '../../../contexts/SearchToggleContext';
@@ -29,7 +30,7 @@ function SearchBar() {
       keyword: input,
       district: district === '전체' ? null : district,
     });
-    console.log('1. 검색됨:', district);
+
     // 검색 후 초기화
     resetInput();
     setDistrict('전체');
@@ -69,6 +70,7 @@ function SearchBar() {
               {locations.map(val => {
                 return (
                   <label
+                    key={uuid()}
                     htmlFor={val}
                     className={district === val && styles.selected}
                   >

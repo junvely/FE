@@ -13,10 +13,6 @@ function MainPage() {
   const [posts, setPosts] = useState([]);
   const [sort, setSort] = useState('인기순');
   const [currPage, setCurrPage] = useState(0);
-  const observRef = useRef(null); // 옵저버 ref
-  const preventRef = useRef(true); // 중복 방지 옵션
-  const endRef = useRef(false); // 마지막 페이지면 옵저버 끄는 옵션
-  const [displayObserv, setDisplayObserv] = useState(false); // 옵저버 display
 
   const { searchQuery, isSearched, updateSearchQuery, resetSearchQuery } =
     useContext(SearchQueryContext);
@@ -30,21 +26,7 @@ function MainPage() {
     },
     {
       onSuccess: postsData => {
-        const { first, last, content } = postsData;
-        preventRef.current = true; // 데이터 성공 시 다시 옵저버 실행 조건 true
-
-        if (first) {
-          setDisplayObserv(true); // 첫 페이지면 옵저버 버튼 생성(첫 로드 시 옵저버 실행 방지 위해 데이터 받은 후 보이게 설정)
-          setCurrPage(0);
-          setPosts(content);
-          endRef.current = false;
-        } else if (!first && last) {
-          setDisplayObserv(false); // 마지막 페이지 시 옵저버 버튼 숨김
-          endRef.current = true; // 마지막 페이지면 옵저버 실행 옵션 끄기
-        } else {
-          setDisplayObserv(true);
-          setPosts(prev => [...prev, ...content]);
-        }
+        setPosts(postsData.content);
       },
     },
   );
@@ -62,16 +44,6 @@ function MainPage() {
     setSort(getSort);
   };
 
-  // 옵저버 실행
-  const handleObserver = entries => {
-    const target = entries[0];
-    // 옵저버 중복 실행 방지 위해 한번 실행 후 데이터 성공시 까지 preventRef.current 옵션 false설정
-    if (!endRef.current && target.isIntersecting && preventRef.current) {
-      preventRef.current = false;
-      setCurrPage(curr => curr + 1);
-    }
-  };
-
   useEffect(() => {
     updateSearchQuery({
       ...searchQuery,
@@ -83,18 +55,6 @@ function MainPage() {
   useEffect(() => {
     refetch();
   }, [searchQuery]);
-
-  useEffect(() => {
-    // 옵저버 생성, 연결
-    const observer = new IntersectionObserver(handleObserver, {
-      threshold: 0,
-      rootMargin: '100px',
-    });
-    if (observRef.current) observer.observe(observRef.current);
-    return () => {
-      observer.disconnect();
-    };
-  }, [handleObserver]);
 
   return (
     <div className={styles.wrap}>
@@ -141,15 +101,9 @@ function MainPage() {
           </div>
         </button>
       </div>
-      {posts.map((post, index) =>
-        index === posts.length - 1 && displayObserv ? (
-          <div key={post.id} ref={observRef} style={{ height: '2rem' }}>
-            <LoadingSpinner />
-          </div>
-        ) : (
-          <MainPost key={uuid()} post={post} />
-        ),
-      )}
+      {posts.map(post => (
+        <MainPost key={post.id} post={post} />
+      ))}
       {isLoading && <LoadingSpinner />}
       {data && posts.length === 0 && (
         <div className={styles.notFound}>
