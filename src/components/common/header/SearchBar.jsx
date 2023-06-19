@@ -30,7 +30,7 @@ function SearchBar() {
       keyword: input,
       district: district === '전체' ? null : district,
     });
-
+    
     // 검색 후 초기화
     resetInput();
     setDistrict('전체');
