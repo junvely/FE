@@ -6,8 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { deletePost, postMainLike } from 'apis/posts';
 import { postMakeChattingRoom } from 'apis/chatting';
-import { useRecoilState } from 'recoil';
-import editingState from 'recoil/atom';
 import styles from './detail.module.scss';
 import locationIcon from '../../assets/svg/mapSmall.svg';
 import priceIcon from '../../assets/svg/price.svg';
@@ -25,7 +23,6 @@ function DetailPage() {
   const queryClient = useQueryClient();
   const { postId } = useParams();
   const { checkingLogin } = useContext(AuthContext);
-  const [isEditing, setIsEditing] = useRecoilState(editingState);
 
   // 데이터 가져오기
   const { data, isLoading, isError } = useQuery('postDetail', () =>
@@ -103,7 +100,6 @@ function DetailPage() {
   };
 
   const handleUpdateClick = () => {
-    setIsEditing(true);
     navigate(`/edit/${postId}`);
   };
 

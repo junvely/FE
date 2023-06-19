@@ -50,10 +50,36 @@ const deleteMembership = async password => {
   }
 };
 
+const putEditProfile = async payload => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+  const formData = new FormData();
+
+  const profileBlob = new Blob([JSON.stringify(payload.profileDto)], {
+    type: 'application/json',
+  });
+
+  const imageType = payload.imageFile.type.split('/')[1];
+  const imageNameWithType = `${payload.imageFile}.${imageType}`;
+  formData.append('profileDto', profileBlob);
+  formData.append('imageFile', payload.imageFile, imageNameWithType);
+
+  try {
+    const { data } = await instance.put('/api/mypage/modify', formData, config);
+    return data;
+  } catch (err) {
+    throw err.response.data;
+  }
+};
+
 export {
   getMypage,
   getMyReservations,
   getLikedPosts,
   getMyPosts,
   deleteMembership,
+  putEditProfile,
 };

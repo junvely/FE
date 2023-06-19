@@ -26,6 +26,7 @@
 .caution {
   font-size: 0.875rem;
   color: #929292;
+  margin-bottom: 0.625rem;
 }
 
 .wrap .exitBtn {
@@ -36,4 +37,10 @@
   border-radius: 6px;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+.kakaoExit {
+  margin-top: -0.3125rem;
+  color: $color-Signature-purple;
+  font-size: 0.875rem;
 }
