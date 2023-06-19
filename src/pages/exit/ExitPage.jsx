@@ -63,6 +63,12 @@ function ExitPage() {
         <p className={styles.caution}>
           회원 탈퇴 시, 내 예약 정보 및 개인 정보가 모두 삭제됩니다.
         </p>
+        <p className={styles.kakaoExit}>
+          카카오 로그인의 경우, 비밀번호 대신 이메일 앞에{' '}
+        </p>
+        <p className={styles.kakaoExit}>
+          &apos;kakao_&apos;를 붙여주세요. ex) kakao_email@email.com
+        </p>
       </div>
       <div>
         <button

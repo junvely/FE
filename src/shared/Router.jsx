@@ -17,6 +17,7 @@ import ReservationPage from 'pages/reservation/ReservationPage';
 import ExitPage from 'pages/exit/ExitPage';
 import ChattingListPage from 'pages/chatting/ChattingListPage';
 import ChattingRoomPage from 'pages/chatting/ChattingRoomPage';
+import Profile from 'pages/mypage/Profile';
 import PrivateRoutes from './PrivateRoutes';
 import EditPage from '../pages/edit/EditPage';
 
@@ -31,6 +32,7 @@ function Router() {
             <Route path='/posting' element={<PostingPage />} />
             <Route path='/edit/:postId' element={<EditPage />} />
             <Route path='/mypage' element={<Mypage />} />
+            <Route path='/profile' element={<Profile />} />
             <Route path='/likedposts' element={<LikedPosts />} />
             <Route path='/myposts' element={<MyPostsPage />} />
             <Route path='/myreservations' element={<MyReservations />} />
