@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { deleteMembership } from 'apis/mypage';
 import { useMutation } from 'react-query';
 import { removeCookie } from 'utils/helpers/cookies';
 import { useNavigate } from 'react-router';
+import { AuthContext } from 'contexts/AuthContext';
 import styles from './exit.module.scss';
 
 function ExitPage() {
+  const { isLogin, updateLoginStatus } = useContext(AuthContext);
   const initialState = {
     password: '',
   };
@@ -17,6 +19,7 @@ function ExitPage() {
     onSuccess: result => {
       if (result === 200) {
         removeCookie();
+        updateLoginStatus();
         alert('탈퇴가 완료되었습니다.');
         navigate('/main');
       }
