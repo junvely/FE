@@ -77,7 +77,7 @@ function DetailPage() {
       navigate('/login');
     }
     if (data.data.userStatus === 1 || data.data.userStatus === 2) {
-      navigate('/reservation', { state: { postId } });
+      navigate(`/reservation/${postId}`);
     }
   };
 
