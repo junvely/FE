@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useInfiniteQuery, useQueryClient } from 'react-query';
 import { getMainPosts } from 'apis/posts';
 import MainPost from 'components/MainPost';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -10,23 +10,34 @@ import styles from './main.module.scss';
 import DropDownIcon from '../../assets/svg/toggleDropDown.svg';
 
 function MainPage() {
-  const [posts, setPosts] = useState([]);
+  const queryClient = useQueryClient();
   const [sort, setSort] = useState('인기순');
-  const [currPage, setCurrPage] = useState(0);
+  const observRef = useRef(null); // 옵저버 ref
 
   const { searchQuery, isSearched, updateSearchQuery, resetSearchQuery } =
     useContext(SearchQueryContext);
   const { sorting, district, keyword } = searchQuery;
 
-  const { data, isLoading, isError, refetch } = useQuery(
+  const {
+    data,
+    isLoading,
+    isFetching,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    refetch,
+  } = useInfiniteQuery(
     'mainPosts',
-    () => {
-      const result = getMainPosts(searchQuery);
-      return result;
+    async ({ pageParam = 0 }) => {
+      const res = await getMainPosts({ ...searchQuery, page: pageParam });
+      return res;
     },
     {
-      onSuccess: postsData => {
-        setPosts(postsData.content);
+      getNextPageParam: (lastPage, allPages) => {
+        // lastPage: 직전에 반환된 리턴값, pages: 지금까지 받아온 전체 페이지
+        const totalPages = lastPage.totalPages || 0;
+        const nextPage = allPages.length;
+        return nextPage < totalPages ? nextPage : undefined;
       },
     },
   );
@@ -40,21 +51,43 @@ function MainPage() {
   const handleChangeSortClick = e => {
     const getSort =
       e.target.innerText === '최신 순' ? '최근 게시물 순' : e.target.innerText;
-    setCurrPage(0);
     setSort(getSort);
   };
+
+  // 옵저버 실행
+  const handleObserver = useCallback(
+    entries => {
+      const target = entries[0];
+      if (target.isIntersecting && hasNextPage && !isFetching) {
+        fetchNextPage();
+      }
+    },
+    [hasNextPage, fetchNextPage, isFetching],
+  );
 
   useEffect(() => {
     updateSearchQuery({
       ...searchQuery,
-      page: currPage,
+      page: 0,
       sorting: sort,
     });
-  }, [currPage, sort]);
+  }, [sort]);
 
   useEffect(() => {
+    queryClient.removeQueries('mainPosts');
     refetch();
   }, [searchQuery]);
+
+  useEffect(() => {
+    // 옵저버 생성, 연결
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 0,
+    });
+    if (observRef.current) observer.observe(observRef.current);
+    return () => {
+      observer.disconnect();
+    };
+  }, [handleObserver]);
 
   return (
     <div className={styles.wrap}>
@@ -62,7 +95,7 @@ function MainPage() {
         {isSearched ? (
           <h2 className={styles.searchResult}>
             {district || '전체'} <span>{keyword && `'${keyword}'`}</span>{' '}
-            검색결과 {(data && data.totalElements) || 0}건
+            검색결과 {(data && data.pages[0].totalElements) || 0}건
           </h2>
         ) : (
           <h2 className={styles.title}>오늘의 Pick!</h2>
@@ -101,11 +134,19 @@ function MainPage() {
           </div>
         </button>
       </div>
-      {posts.map(post => (
-        <MainPost key={post.id} post={post} />
-      ))}
+      {data &&
+        data.pages.map(page =>
+          page.content.map((post, index) => (
+            <MainPost key={uuid()} post={post} />
+          )),
+        )}
+      {hasNextPage && !isFetching && (
+        <div ref={observRef} style={{ height: '2rem' }}>
+          <LoadingSpinner />
+        </div>
+      )}
       {isLoading && <LoadingSpinner />}
-      {data && posts.length === 0 && (
+      {data && data.pages[0].content.length === 0 && (
         <div className={styles.notFound}>
           <p>검색 결과가 존재하지 않습니다.</p>
           <button type='button' onClick={resetSearchQuery}>
