@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery, useQueryClient } from 'react-query';
 import { getMainPosts } from 'apis/posts';
 import MainPost from 'components/MainPost';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -10,6 +10,7 @@ import styles from './main.module.scss';
 import DropDownIcon from '../../assets/svg/toggleDropDown.svg';
 
 function MainPage() {
+  const queryClient = useQueryClient();
   const [sort, setSort] = useState('인기순');
   const observRef = useRef(null); // 옵저버 ref
 
@@ -73,6 +74,7 @@ function MainPage() {
   }, [sort]);
 
   useEffect(() => {
+    queryClient.removeQueries('mainPosts');
     refetch();
   }, [searchQuery]);
 
