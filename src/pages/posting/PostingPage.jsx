@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import useForm from 'hooks/useForm';
 import { postAddPost, putEditPost } from 'apis/posts';
@@ -18,8 +18,9 @@ import {
   amenityCheckList,
   holidayCheckList,
   holidayTypes,
+  initialCloseTime,
+  initialOpenTime,
   initialState,
-  initialTime,
 } from '../../utils/constants/constants';
 
 function PostingPage() {
@@ -33,8 +34,8 @@ function PostingPage() {
   const [location, setLocation] = useState('주소를 입력해주세요');
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   // 운영 시간
-  const [openTime, setOpenTime] = useState(initialTime);
-  const [closeTime, setCloseTime] = useState(initialTime);
+  const [openTime, setOpenTime] = useState(initialOpenTime);
+  const [closeTime, setCloseTime] = useState(initialCloseTime);
   // 휴무 옵션/체크리스트
   const [holidayType, setHolidayType] = useState(holidayTypes[0]);
   const [holidays, setHolidays] = useState(holidayCheckList);
@@ -70,7 +71,7 @@ function PostingPage() {
       navigate('/main');
     },
     onError: error => {
-      if (error === 'Maximum upload size exceeded') {
+      if (error.message === 'Maximum upload size exceeded') {
         alert('이미지 용량 사이즈를 초과하였습니다!');
       } else {
         alert('서버 에러 발생 : 포스팅 실패', error.msg);
@@ -290,7 +291,7 @@ function PostingPage() {
           value={title}
           label='글 제목'
           placeHolder='글 제목을 입력해 주세요'
-          max='40'
+          max='35'
           onChange={handleFormChange}
         ></PostInput>
         {/* 주소 */}
@@ -338,8 +339,8 @@ function PostingPage() {
           <span>오피스 소개</span>
           <textarea
             name='content'
-            placeholder='오피스 공간에 대해 소개해 주세요'
-            maxLength={100}
+            placeholder='오피스 공간에 대해 소개해 주세요(255자)'
+            maxLength='255'
             onChange={handleFormChange}
             value={content}
           />
@@ -395,9 +396,9 @@ function PostingPage() {
           <span>추가 안내</span>
           <textarea
             name='contentDetails'
+            placeholder='오피스 공간에 대해 소개해 주세요(255자)'
             value={contentDetails}
-            maxLength={100}
-            placeholder='사용 가능 시간, 환불 규정 등'
+            maxLength='255'
             onChange={handleFormChange}
           />
         </div>
@@ -425,7 +426,7 @@ function PostingPage() {
         </div>
         {/* 이미지 등록 */}
         <div className={styles.inputCon}>
-          <span>이미지 등록</span>
+          <span>이미지 등록 {`(${imageList.length}/3)`}</span>
           <div className={styles.labelWrap}>
             {imageList.map((img, idx) => (
               <div className={styles.addImage}>
