@@ -38,8 +38,12 @@ export const initialState = {
   imageList: '',
 };
 // 운영시간
-export const initialTime = {
+export const initialOpenTime = {
   hour: '00',
+  minute: '00',
+};
+export const initialCloseTime = {
+  hour: '24',
   minute: '00',
 };
 // 휴일

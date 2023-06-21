@@ -2,7 +2,6 @@ function OperatingTime({ time, setTime }) {
   const handleGetTime = e => {
     const { name, value } = e.target;
     setTime({ ...time, [name]: value });
-    console.log(name, value);
   };
 
   return (
