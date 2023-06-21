@@ -7,7 +7,6 @@ import { SearchToggleProvider } from '../../../contexts/SearchToggleContext';
 
 function Layout() {
   const location = useLocation();
-  console.log(location);
   return (
     <SearchToggleProvider>
       <SearchQueryProvider>

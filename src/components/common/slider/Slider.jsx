@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import uuid from 'react-uuid';
 import styles from './slider.module.scss';
 import arrowLeft from '../../../assets/svg/arrowLeft.svg';
@@ -11,6 +11,7 @@ import LikeFullIcon from '../../../assets/svg/likefull.svg';
 import { AuthContext } from '../../../contexts/AuthContext';
 
 function Slider({ post }) {
+  const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
   const isMain = pathname.includes('main');
@@ -53,11 +54,7 @@ function Slider({ post }) {
   };
 
   return (
-    <div
-      className={styles.sliderCon}
-      onClick={e => e.stopPropagation()}
-      role='presentation'
-    >
+    <div className={styles.sliderCon}>
       <ul
         className={styles.slides}
         style={{
@@ -67,13 +64,25 @@ function Slider({ post }) {
       >
         {images &&
           images.map((image, idx) => (
-            <li key={uuid()} className={styles.slide}>
-              <img src={image} alt={`share-office${idx}`}></img>
+            <li
+              key={uuid()}
+              className={styles.slide}
+              onClick={() => isMain && navigate(`/detail/${post.id}`)}
+              role='presentation'
+            >
+              <img src={image} alt={`share-office${idx}`} />
             </li>
           ))}
       </ul>
       {isMain && !isMyPost && (
-        <button type='button' className={styles.like} onClick={handleLikeClick}>
+        <button
+          type='button'
+          className={styles.like}
+          onClick={e => {
+            e.stopPropagation();
+            handleLikeClick();
+          }}
+        >
           {likeStatus ? (
             <img src={LikeFullIcon} alt='like-full-icon'></img>
           ) : (
@@ -81,11 +90,27 @@ function Slider({ post }) {
           )}
         </button>
       )}
-      <div className={styles.arrowButtons}>
-        <button type='button' onClick={handleClickPrevSlide}>
+      <div
+        className={styles.arrowButtons}
+        onClick={() => isMain && navigate(`/detail${post.id}}`)}
+        role='presentation'
+      >
+        <button
+          type='button'
+          onClick={e => {
+            e.stopPropagation();
+            handleClickPrevSlide();
+          }}
+        >
           <img src={arrowLeft} alt='prev-button' />
         </button>
-        <button type='button' onClick={handleClickNextSlide}>
+        <button
+          type='button'
+          onClick={e => {
+            e.stopPropagation();
+            handleClickNextSlide();
+          }}
+        >
           <img src={arrowRight} alt='next-button' />
         </button>
       </div>
@@ -99,7 +124,10 @@ function Slider({ post }) {
                 className={currentPage === idx ? styles.active : ''}
                 id={idx}
                 aria-label='goto-page'
-                onClick={handleClickSetCurrentPage}
+                onClick={e => {
+                  e.stopPropagation();
+                  handleClickSetCurrentPage(e);
+                }}
               />
             ))}
         </div>
