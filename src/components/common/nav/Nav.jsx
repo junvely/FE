@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './nav.module.scss';
 import homeIcon from '../../../assets/svg/home.svg';
 import chattingIcon from '../../../assets/svg/chatting.svg';
@@ -9,8 +9,8 @@ import topIcon from '../../../assets/svg/topIcon.svg';
 import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
 
 function Nav() {
-  const navigate = useNavigate();
   const location = useLocation();
+  const { pathname } = location;
   const { resetSearchQuery } = useContext(SearchQueryContext);
 
   const handleHomeClick = () => {
@@ -30,9 +30,7 @@ function Nav() {
               src={homeIcon}
               alt='home'
               className={
-                location.pathname === '/main'
-                  ? styles.selectedIcon
-                  : styles.icon
+                pathname === '/main' ? styles.selectedIcon : styles.icon
               }
             />
           </li>
@@ -43,7 +41,7 @@ function Nav() {
               src={postIcon}
               alt='posting'
               className={
-                location.pathname.startsWith('/posting')
+                pathname.startsWith('/posting')
                   ? styles.selectedIcon
                   : styles.icon
               }
@@ -56,7 +54,7 @@ function Nav() {
               src={chattingIcon}
               alt='chatting'
               className={
-                location.pathname.startsWith('/chatting')
+                pathname.startsWith('/chatting')
                   ? styles.selectedIcon
                   : styles.icon
               }
@@ -69,10 +67,10 @@ function Nav() {
               src={mypageIcon}
               alt='mypage'
               className={
-                location.pathname === '/mypage' ||
-                location.pathname === '/likedposts' ||
-                location.pathname === '/myposts' ||
-                location.pathname === '/myreservations'
+                pathname === '/mypage' ||
+                pathname === '/likedposts' ||
+                pathname === '/myposts' ||
+                pathname === '/myreservations'
                   ? styles.selectedIcon
                   : styles.icon
               }
@@ -80,7 +78,7 @@ function Nav() {
           </li>
         </Link>
       </ul>
-      {location.pathname === '/main' && (
+      {pathname === '/main' && (
         <button
           type='button'
           className={styles.scrollTop}
