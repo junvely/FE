@@ -51,6 +51,7 @@ function Profile() {
   };
 
   const profileData = { profileDto: newNickname, imageFile: image };
+  console.log('프로필 데이터', profileData);
 
   const handleClickSubmitProfile = e => {
     e.preventDefault();
@@ -79,8 +80,9 @@ function Profile() {
       return;
     }
     try {
-      const modifiedUrl = profileImage.replace('https://', 'http://');
-      const response = await axios.get(modifiedUrl, {
+      // const modifiedUrl = profileImage.replace('https://', 'http://');
+      // const response = await axios.get(modifiedUrl, {
+      const response = await axios.get(profileImage, {
         responseType: 'blob',
       });
       setDownloadImage(response.data);
