@@ -166,7 +166,7 @@ function DetailPage() {
               <div>
                 <div className={styles.buttonBox}>
                   <div className={styles.profileBox}>
-                    <img src={profileImage} alt='프로필 이미지' />
+                    <img src={data.data.userImg} alt='프로필 이미지' />
                     <div>
                       <p className={styles.host}>호스트</p>
                       <p>{data.data.nickname}</p>
