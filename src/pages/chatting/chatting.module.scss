@@ -13,9 +13,21 @@
 }
 
 .listWrap {
+  width: 100%;
   padding: 1.25rem 1.875rem;
   display: flex;
   border-bottom: 1px solid $color-line-gray;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    translate: -50% -50%;
+    width: 2.3125rem;
+    height: 2.3125rem;
+    background-image: url('../../assets/svg/chatListRightArrow.svg');
+  }
 }
 
 .listPhotoFrame {
@@ -26,21 +38,29 @@
   margin-right: 0.75rem;
   border-radius: 6px;
   img {
+    position: relative;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+  }
+  span {
+    position: absolute;
+    top: 0.9375rem;
+    left: 1.375rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background-color: $color-Signature-purple;
+    color: #fff;
+    @include flex-all-center;
+    font-size: 0.75rem;
   }
 }
 
 .listContentWrap {
-  width: 100%;
-  max-width: 17.8125rem;
+  width: 75%;
   display: flex;
   justify-content: space-between;
-  // align-items: center;
-  img {
-    width: 2.25rem;
-    height: 100%;
-  }
 }
 
 .listTitleWrap {
@@ -72,6 +92,7 @@
 
 .listTextWrap {
   width: 87%;
+  max-width: 250px;
 }
 
 // 채팅 룸

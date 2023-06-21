@@ -3,7 +3,6 @@ import { useQuery } from 'react-query';
 import { getChattingList } from 'apis/chatting';
 import LoadingSpinner from 'components/LoadingSpinner';
 import styles from './chatting.module.scss';
-import rightArrow from '../../assets/svg/chatListRightArrow.svg';
 
 function ChattingListPage() {
   const { isLoading, isError, data } = useQuery('chatList', getChattingList);
@@ -24,6 +23,7 @@ function ChattingListPage() {
             <div className={styles.listWrap}>
               <div className={styles.listPhotoFrame}>
                 <img src={list.postImage} alt='오피스이미지' />
+                <span>{list.notSeenCount}</span>
               </div>
               <div className={styles.listContentWrap}>
                 <div className={styles.listTextWrap}>
@@ -33,7 +33,6 @@ function ChattingListPage() {
                   </div>
                   <p className={styles.chatListText}>{list.message}</p>
                 </div>
-                <img src={rightArrow} alt='오른쪽 화살표' />
               </div>
             </div>
           </Link>

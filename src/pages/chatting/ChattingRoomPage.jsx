@@ -31,6 +31,8 @@ function ChattingRoomPage() {
       alert('메세지를 입력하세요.');
     } else if (chat.length > 255) {
       alert('채팅은 한번에 255자까지 보낼 수 있습니다.');
+    } else if (chat.trim().length === 0) {
+      alert('공백만 보낼 수 없습니다.');
     } else {
       sendChat(roomId, sender, chat);
       setChat('');
