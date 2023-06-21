@@ -9,6 +9,7 @@ let stompClient = null;
 const connectClient = (roomId, jsonParseChat) => {
   const sock = new SockJS('https://api.ohpick.shop/ws');
   stompClient = Stomp.over(() => sock);
+  stompClient.debug = () => {};
   stompClient.connect(
     {
       header: {
@@ -16,7 +17,7 @@ const connectClient = (roomId, jsonParseChat) => {
       },
     },
     frame => {
-      console.log('frame 연결 성공 =', frame);
+      // console.log('frame 연결 성공 =', frame);
       stompClient.subscribe(`/sub/chat/room/${roomId}`, jsonParseChat);
     },
   );

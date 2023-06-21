@@ -147,21 +147,23 @@ function ChattingRoomPage() {
             </div>
           ))}
       </div>
-      <form onSubmit={e => e.preventDefault()} className={styles.formStyle}>
-        <input
-          type='text'
-          value={chat}
-          placeholder='메세지를 입력하세요.'
-          onChange={e => setChat(e.target.value)}
-        />
-        <button
-          type='submit'
-          onClick={handleChatSubmit}
-          className={styles.submitButton}
-        >
-          보내기
-        </button>
-      </form>
+      <div className={styles.formWrap}>
+        <form onSubmit={e => e.preventDefault()} className={styles.formStyle}>
+          <input
+            type='text'
+            value={chat}
+            placeholder='메세지를 입력하세요.'
+            onChange={e => setChat(e.target.value)}
+          />
+          <button
+            type='submit'
+            onClick={handleChatSubmit}
+            className={styles.submitButton}
+          >
+            보내기
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
