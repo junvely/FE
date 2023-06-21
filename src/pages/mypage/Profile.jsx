@@ -33,7 +33,20 @@ function Profile() {
       navigate('/mypage');
     },
     onError: error => {
-      alert('서버 에러 발생 : 프로필 수정 실패', error.msg);
+      const { errorCode } = error.response.data;
+      console.log(errorCode);
+      if (errorCode === 'InvalidToken') {
+        alert('유효하지 않은 토큰입니다.');
+      }
+      if (errorCode === 'ExistNickname') {
+        alert('이미 등록된 닉네임 입니다.');
+      }
+      if (errorCode === 'InvalidNicknamePattern') {
+        alert('닉네임은 2~10글자로 설정해주세요.');
+      }
+      if (errorCode === 'Error') {
+        alert('서버 에러 발생 : 프로필 수정 실패', error.msg);
+      }
     },
   });
 
