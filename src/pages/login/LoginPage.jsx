@@ -25,7 +25,6 @@ function LoginPage() {
 
   const mutation = useMutation(authLogin, {
     onSuccess: result => {
-      alert(result.message);
       updateLoginStatus();
       navigate('/main');
       resetForm();
@@ -58,42 +57,48 @@ function LoginPage() {
 
   return (
     <div className={styles.wrap}>
-      <FormLabel>간편 로그인</FormLabel>
-      <button
-        type='button'
-        onClick={() => {
-          window.location.href = `${KAKAO_AUTH_URL}`;
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          handleLoginBtnClick();
         }}
-        className={styles.kakaoButton}
       >
-        <img src={KakaoButton} alt='kakao-button' />
-      </button>
-      <AirBox height='2.25rem' />
-      <FormLabel>이메일 로그인</FormLabel>
-      <Input
-        type='text'
-        name='email'
-        value={email}
-        placeholder='아이디를 입력'
-        onChange={handleFormChange}
-      ></Input>
-      <Input
-        type='password'
-        name='password'
-        value={password}
-        placeholder='비밀번호를 입력'
-        onChange={handleFormChange}
-      ></Input>
-      <button
-        type='submit'
-        className={`${styles.loginButton} ${isActiveLogin && styles.active}`}
-        onClick={handleLoginBtnClick}
-      >
-        로그인
-      </button>
-      <p className={styles.signup}>
-        아직 회원이 아니신가요?<Link to='/signup'>회원가입</Link>
-      </p>
+        <FormLabel>간편 로그인</FormLabel>
+        <button
+          type='button'
+          onClick={() => {
+            window.location.href = `${KAKAO_AUTH_URL}`;
+          }}
+          className={styles.kakaoButton}
+        >
+          <img src={KakaoButton} alt='kakao-button' />
+        </button>
+        <AirBox height='2.25rem' />
+        <FormLabel>이메일 로그인</FormLabel>
+        <Input
+          type='text'
+          name='email'
+          value={email}
+          placeholder='이메일을 입력해 주세요'
+          onChange={handleFormChange}
+        ></Input>
+        <Input
+          type='password'
+          name='password'
+          value={password}
+          placeholder='비밀번호를 입력해 주세요'
+          onChange={handleFormChange}
+        ></Input>
+        <button
+          type='submit'
+          className={`${styles.loginButton} ${isActiveLogin && styles.active}`}
+        >
+          로그인
+        </button>
+        <p className={styles.signup}>
+          아직 회원이 아니신가요?<Link to='/signup'>회원가입</Link>
+        </p>
+      </form>
     </div>
   );
 }

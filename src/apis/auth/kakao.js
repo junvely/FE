@@ -5,7 +5,8 @@ const authKakaoLogin = async code => {
     const { data } = await instance.get(`/oauth/kakao?code=${code}`);
     return data.message;
   } catch (error) {
-    throw new Error(error);
+    alert(`카카오 로그인 에러 발생 : ${error.response.data.status}`);
+    throw error.response.data;
   }
 };
 
