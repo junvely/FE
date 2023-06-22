@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useLocation, useNavigate } from 'react-router';
 import uuid from 'react-uuid';
@@ -52,6 +52,12 @@ function Slider({ post }) {
       setCurrentPage(current => current - 1);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      setCurrentPage(0);
+    };
+  });
 
   return (
     <div className={styles.sliderCon}>

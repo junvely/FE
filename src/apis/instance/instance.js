@@ -8,6 +8,7 @@ import { REACT_APP_SERVER } from '../../utils/constants/keys';
 
 const instance = axios.create({
   baseURL: REACT_APP_SERVER,
+  withCredentials: true,
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
@@ -16,13 +17,10 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {
   if (config.headers === undefined) return config;
   const accessToken = getCookie('access_token');
-  const refreshToken = getCookie('refresh_token');
 
-  if (!accessToken || !refreshToken) return config;
+  if (!accessToken) return config;
   // eslint-disable-next-line no-param-reassign
   config.headers.Access_Token = accessToken;
-  // eslint-disable-next-line no-param-reassign
-  config.headers.Refresh_Token = refreshToken;
 
   return config;
 });
@@ -30,20 +28,15 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(
   response => {
     const accessToken = response.headers.access_token;
-    const refreshToken = response.headers.refresh_token;
 
     if (accessToken) {
       setCookie('access_token', accessToken, {
         path: '/',
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        expires: new Date(Date.now() + 86400000),
       });
     }
-    if (refreshToken) {
-      setCookie('refresh_token', refreshToken, {
-        path: '/',
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      });
-    }
+    // axios.defaults.headers.common.access_token = `${accessToken}`;
+
     return response;
   },
 
