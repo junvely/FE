@@ -1,21 +1,29 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useInfiniteQuery, useQueryClient } from 'react-query';
 import { getMainPosts } from 'apis/posts';
 import MainPost from 'components/MainPost';
 import LoadingSpinner from 'components/LoadingSpinner';
 import uuid from 'react-uuid';
-import { SearchQueryContext } from '../../contexts/SearchQueryContext';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { sortingList } from '../../utils/constants/constants';
 import styles from './main.module.scss';
 import DropDownIcon from '../../assets/svg/toggleDropDown.svg';
+import useSearchQuery from '../../hooks/useSearchQuery';
+import {
+  isScrollTopState,
+  scrollTopClikedState,
+} from '../../atoms/scrollTopAtom';
 
 function MainPage() {
   const queryClient = useQueryClient();
   const [sort, setSort] = useState('인기순');
   const observRef = useRef(null); // 옵저버 ref
-
+  const postsRef = useRef(null);
+  const [isScrollTop, setIsScrollTop] = useRecoilState(isScrollTopState);
+  console.log(isScrollTop);
+  const scrolltopClicked = useRecoilValue(scrollTopClikedState);
   const { searchQuery, isSearched, updateSearchQuery, resetSearchQuery } =
-    useContext(SearchQueryContext);
+    useSearchQuery();
   const { sorting, district, keyword } = searchQuery;
 
   const {
@@ -60,10 +68,23 @@ function MainPage() {
       const target = entries[0];
       if (target.isIntersecting && hasNextPage && !isFetching) {
         fetchNextPage();
+        if (!isScrollTop) {
+          setIsScrollTop(true);
+        }
       }
     },
     [hasNextPage, fetchNextPage, isFetching],
   );
+
+  console.log('scrolltopClicked', scrolltopClicked);
+
+  const handleScrollTop = () => {
+    console.dir(postsRef.current);
+    postsRef.current.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   useEffect(() => {
     updateSearchQuery({
@@ -88,6 +109,10 @@ function MainPage() {
       observer.disconnect();
     };
   }, [handleObserver]);
+
+  useEffect(() => {
+    handleScrollTop();
+  }, [scrolltopClicked]);
 
   return (
     <div className={styles.wrap}>
@@ -134,17 +159,19 @@ function MainPage() {
           </div>
         </button>
       </div>
-      {data &&
-        data.pages.map(page =>
-          page.content.map((post, index) => (
-            <MainPost key={uuid()} post={post} />
-          )),
+      <div ref={postsRef}>
+        {data &&
+          data.pages.map(page =>
+            page.content.map((post, index) => (
+              <MainPost key={uuid()} post={post} />
+            )),
+          )}
+        {hasNextPage && !isFetching && (
+          <div ref={observRef} style={{ height: '2rem' }}>
+            <LoadingSpinner />
+          </div>
         )}
-      {hasNextPage && !isFetching && (
-        <div ref={observRef} style={{ height: '2rem' }}>
-          <LoadingSpinner />
-        </div>
-      )}
+      </div>
       {isLoading && <LoadingSpinner />}
       {data && data.pages[0].content.length === 0 && (
         <div className={styles.notFound}>

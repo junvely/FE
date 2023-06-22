@@ -8,7 +8,7 @@ import arrowRight from '../../../assets/svg/arrowRight.svg';
 import { postMainLike } from '../../../apis/posts';
 import LikeNullIcon from '../../../assets/svg/likeNull.svg';
 import LikeFullIcon from '../../../assets/svg/likefull.svg';
-import { AuthContext } from '../../../contexts/AuthContext';
+import useAuth from '../../../hooks/useAuth';
 
 function Slider({ post }) {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function Slider({ post }) {
   const images = post && (post.postImages || post.imageUrl);
   const slideLength = images && images.length;
 
-  const { checkingLogin } = useContext(AuthContext);
+  const { checkingLogin } = useAuth();
   const queryClient = useQueryClient();
   const mutation = useMutation(postMainLike, {
     onSuccess: () => {

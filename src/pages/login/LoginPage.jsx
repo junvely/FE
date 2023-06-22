@@ -2,18 +2,18 @@ import useForm from 'hooks/useForm';
 import { useMutation } from 'react-query';
 import { authLogin } from 'apis/auth/login';
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './login.module.scss';
 import KakaoButton from '../../assets/img/kakaoButton.png';
 import Input from '../../components/common/input/Input';
 import FormLabel from '../../components/FormLabel';
 import AirBox from '../../components/common/airBox/AirBox';
-import { AuthContext } from '../../contexts/AuthContext';
 import { KAKAO_AUTH_URL } from '../../utils/constants/keys';
+import useAuth from '../../hooks/useAuth';
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { updateLoginStatus } = useContext(AuthContext);
+  const { updateLoginStatus } = useAuth();
   const initialState = {
     email: '',
     password: '',
@@ -24,7 +24,7 @@ function LoginPage() {
   const { email, password } = form;
 
   const mutation = useMutation(authLogin, {
-    onSuccess: result => {
+    onSuccess: () => {
       updateLoginStatus();
       navigate('/main');
       resetForm();

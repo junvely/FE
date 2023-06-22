@@ -1,4 +1,4 @@
-const { default: instance } = require('./instance/instance');
+import instance from './instance/instance';
 
 const getMainPosts = async payload => {
   try {

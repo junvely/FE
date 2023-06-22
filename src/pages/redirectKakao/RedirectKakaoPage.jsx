@@ -1,13 +1,13 @@
 import authKakaoLogin from 'apis/auth/kakao';
 import LoadingSpinner from 'components/LoadingSpinner';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
+import useAuth from '../../hooks/useAuth';
 
 function RedirectKakaoPage() {
   const navigate = useNavigate();
-  const { updateLoginStatus } = useContext(AuthContext);
+  const { updateLoginStatus } = useAuth();
   const redirectCode = new URL(window.location.href).searchParams.get('code');
 
   const { data, isError } = useQuery('kakaoAuth', async () => {

@@ -1,19 +1,19 @@
-import useInput from 'hooks/useInput';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import useInput from 'hooks/useInput';
 import uuid from 'react-uuid';
-import styles from './header.module.scss';
-import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
-import { searchToggleContext } from '../../../contexts/SearchToggleContext';
 import { locations } from '../../../utils/constants/constants';
+import useSearchToggle from '../../../hooks/useSearchToggle';
+import styles from './header.module.scss';
+import useSearchQuery from '../../../hooks/useSearchQuery';
 
 function SearchBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
 
-  const { searchQuery, updateSearchQuery } = useContext(SearchQueryContext);
-  const { isSearchOpen, searchToggleSwitch } = useContext(searchToggleContext);
+  const { searchQuery, updateSearchQuery } = useSearchQuery();
+  const { isSearchOpen, searchToggleSwitch } = useSearchToggle();
 
   const [input, handleInputChange, resetInput] = useInput('');
   const [district, setDistrict] = useState('전체');

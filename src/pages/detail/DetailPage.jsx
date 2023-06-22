@@ -1,11 +1,10 @@
-import { useContext, useEffect } from 'react';
-import Slider from 'components/common/slider/Slider';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import getPostDetail from 'apis/detail';
 import { useNavigate, useParams } from 'react-router-dom';
-import LoadingSpinner from 'components/LoadingSpinner';
 import { deletePost, postMainLike } from 'apis/posts';
 import { postMakeChattingRoom } from 'apis/chatting';
+import getPostDetail from 'apis/detail';
+import Slider from 'components/common/slider/Slider';
+import LoadingSpinner from 'components/LoadingSpinner';
 import styles from './detail.module.scss';
 import locationIcon from '../../assets/svg/mapSmall.svg';
 import priceIcon from '../../assets/svg/price.svg';
@@ -14,15 +13,14 @@ import profileSmallIcon from '../../assets/svg/profileSmall.svg';
 import likeNullIcon from '../../assets/svg/likeBlack.svg';
 import likeFullIcon from '../../assets/svg/likefull.svg';
 import chattingIcon from '../../assets/svg/chatting.svg';
-import profileImage from '../../assets/img/profileDefault.png';
 import Map from '../../components/common/map/Map';
-import { AuthContext } from '../../contexts/AuthContext';
+import useAuth from '../../hooks/useAuth';
 
 function DetailPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { postId } = useParams();
-  const { checkingLogin } = useContext(AuthContext);
+  const { checkingLogin } = useAuth();
 
   // 데이터 가져오기
   const { data, isLoading, isError } = useQuery('postDetail', () =>
