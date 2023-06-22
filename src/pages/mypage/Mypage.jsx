@@ -1,4 +1,3 @@
-import React, { useContext, useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { getMypage } from 'apis/mypage';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,9 +8,8 @@ import officeIcon from '../../assets/svg/office.svg';
 import reservationIcon from '../../assets/svg/reservation.svg';
 import logoutIcon from '../../assets/svg/logout.svg';
 import profileDefault from '../../assets/img/profileDefault.png';
-import { AuthContext } from '../../contexts/AuthContext';
 import { authLogout } from '../../apis/auth/login';
-import { removeCookie } from '../../utils/helpers/cookies';
+import useAuth from '../../hooks/useAuth';
 
 function Mypage() {
   // const [modal, setModal] = useState(false);
@@ -20,13 +18,11 @@ function Mypage() {
   // console.log('🌟 → Mypage → confirm:', confirm);
 
   const navigate = useNavigate();
-  const { updateLoginStatus } = useContext(AuthContext);
+  const { logout } = useAuth();
 
   const mutationLogout = useMutation(authLogout, {
     onSuccess: () => {
-      removeCookie();
-      updateLoginStatus();
-      alert('로그아웃 처리 되었습니다');
+      logout();
       navigate('/main');
     },
   });

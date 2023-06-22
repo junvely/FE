@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
+import { useState } from 'react';
 import { deleteMembership } from 'apis/mypage';
 import { useMutation } from 'react-query';
 import { removeCookie } from 'utils/helpers/cookies';
 import { useNavigate } from 'react-router';
-import { AuthContext } from 'contexts/AuthContext';
 import styles from './exit.module.scss';
+import useAuth from '../../hooks/useAuth';
 
 function ExitPage() {
-  const { isLogin, updateLoginStatus } = useContext(AuthContext);
+  const { updateLoginStatus } = useAuth();
   const initialState = {
     password: '',
   };

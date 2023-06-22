@@ -1,9 +1,9 @@
-import { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router';
-import { AuthContext } from '../contexts/AuthContext';
+import useAuth from '../hooks/useAuth';
 
 function PrivateRoutes() {
-  const { isLogin } = useContext(AuthContext);
+  const { isLogin } = useAuth();
+  console.log('isLogin', isLogin);
 
   return isLogin ? (
     <Outlet />

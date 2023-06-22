@@ -1,6 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from 'components/common/header/SearchBar';
-import { useContext } from 'react';
 import { useMutation } from 'react-query';
 import styles from './header.module.scss';
 import BackArrowIcon from '../../../assets/svg/backArrow.svg';
@@ -8,26 +7,23 @@ import SearchIcon from '../../../assets/svg/serach.svg';
 import LogoIcon from '../../../assets/svg/logo.svg';
 import LoginIcon from '../../../assets/svg/login.svg';
 import LogoutIcon from '../../../assets/svg/headerLogout.svg';
-import { searchToggleContext } from '../../../contexts/SearchToggleContext';
-import { SearchQueryContext } from '../../../contexts/SearchQueryContext';
-import { AuthContext } from '../../../contexts/AuthContext';
 import { authLogout } from '../../../apis/auth/login';
-import { removeCookie } from '../../../utils/helpers/cookies';
 import AirBox from '../airBox/AirBox';
+import useAuth from '../../../hooks/useAuth';
+import useSearchToggle from '../../../hooks/useSearchToggle';
+import useSearchQuery from '../../../hooks/useSearchQuery';
 
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
-  const { searchToggleSwitch } = useContext(searchToggleContext);
-  const { resetSearchQuery } = useContext(SearchQueryContext);
-  const { isLogin, updateLoginStatus } = useContext(AuthContext);
+  const { isLogin, logout } = useAuth();
+  const { isSearchOpen, searchToggleSwitch } = useSearchToggle();
+  const { resetSearchQuery } = useSearchQuery();
 
   const mutationLogout = useMutation(authLogout, {
     onSuccess: () => {
-      removeCookie();
-      updateLoginStatus();
-      alert('로그아웃 처리 되었습니다');
+      logout();
       navigate('/main');
     },
   });
@@ -36,6 +32,13 @@ function Header() {
     const isLogout = window.confirm('로그아웃 하시겠습니까?');
     if (isLogout) {
       mutationLogout.mutate();
+    }
+  };
+
+  const handleLogoClick = () => {
+    resetSearchQuery();
+    if (isSearchOpen) {
+      searchToggleSwitch();
     }
   };
 
@@ -51,7 +54,7 @@ function Header() {
         <img src={BackArrowIcon} alt='goto-back'></img>
       </button>
       {!pathname.includes('room') && <AirBox width='2rem' />}
-      <Link to='/main' onClick={resetSearchQuery}>
+      <Link to='/main' onClick={handleLogoClick}>
         <h1 className={styles.logo}>
           <img src={LogoIcon} alt='goto-back'></img>
         </h1>

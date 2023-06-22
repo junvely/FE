@@ -18,6 +18,7 @@
 
 .nav .scrollTop {
   @include flex-all-center;
+  transition: all 0.3s;
   width: 3.75rem;
   height: 3.75rem;
   position: absolute;
