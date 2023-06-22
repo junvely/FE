@@ -13,7 +13,7 @@ import useAuth from '../../hooks/useAuth';
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { updateLoginStatus } = useAuth();
+  const { isLogin, updateLoginStatus } = useAuth();
   const initialState = {
     email: '',
     password: '',
@@ -47,6 +47,15 @@ function LoginPage() {
     mutation.mutate(form);
   };
 
+  const handleKakaoLogin = () => {
+    if (isLogin) {
+      alert('이미 로그인된 회원입니다');
+      navigate('/main');
+    } else {
+      window.location.href = `${KAKAO_AUTH_URL}`;
+    }
+  };
+
   useEffect(() => {
     if (email && password) {
       setIsActiveLogin(true);
@@ -66,9 +75,7 @@ function LoginPage() {
         <FormLabel>간편 로그인</FormLabel>
         <button
           type='button'
-          onClick={() => {
-            window.location.href = `${KAKAO_AUTH_URL}`;
-          }}
+          onClick={handleKakaoLogin}
           className={styles.kakaoButton}
         >
           <img src={KakaoButton} alt='kakao-button' />
