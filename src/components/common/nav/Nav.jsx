@@ -1,11 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styles from './nav.module.scss';
 import homeIcon from '../../../assets/svg/home.svg';
 import chattingIcon from '../../../assets/svg/chatting.svg';
 import mypageIcon from '../../../assets/svg/mypage.svg';
 import postIcon from '../../../assets/svg/postIcon.svg';
-import topIcon from '../../../assets/svg/topIcon.svg';
 import useSearchQuery from '../../../hooks/useSearchQuery';
 import {
   isScrollTopState,
@@ -16,18 +15,9 @@ function Nav() {
   const location = useLocation();
   const { pathname } = location;
   const { resetSearchQuery } = useSearchQuery();
-  const isScrollTop = useRecoilValue(isScrollTopState);
-  const setScrollTopClicked = useSetRecoilState(scrollTopClikedState);
-  console.log('isScrollTop', isScrollTop);
 
   const handleHomeClick = () => {
     resetSearchQuery();
-  };
-
-  const handleScrollToTop = () => {
-    if (isScrollTop) {
-      setScrollTopClicked(true);
-    }
   };
 
   return (
@@ -87,15 +77,6 @@ function Nav() {
           </li>
         </Link>
       </ul>
-      {pathname === '/main' && isScrollTop && (
-        <button
-          type='button'
-          className={styles.scrollTop}
-          onClick={handleScrollToTop}
-        >
-          <img src={topIcon} alt='scroll-top' />
-        </button>
-      )}
     </nav>
   );
 }

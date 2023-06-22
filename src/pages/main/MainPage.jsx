@@ -4,24 +4,19 @@ import { getMainPosts } from 'apis/posts';
 import MainPost from 'components/MainPost';
 import LoadingSpinner from 'components/LoadingSpinner';
 import uuid from 'react-uuid';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { sortingList } from '../../utils/constants/constants';
 import styles from './main.module.scss';
 import DropDownIcon from '../../assets/svg/toggleDropDown.svg';
+import topIcon from '../../assets/svg/topIcon.svg';
 import useSearchQuery from '../../hooks/useSearchQuery';
-import {
-  isScrollTopState,
-  scrollTopClikedState,
-} from '../../atoms/scrollTopAtom';
 
 function MainPage() {
   const queryClient = useQueryClient();
   const [sort, setSort] = useState('인기순');
+  const [isScrollTop, setIsScrollTop] = useState(false);
   const observRef = useRef(null); // 옵저버 ref
   const postsRef = useRef(null);
-  const [isScrollTop, setIsScrollTop] = useRecoilState(isScrollTopState);
-  console.log(isScrollTop);
-  const scrolltopClicked = useRecoilValue(scrollTopClikedState);
+
   const { searchQuery, isSearched, updateSearchQuery, resetSearchQuery } =
     useSearchQuery();
   const { sorting, district, keyword } = searchQuery;
@@ -62,6 +57,8 @@ function MainPage() {
     setSort(getSort);
   };
 
+  console.log('scroll', isScrollTop);
+
   // 옵저버 실행
   const handleObserver = useCallback(
     entries => {
@@ -76,14 +73,15 @@ function MainPage() {
     [hasNextPage, fetchNextPage, isFetching],
   );
 
-  console.log('scrolltopClicked', scrolltopClicked);
-
   const handleScrollTop = () => {
-    console.dir(postsRef.current);
-    postsRef.current.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    if (isScrollTop) {
+      postsRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+        duration: 100,
+        easing: 'ease-in-out',
+      });
+    }
   };
 
   useEffect(() => {
@@ -110,12 +108,8 @@ function MainPage() {
     };
   }, [handleObserver]);
 
-  useEffect(() => {
-    handleScrollTop();
-  }, [scrolltopClicked]);
-
   return (
-    <div className={styles.wrap}>
+    <div className={styles.wrap} ref={postsRef}>
       <div className={styles.titleCon}>
         {isSearched ? (
           <h2 className={styles.searchResult}>
@@ -159,7 +153,7 @@ function MainPage() {
           </div>
         </button>
       </div>
-      <div ref={postsRef}>
+      <div>
         {data &&
           data.pages.map(page =>
             page.content.map((post, index) => (
@@ -172,6 +166,16 @@ function MainPage() {
           </div>
         )}
       </div>
+      {isScrollTop && (
+        <button
+          type='button'
+          className={styles.scrollTop}
+          onClick={handleScrollTop}
+        >
+          <img src={topIcon} alt='scroll-top' />
+        </button>
+      )}
+
       {isLoading && <LoadingSpinner />}
       {data && data.pages[0].content.length === 0 && (
         <div className={styles.notFound}>
