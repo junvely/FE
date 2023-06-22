@@ -57,8 +57,6 @@ function MainPage() {
     setSort(getSort);
   };
 
-  console.log('scroll', isScrollTop);
-
   // 옵저버 실행
   const handleObserver = useCallback(
     entries => {
