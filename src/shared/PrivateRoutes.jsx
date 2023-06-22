@@ -3,7 +3,6 @@ import useAuth from '../hooks/useAuth';
 
 function PrivateRoutes() {
   const { isLogin } = useAuth();
-  console.log('isLogin', isLogin);
 
   return isLogin ? (
     <Outlet />
