@@ -32,7 +32,7 @@ instance.interceptors.response.use(
     if (accessToken) {
       setCookie('access_token', accessToken, {
         path: '/',
-        expires: new Date(Date.now() + 86400000),
+        expires: new Date(Date.now() + 172800000),
       });
     }
     // axios.defaults.headers.common.access_token = `${accessToken}`;
