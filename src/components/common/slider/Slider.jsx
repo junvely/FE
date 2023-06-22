@@ -53,12 +53,6 @@ function Slider({ post }) {
     }
   };
 
-  useEffect(() => {
-    return () => {
-      setCurrentPage(0);
-    };
-  });
-
   return (
     <div className={styles.sliderCon}>
       <ul
