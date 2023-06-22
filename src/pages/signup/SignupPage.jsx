@@ -175,7 +175,6 @@ function SignupPage() {
   // 가입하기
   const handleSignupBtnClick = () => {
     const signupData = { email, nickname, password, passwordCheck };
-    console.log(signupData);
     mutationAddUser.mutate(signupData);
   };
 

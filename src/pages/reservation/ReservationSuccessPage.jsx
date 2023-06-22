@@ -36,7 +36,6 @@ function ReservationSuccessPage() {
     navigate('/myreservations');
   };
 
-  console.log(data.data);
   return (
     <div>
       <div className={styles.resSuccessTextWrap}>

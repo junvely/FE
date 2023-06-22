@@ -53,8 +53,6 @@ function DetailPage() {
   const mutationChatting = useMutation(postMakeChattingRoom, {
     onSuccess: result => {
       const { userStatus } = data.data;
-      console.log('방 생성한 유저 상태', userStatus);
-      console.log('방 생성 결과', result);
       if (result.status === 'OK') {
         if (userStatus === 1 || userStatus === 2) {
           navigate(`/chatting/room/${result.data}`);
@@ -147,9 +145,6 @@ function DetailPage() {
     isSat: '토',
     isSun: '일',
   };
-
-  // console.log(data && data.data.userStatus);
-  // console.log(data && data.data);
 
   return (
     <div className={styles.container}>

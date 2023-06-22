@@ -55,7 +55,6 @@ const deletePost = async id => {
     const { data } = await instance.delete(`/api/posts/${id}`);
     return data.message;
   } catch (error) {
-    console.log(error.message);
     throw error.response.data;
   }
 };
