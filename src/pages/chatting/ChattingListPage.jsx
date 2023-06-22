@@ -23,7 +23,11 @@ function ChattingListPage() {
             <div className={styles.listWrap}>
               <div className={styles.listPhotoFrame}>
                 <img src={list.postImage} alt='오피스이미지' />
-                <span>{list.notSeenCount}</span>
+                {list.notSeenCount === 0 ? null : (
+                  <span className={styles.newMessageCount}>
+                    {list.notSeenCount}
+                  </span>
+                )}
               </div>
               <div className={styles.listContentWrap}>
                 <div className={styles.listTextWrap}>
