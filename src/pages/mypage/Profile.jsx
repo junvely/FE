@@ -25,8 +25,6 @@ function Profile() {
     },
   });
 
-  // console.log(data);
-
   const mutation = useMutation(putEditProfile, {
     onSuccess: () => {
       alert('프로필 수정 성공');
@@ -34,7 +32,6 @@ function Profile() {
     },
     onError: error => {
       const { errorCode } = error.response.data;
-      console.log(errorCode);
       if (errorCode === 'InvalidToken') {
         alert('유효하지 않은 토큰입니다.');
       }
@@ -64,7 +61,6 @@ function Profile() {
   };
 
   const profileData = { profileDto: newNickname, imageFile: image };
-  console.log('프로필 데이터', profileData);
 
   const handleClickSubmitProfile = e => {
     e.preventDefault();
