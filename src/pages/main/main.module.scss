@@ -4,6 +4,7 @@
 .wrap {
   @include wrap;
   padding: 0 2rem;
+  position: relative;
 
   .titleCon {
     @include flex-space-between;
@@ -105,6 +106,20 @@
         margin-left: 10px;
       }
     }
+  }
+
+  .scrollTop {
+    @include flex-all-center;
+    transition: all 0.3s;
+    width: 3.75rem;
+    height: 3.75rem;
+    position: sticky;
+    bottom: 2rem;
+    left: 100%;
+    background: rgba(238, 238, 238, 0.9);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    z-index: 20;
   }
 }
 
