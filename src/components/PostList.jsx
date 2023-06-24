@@ -100,10 +100,11 @@ function PostList({ post }) {
           <div className={styles.listTextWrap}>
             <p className={styles.listTitle}>{post.title}</p>
             <p className={styles.listText}>
-              <img src={locationIcon} alt='위치 아이콘' /> {post.location}
+              <img src={locationIcon} alt='위치 아이콘' loading='lazy' />{' '}
+              {post.location}
             </p>
             <p className={styles.listText}>
-              <img src={priceIcon} alt='금액 아이콘' />
+              <img src={priceIcon} alt='금액 아이콘' loading='lazy' />
               <span className={styles.priceText}>
                 {post.price.toLocaleString()}
               </span>
@@ -111,11 +112,11 @@ function PostList({ post }) {
             </p>
             <div className={styles.listFlexWrap}>
               <p className={styles.listText}>
-                <img src={likeNullIcon} alt='좋아요 아이콘' />
+                <img src={likeNullIcon} alt='좋아요 아이콘' loading='lazy' />
                 {post.likeCount}
               </p>
               <p className={styles.capaText}>
-                <img src={profileIcon} alt='인원수 아이콘' />
+                <img src={profileIcon} alt='인원수 아이콘' loading='lazy' />
                 최대 {post.capacity}명
               </p>
             </div>

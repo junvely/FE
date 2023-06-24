@@ -57,7 +57,11 @@ function Mypage() {
           <Link to='/profile'>
             <div className={styles.profileBox}>
               <div className={styles.photoFrame}>
-                <img src={imageUrl || profileDefault} alt='프로필사진' />
+                <img
+                  src={imageUrl || profileDefault}
+                  alt='프로필사진'
+                  loading='lazy'
+                />
               </div>
               <div className={styles.profileText}>
                 <p className={styles.nickname}>{nickname}</p>
@@ -70,7 +74,7 @@ function Mypage() {
           <div>
             <Link to='/likedposts'>
               <h2 className={styles.title}>
-                <img src={likeNullIcon} alt='좋아요 아이콘' />
+                <img src={likeNullIcon} alt='좋아요 아이콘' loading='lazy' />
                 좋아요
                 <span className={styles.count}>{likeCount}</span>
               </h2>
@@ -79,7 +83,7 @@ function Mypage() {
           <div>
             <Link to='/myposts'>
               <h2 className={styles.title}>
-                <img src={officeIcon} alt='나의 오피스 아이콘' />
+                <img src={officeIcon} alt='나의 오피스 아이콘' loading='lazy' />
                 나의 오피스 <span className={styles.count}>{postCount}</span>
               </h2>
             </Link>
@@ -87,7 +91,11 @@ function Mypage() {
           <div>
             <Link to='/myreservations'>
               <h2 className={styles.title}>
-                <img src={reservationIcon} alt='예약현황 아이콘' />
+                <img
+                  src={reservationIcon}
+                  alt='예약현황 아이콘'
+                  loading='lazy'
+                />
                 예약현황 <span className={styles.count}>{reserveCount}</span>
               </h2>
             </Link>
@@ -98,7 +106,7 @@ function Mypage() {
               className={styles.title}
               onClick={handleClickLogoutBtn}
             >
-              <img src={logoutIcon} alt='로그아웃 아이콘' />
+              <img src={logoutIcon} alt='로그아웃 아이콘' loading='lazy' />
               로그아웃
             </button>
             {/* <Modal setConfirm={setConfirm} modal={modal} setModal={setModal}>
