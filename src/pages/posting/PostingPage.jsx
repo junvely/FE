@@ -214,18 +214,6 @@ function PostingPage() {
     if (validation()) {
       alert('준비중인 기능입니다.');
       navigate('/main');
-      // mutationEdit.mutate({
-      //   postId,
-      //   title,
-      //   price: Number(form.price),
-      //   capacity: Number(persons),
-      //   content: content.replace(/\n/g, '\\n'),
-      //   contentDetails: contentDetails.replace(/\n/g, '\\n'),
-      //   amenities: amenitiesData,
-      //   operatingTime: operatingTimeData,
-      //   imageList,
-      //   location,
-      // });
     }
   };
 
@@ -324,6 +312,7 @@ function PostingPage() {
               <img src={DecreaseIcon} alt='decrease' />
             </button>
             <input
+              id='persons'
               type='text'
               value={persons}
               maxLength='2'
@@ -351,11 +340,13 @@ function PostingPage() {
           <div className={styles.operatingCon}>
             <div className={styles.timeCon}>
               <OperatingTime
+                label='opentime'
                 time={editMode ? editOpenTime : openTime}
                 setTime={setOpenTime}
               />
               <span>~</span>
               <OperatingTime
+                label='closetime'
                 time={editMode ? editCloseTime : closeTime}
                 setTime={setCloseTime}
               />
@@ -376,7 +367,7 @@ function PostingPage() {
                   htmlFor={day.key}
                   // key={uuid()}
                   className={`${styles.checkbox} ${
-                    day.checked ? styles.checked : undefined
+                    day.checked ? styles.checked : null
                   }`}
                 >
                   <input
@@ -410,7 +401,7 @@ function PostingPage() {
               <label
                 htmlFor={amenity.key}
                 className={`${styles.checkbox} ${
-                  amenity.checked ? styles.checked : undefined
+                  amenity.checked ? styles.checked : null
                 }`}
               >
                 <input
@@ -427,6 +418,9 @@ function PostingPage() {
         {/* 이미지 등록 */}
         <div className={styles.inputCon}>
           <span>이미지 등록 {`(${imageList.length}/3)`}</span>
+          <p className={styles.imageUpload}>
+            *파일 1개당 10MB, 최대 20MB까지만 업로드 가능합니다.
+          </p>
           <div className={styles.labelWrap}>
             {imageList.map((img, idx) => (
               <div className={styles.addImage}>
