@@ -330,8 +330,8 @@ function PostingPage() {
           <span>오피스 소개</span>
           <textarea
             name='content'
-            placeholder='오피스 공간에 대해 소개해 주세요(255자)'
-            maxLength='255'
+            placeholder='오피스 공간에 대해 소개해 주세요(1500자)'
+            maxLength='1500'
             onChange={handleFormChange}
             value={content}
           />
