@@ -53,6 +53,12 @@ function Slider({ post }) {
     }
   };
 
+  const handleNavigate = () => {
+    if (isMain) {
+      navigate(`/detail/${post.id}`);
+    }
+  };
+
   return (
     <div className={styles.sliderCon}>
       <ul
@@ -65,9 +71,9 @@ function Slider({ post }) {
         {images &&
           images.map((image, idx) => (
             <li
-              key={`${image + idx} `}
+              key={uuid()}
               className={styles.slide}
-              onClick={() => isMain && navigate(`/detail/${post.id}`)}
+              onClick={handleNavigate}
               role='presentation'
             >
               <img src={image} alt={`share-office${idx}`} />
