@@ -89,11 +89,19 @@ function Profile() {
       return;
     }
     try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Cache-Control': 'no-cache',
+        },
+        responseType: 'blob',
+      };
       // const modifiedUrl = profileImage.replace('https://', 'http://');
       // const response = await axios.get(modifiedUrl, {
-      const response = await axios.get(profileImage, {
-        responseType: 'blob',
-      });
+      // const response = await axios.get(profileImage, {
+      //   responseType: 'blob',
+      // });
+      const response = await axios.get(profileImage, config);
       setDownloadImage(response.data);
       setImage(response.data);
     } catch (err) {
