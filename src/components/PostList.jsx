@@ -64,7 +64,7 @@ function PostList({ post }) {
       {location.pathname === '/myreservations' && (
         <div className={styles.listWrap}>
           <div className={styles.resListPhotoFrame}>
-            <img src={post.imageUrl} alt='오피스이미지' />
+            <img src={post.imageUrl} alt='오피스이미지' loading='lazy' />
           </div>
           <div className={styles.listTextWrap}>
             <p className={styles.resListTitle}>{post.title}</p>
@@ -95,7 +95,7 @@ function PostList({ post }) {
         location.pathname === '/myposts') && (
         <div className={styles.listWrap}>
           <div className={styles.listPhotoFrame}>
-            <img src={post.imageUrl[0]} alt='오피스이미지' />
+            <img src={post.imageUrl[0]} alt='오피스이미지' loading='lazy' />
           </div>
           <div className={styles.listTextWrap}>
             <p className={styles.listTitle}>{post.title}</p>

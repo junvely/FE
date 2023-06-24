@@ -70,7 +70,7 @@ function Slider({ post }) {
               onClick={() => isMain && navigate(`/detail/${post.id}`)}
               role='presentation'
             >
-              <img src={image} alt={`share-office${idx}`} />
+              <img src={image} alt={`share-office${idx}`} loading='lazy' />
             </li>
           ))}
       </ul>
@@ -84,9 +84,9 @@ function Slider({ post }) {
           }}
         >
           {likeStatus ? (
-            <img src={LikeFullIcon} alt='like-full-icon'></img>
+            <img src={LikeFullIcon} alt='like-full-icon' loading='lazy'></img>
           ) : (
-            <img src={LikeNullIcon} alt='like-null-icon'></img>
+            <img src={LikeNullIcon} alt='like-null-icon' loading='lazy'></img>
           )}
         </button>
       )}
@@ -102,7 +102,7 @@ function Slider({ post }) {
             handleClickPrevSlide();
           }}
         >
-          <img src={arrowLeft} alt='prev-button' />
+          <img src={arrowLeft} alt='prev-button' loading='lazy' />
         </button>
         <button
           type='button'
@@ -111,7 +111,7 @@ function Slider({ post }) {
             handleClickNextSlide();
           }}
         >
-          <img src={arrowRight} alt='next-button' />
+          <img src={arrowRight} alt='next-button' loading='lazy' />
         </button>
       </div>
       <div className={styles.sliderButtons}>
