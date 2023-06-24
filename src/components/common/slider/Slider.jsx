@@ -74,7 +74,7 @@ function Slider({ post }) {
               <img
                 src={image}
                 alt={`share-office${idx}`}
-                // loading={idx === 0 ? null : 'lazy'}
+                loading={idx === 0 ? null : 'lazy'}
               />
             </div>
           ))}
