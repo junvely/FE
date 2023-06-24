@@ -13,7 +13,11 @@ function MainPost({ post }) {
   return (
     <div className={styles.post}>
       <Slider post={post}></Slider>
-      <div className={styles.postContents}>
+      <div
+        className={styles.postContents}
+        onClick={() => navigate(`/detail/${id}`)}
+        role='presentation'
+      >
         <h3>{title}</h3>
         <p>
           <img src={LocationIcon} alt='post-location' loading='lazy' />
