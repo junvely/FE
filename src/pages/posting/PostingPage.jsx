@@ -311,13 +311,15 @@ function PostingPage() {
             <button type='button' onClick={handleDecrease}>
               <img src={DecreaseIcon} alt='decrease' />
             </button>
-            <input
-              id='persons'
-              type='text'
-              value={persons}
-              maxLength='2'
-              onChange={e => setPersons(e.target.value)}
-            />
+            <label htmlFor='persons'>
+              <input
+                id='persons'
+                type='text'
+                value={persons}
+                maxLength='2'
+                onChange={e => setPersons(e.target.value)}
+              />
+            </label>
             <button type='button' onClick={handleIncrease}>
               <img src={IncreaseIcon} alt='increase' />
             </button>
