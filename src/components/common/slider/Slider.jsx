@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useLocation, useNavigate } from 'react-router';
 import uuid from 'react-uuid';
@@ -38,7 +38,8 @@ function Slider({ post }) {
   };
 
   const handleClickSetCurrentPage = e => {
-    setCurrentPage(Number(e.target.id));
+    const { page } = e.target.dataset;
+    setCurrentPage(Number(page));
   };
 
   const handleClickNextSlide = () => {
@@ -50,12 +51,6 @@ function Slider({ post }) {
   const handleClickPrevSlide = () => {
     if (currentPage > 0) {
       setCurrentPage(current => current - 1);
-    }
-  };
-
-  const handleNavigate = () => {
-    if (isMain) {
-      navigate(`/detail/${post.id}`);
     }
   };
 
@@ -73,10 +68,9 @@ function Slider({ post }) {
             <li
               key={uuid()}
               className={styles.slide}
-              onClick={handleNavigate}
+              onClick={() => isMain && navigate(`/detail/${post.id}`)}
               role='presentation'
             >
-              {console.log('idx', idx)}
               <img
                 src={image}
                 alt={`share-office${idx}`}
@@ -103,7 +97,7 @@ function Slider({ post }) {
       )}
       <div
         className={styles.arrowButtons}
-        onClick={() => isMain && navigate(`/detail${post.id}}`)}
+        onClick={() => isMain && navigate(`/detail/${post.id}`)}
         role='presentation'
       >
         <button
@@ -133,7 +127,7 @@ function Slider({ post }) {
                 key={uuid()}
                 type='button'
                 className={currentPage === idx ? styles.active : ''}
-                id={uuid()}
+                data-page={idx}
                 aria-label='goto-page'
                 onClick={e => {
                   e.stopPropagation();

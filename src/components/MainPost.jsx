@@ -11,11 +11,7 @@ function MainPost({ post }) {
   const { id, title, location, price, likeCount, capacity } = post;
 
   return (
-    <div
-      className={styles.post}
-      onClick={() => navigate(`/detail/${id}`)}
-      role='presentation'
-    >
+    <div className={styles.post}>
       <Slider post={post}></Slider>
       <div className={styles.postContents}>
         <h3>{title}</h3>
