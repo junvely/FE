@@ -6,22 +6,28 @@ function OperatingTime({ time, setTime }) {
 
   return (
     <div>
-      <input
-        type='text'
-        name='hour'
-        value={time.hour}
-        max={24}
-        maxLength='2'
-        onChange={handleGetTime}
-      />
+      <label htmlFor='hour'>
+        <input
+          id='hour'
+          type='text'
+          name='hour'
+          value={time.hour}
+          max={24}
+          maxLength='2'
+          onChange={handleGetTime}
+        />
+      </label>
       <span>:</span>
-      <input
-        type='text'
-        name='minute'
-        value={time.minute}
-        maxLength='2'
-        onChange={handleGetTime}
-      />
+      <label htmlFor='minute'>
+        <input
+          id='minute'
+          type='text'
+          name='minute'
+          value={time.minute}
+          maxLength='2'
+          onChange={handleGetTime}
+        />
+      </label>
     </div>
   );
 }
