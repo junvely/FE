@@ -22,7 +22,7 @@ function ChattingListPage() {
           <Link to={`/chatting/room/${list.roomId}`} key={list.roomId}>
             <div className={styles.listWrap}>
               <div className={styles.listPhotoFrame}>
-                <img src={list.postImage} alt='오피스이미지' />
+                <img src={list.postImage} alt='오피스이미지' loading='lazy' />
                 {list.notSeenCount === 0 ? null : (
                   <span className={styles.newMessageCount}>
                     {list.notSeenCount}
