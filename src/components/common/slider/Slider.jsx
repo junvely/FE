@@ -76,7 +76,12 @@ function Slider({ post }) {
               onClick={handleNavigate}
               role='presentation'
             >
-              <img src={image} alt={`share-office${idx}`} />
+              {console.log('idx', idx)}
+              <img
+                src={image}
+                alt={`share-office${idx}`}
+                loading={idx === 0 ? null : 'lazy'}
+              />
             </li>
           ))}
       </ul>
