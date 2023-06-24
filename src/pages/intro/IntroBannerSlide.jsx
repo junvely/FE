@@ -39,7 +39,7 @@ function IntroBannerSlide() {
           }}
         >
           <li className={`${styles.slide} ${styles.slide1}`}>
-            <img src={SlideImage1} alt='slide1' />
+            <img src={SlideImage1} alt='slide1' loading='lazy' />
             <h3>
               나만의 <br />
               {['오', '피', '스', '공', '간'].map(string => (
@@ -54,7 +54,7 @@ function IntroBannerSlide() {
             </p>
           </li>
           <li className={`${styles.slide} ${styles.slide2}`}>
-            <img src={SlideImage2} alt='slide2' />
+            <img src={SlideImage2} alt='slide2' loading='lazy' />
             <h3>
               공유 오피스부터
               <br /> 독립 오피스까지 <br />
@@ -66,7 +66,7 @@ function IntroBannerSlide() {
             </h3>
           </li>
           <li className={`${styles.slide} ${styles.slide3}`}>
-            <img src={SlideImage3} alt='slide3' />
+            <img src={SlideImage3} alt='slide3' loading='lazy' />
             <h3>
               호스트에게 문의는
               <br />
@@ -80,7 +80,7 @@ function IntroBannerSlide() {
             </p>
           </li>
           <li className={`${styles.slide} ${styles.slide4}`}>
-            <img src={SlideImage4} alt='slide4' />
+            <img src={SlideImage4} alt='slide4' loading='lazy' />
             <h3>
               {['내', '오', '피', '스'].map(string => (
                 <span key={uuid()}>{string}</span>

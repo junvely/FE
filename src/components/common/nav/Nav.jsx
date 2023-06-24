@@ -23,8 +23,8 @@ function Nav() {
   return (
     <nav className={styles.nav}>
       <ul>
-        <Link to='/main' onClick={handleHomeClick}>
-          <li>
+        <li>
+          <Link to='/main' onClick={handleHomeClick}>
             <img
               src={homeIcon}
               alt='home'
@@ -32,10 +32,10 @@ function Nav() {
                 pathname === '/main' ? styles.selectedIcon : styles.icon
               }
             />
-          </li>
-        </Link>
-        <Link to='/posting'>
-          <li>
+          </Link>
+        </li>
+        <li>
+          <Link to='/posting'>
             <img
               src={postIcon}
               alt='posting'
@@ -45,10 +45,10 @@ function Nav() {
                   : styles.icon
               }
             />
-          </li>
-        </Link>
-        <Link to='/chatting'>
-          <li>
+          </Link>
+        </li>
+        <li>
+          <Link to='/chatting'>
             <img
               src={chattingIcon}
               alt='chatting'
@@ -58,10 +58,10 @@ function Nav() {
                   : styles.icon
               }
             />
-          </li>
-        </Link>
-        <Link to='/mypage'>
-          <li>
+          </Link>
+        </li>
+        <li>
+          <Link to='/mypage'>
             <img
               src={mypageIcon}
               alt='mypage'
@@ -74,8 +74,8 @@ function Nav() {
                   : styles.icon
               }
             />
-          </li>
-        </Link>
+          </Link>
+        </li>
       </ul>
     </nav>
   );

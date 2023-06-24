@@ -65,12 +65,12 @@ function Slider({ post }) {
         {images &&
           images.map((image, idx) => (
             <li
-              key={uuid()}
+              key={`${image + idx} `}
               className={styles.slide}
               onClick={() => isMain && navigate(`/detail/${post.id}`)}
               role='presentation'
             >
-              <img src={image} alt={`share-office${idx}`} loading='lazy' />
+              <img src={image} alt={`share-office${idx}`} />
             </li>
           ))}
       </ul>
@@ -84,9 +84,9 @@ function Slider({ post }) {
           }}
         >
           {likeStatus ? (
-            <img src={LikeFullIcon} alt='like-full-icon' loading='lazy'></img>
+            <img src={LikeFullIcon} alt='like-full-icon'></img>
           ) : (
-            <img src={LikeNullIcon} alt='like-null-icon' loading='lazy'></img>
+            <img src={LikeNullIcon} alt='like-null-icon'></img>
           )}
         </button>
       )}
@@ -102,7 +102,7 @@ function Slider({ post }) {
             handleClickPrevSlide();
           }}
         >
-          <img src={arrowLeft} alt='prev-button' loading='lazy' />
+          <img src={arrowLeft} alt='prev-button' />
         </button>
         <button
           type='button'
@@ -111,7 +111,7 @@ function Slider({ post }) {
             handleClickNextSlide();
           }}
         >
-          <img src={arrowRight} alt='next-button' loading='lazy' />
+          <img src={arrowRight} alt='next-button' />
         </button>
       </div>
       <div className={styles.sliderButtons}>
@@ -122,7 +122,7 @@ function Slider({ post }) {
                 key={uuid()}
                 type='button'
                 className={currentPage === idx ? styles.active : ''}
-                id={idx}
+                id={uuid()}
                 aria-label='goto-page'
                 onClick={e => {
                   e.stopPropagation();
