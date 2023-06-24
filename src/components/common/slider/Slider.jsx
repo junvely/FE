@@ -56,7 +56,7 @@ function Slider({ post }) {
 
   return (
     <div className={styles.sliderCon}>
-      <ul
+      <div
         className={styles.slides}
         style={{
           width: `${slideLength}00%`,
@@ -65,7 +65,7 @@ function Slider({ post }) {
       >
         {images &&
           images.map((image, idx) => (
-            <li
+            <div
               key={uuid()}
               className={styles.slide}
               onClick={() => isMain && navigate(`/detail/${post.id}`)}
@@ -76,9 +76,9 @@ function Slider({ post }) {
                 alt={`share-office${idx}`}
                 loading={idx === 0 ? null : 'lazy'}
               />
-            </li>
+            </div>
           ))}
-      </ul>
+      </div>
       {isMain && !isMyPost && (
         <button
           type='button'
