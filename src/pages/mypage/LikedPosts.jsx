@@ -18,7 +18,7 @@ function LikedPosts() {
         <div className={styles.pageWrap}>
           <div className={styles.pageTitleBox}>
             <h2 className={styles.pageTitle}>
-              <img src={likeFullIcon} alt='LikeIcon' />
+              <img src={likeFullIcon} alt='LikeIcon' loading='lazy' />
               좋아요 <span>({data.data.length})</span>
             </h2>
           </div>
@@ -28,7 +28,7 @@ function LikedPosts() {
         <div className={styles.pageWrap}>
           <div className={styles.pageTitleBox}>
             <h2 className={styles.pageTitle}>
-              <img src={likeFullIcon} alt='LikeIcon' />
+              <img src={likeFullIcon} alt='LikeIcon' loading='lazy' />
               좋아요 <span>({data.data.length})</span>
             </h2>
           </div>

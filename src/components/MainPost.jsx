@@ -20,21 +20,21 @@ function MainPost({ post }) {
       <div className={styles.postContents}>
         <h3>{title}</h3>
         <p>
-          <img src={LocationIcon} alt='post-location' />
+          <img src={LocationIcon} alt='post-location' loading='lazy' />
           {location}
         </p>
         <p>
-          <img src={PriceIcon} alt='post-price' />
+          <img src={PriceIcon} alt='post-price' loading='lazy' />
           <span className={styles.price}>{Number(price).toLocaleString()}</span>
           원/일
         </p>
         <div className={styles.flexCon}>
           <p>
-            <img src={LikeSmallIcon} alt='post-like' />
+            <img src={LikeSmallIcon} alt='post-like' loading='lazy' />
             {likeCount}
           </p>
           <p className={styles.profile}>
-            <img src={ProfileIcon} alt='post-profile' />
+            <img src={ProfileIcon} alt='post-profile' loading='lazy' />
             최대 {capacity}명
           </p>
         </div>
