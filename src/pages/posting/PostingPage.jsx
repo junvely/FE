@@ -40,7 +40,7 @@ function PostingPage() {
   const [holidayType, setHolidayType] = useState(holidayTypes[0]);
   const [holidays, setHolidays] = useState(holidayCheckList);
   // 최대 인원
-  const [persons, setPersons] = useState(0);
+  const [persons, setPersons] = useState(1);
   // 편의시설 체크리스트
   const [amenityList, setAmenityList] = useState(amenityCheckList);
   // 포스팅 폼
@@ -104,7 +104,7 @@ function PostingPage() {
     }
   };
   const handleDecrease = () => {
-    if (persons > 0) {
+    if (persons > 1) {
       setPersons(Number(persons) - 1);
     }
   };
