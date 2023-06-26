@@ -12,7 +12,7 @@ const authLogin = async payload => {
 
 const authLogout = async () => {
   try {
-    await instance.post('api/members/logout');
+    const { data } = await instance.post('api/members/logout');
   } catch (error) {
     throw error.response.data;
   }

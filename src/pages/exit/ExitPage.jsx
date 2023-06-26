@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { deleteMembership } from 'apis/mypage';
 import { useMutation } from 'react-query';
-import { removeCookie } from 'utils/helpers/cookies';
 import { useNavigate } from 'react-router';
 import styles from './exit.module.scss';
 import useAuth from '../../hooks/useAuth';
 
 function ExitPage() {
-  const { updateLoginStatus } = useAuth();
+  const { logout } = useAuth();
   const initialState = {
     password: '',
   };
@@ -18,9 +17,7 @@ function ExitPage() {
   const mutationExitMembership = useMutation(deleteMembership, {
     onSuccess: result => {
       if (result === 200) {
-        removeCookie();
-        updateLoginStatus();
-        alert('탈퇴가 완료되었습니다.');
+        logout('회원 탈퇴');
         navigate('/main');
       }
     },

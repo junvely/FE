@@ -1,8 +1,7 @@
+import axios from 'axios';
 import { atom } from 'recoil';
-import { getCookie } from '../utils/helpers/cookies';
 
-const isToken = !!getCookie('access_token');
-
+const isToken = !!axios.defaults.headers.common.Access_Token;
 const isLoginState = atom({
   key: 'isLoginState',
   default: isToken,
