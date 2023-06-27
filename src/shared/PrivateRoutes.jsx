@@ -1,10 +1,9 @@
 import { Navigate, Outlet } from 'react-router';
-import useAuth from '../hooks/useAuth';
 
 function PrivateRoutes() {
-  const { isLogin } = useAuth();
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
 
-  return isLogin ? (
+  return isLoggedIn ? (
     <Outlet />
   ) : (
     <>

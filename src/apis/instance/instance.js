@@ -13,6 +13,7 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {
   if (config.headers === undefined) return config;
   const accessToken = axios.defaults.headers.common.Access_Token;
+
   if (accessToken) {
     // eslint-disable-next-line no-param-reassign
     config.headers.Access_Token = accessToken;
@@ -47,7 +48,10 @@ instance.interceptors.response.use(
     // 액세스 토큰 만료 시 재발급
     if (errorCode === 'TOKEN_ERROR') {
       const data = await tokenRefresh();
-      if (data) axios.defaults.headers.common.Access_Token = data;
+      if (data) {
+        axios.defaults.headers.common.Access_Token = data;
+        localStorage.setItem('isLoggedIn', true);
+      }
 
       // 다시 이전요청 보내는 로직
       const originalRequests = config;
