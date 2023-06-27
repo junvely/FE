@@ -1,7 +1,9 @@
 import { useRecoilState } from 'recoil';
 import { useEffect } from 'react';
+import { useMutation } from 'react-query';
 import axios from 'axios';
 import isLoginState from '../atoms/authAtom';
+import { tokenRefresh } from '../apis/auth/login';
 
 const useAuth = () => {
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);
@@ -10,6 +12,13 @@ const useAuth = () => {
     const isToken = axios.defaults.headers.common.Access_Token;
     setIsLogin(!!isToken);
   };
+
+  // 액세스 토큰 재발급 mutation, 성공 시 로그인 상태 업데이트
+  const authMutation = useMutation(tokenRefresh, {
+    onSuccess: data => {
+      axios.defaults.headers.common.Access_Token = data;
+    },
+  });
 
   const checkingLogin = () => {
     if (isLogin) return true;
@@ -20,9 +29,12 @@ const useAuth = () => {
   const logout = (message = '로그아웃') => {
     delete axios.defaults.headers.common.Access_Token;
     localStorage.removeItem('isLoggedIn');
-    updateLoginStatus();
     alert(`${message} 처리 되었습니다`);
-    // 리프레쉬 로그아웃 처리 api 요청
+  };
+
+  // 새로고침시 액세스 토큰 재발급
+  const reloadTokenRefresh = async () => {
+    authMutation.mutate();
   };
 
   useEffect(() => {
@@ -32,10 +44,13 @@ const useAuth = () => {
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     if (!isLogin && isLoggedIn) {
-      console.log('새로고침');
-      // 새로고침, 브라우저 리로드로 상태 잃을 시 마다 리프레쉬 유효 확인, 액세스 토큰 재요청API
+      reloadTokenRefresh();
     }
   }, []);
+
+  useEffect(() => {
+    updateLoginStatus();
+  }, [axios.defaults.headers.common.Access_Token]);
 
   return { isLogin, updateLoginStatus, checkingLogin, logout };
 };
