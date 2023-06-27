@@ -44,8 +44,8 @@ instance.interceptors.response.use(
       window.location.href = '/login';
     };
 
+    // 액세스 토큰 만료 시 재발급
     if (errorCode === 'TOKEN_ERROR') {
-      // 액세스 토큰 만료 시 재발급
       const data = await tokenRefresh();
       if (data) axios.defaults.headers.common.Access_Token = data;
 
@@ -55,7 +55,8 @@ instance.interceptors.response.use(
       if (accessToken) {
         // eslint-disable-next-line no-param-reassign
         originalRequests.headers.Access_Token = accessToken;
-        await axios(originalRequests);
+        const redirect = await axios(originalRequests);
+        return redirect; // 이전 요청 에러 메세지 반환하지 않고, 재요청 성공 메세지 반환 후 함수 끝내기
       }
     }
 
