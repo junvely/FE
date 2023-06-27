@@ -14,14 +14,16 @@ function Slider({ post }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
+
+  const { checkingLogin } = useAuth();
+  const { id, likeStatus, userStatus, likeCount } = post;
   const isMain = pathname.includes('main');
-  const isMyPost = post.userStatus === 3;
+  const isMyPost = userStatus === 3;
 
   const [currentPage, setCurrentPage] = useState(0);
   const images = post && (post.postImages || post.imageUrl);
   const slideLength = images && images.length;
 
-  const { checkingLogin } = useAuth();
   const queryClient = useQueryClient();
   const mutation = useMutation(postMainLike, {
     onSuccess: () => {
@@ -29,8 +31,7 @@ function Slider({ post }) {
     },
   });
 
-  const { id, likeStatus } = post;
-
+  console.log(post.likeCount);
   const handleLikeClick = () => {
     if (checkingLogin()) {
       mutation.mutate(id);
