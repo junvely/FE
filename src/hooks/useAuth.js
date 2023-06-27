@@ -38,10 +38,6 @@ const useAuth = () => {
   };
 
   useEffect(() => {
-    console.log('isLogin', isLogin);
-  }, [isLogin]);
-
-  useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     if (!isLogin && isLoggedIn) {
       reloadTokenRefresh();
