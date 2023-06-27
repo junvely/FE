@@ -18,4 +18,13 @@ const authLogout = async () => {
   }
 };
 
-export { authLogin, authLogout };
+const tokenRefresh = async () => {
+  try {
+    const { data } = await instance.post('api/reissue');
+    return data.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export { authLogin, authLogout, tokenRefresh };

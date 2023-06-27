@@ -1,6 +1,6 @@
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
-import { getCookie } from 'utils/helpers/cookies';
+import axios from 'axios';
 import instance from './instance/instance';
 
 let stompClient = null;
@@ -13,7 +13,7 @@ const connectClient = (roomId, jsonParseChat) => {
   stompClient.connect(
     {
       header: {
-        access_token: getCookie('access_token'),
+        access_token: axios.defaults.headers.common.Access_Token,
       },
     },
     frame => {
