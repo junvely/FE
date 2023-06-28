@@ -31,7 +31,6 @@ function Slider({ post }) {
     },
   });
 
-  console.log(post.likeCount);
   const handleLikeClick = () => {
     if (checkingLogin()) {
       mutation.mutate(id);

@@ -31,7 +31,6 @@ const useAuth = () => {
       axios.defaults.headers.common.Access_Token = data;
     },
     onError: error => {
-      console.log('authMutation error:', error);
       if (error.message !== '리프레쉬 토큰이 만료되어 로그인이 필요합니다.') {
         logout('서버 에러로 인하여 로그아웃');
       }
@@ -40,21 +39,23 @@ const useAuth = () => {
 
   // 새로고침시 액세스 토큰 재발급
   const reloadTokenRefresh = () => {
-    authMutation.mutate();
-  };
-
-  useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     if (!isLogin && isLoggedIn) {
-      reloadTokenRefresh();
+      authMutation.mutate();
     }
-  }, []);
+  };
 
   useEffect(() => {
     updateLoginStatus();
   }, [axios.defaults.headers.common.Access_Token]);
 
-  return { isLogin, updateLoginStatus, checkingLogin, logout };
+  return {
+    isLogin,
+    updateLoginStatus,
+    checkingLogin,
+    logout,
+    reloadTokenRefresh,
+  };
 };
 
 export default useAuth;

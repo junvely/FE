@@ -1,15 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styles from './nav.module.scss';
 import homeIcon from '../../../assets/svg/home.svg';
 import chattingIcon from '../../../assets/svg/chatting.svg';
 import mypageIcon from '../../../assets/svg/mypage.svg';
 import postIcon from '../../../assets/svg/postIcon.svg';
 import useSearchQuery from '../../../hooks/useSearchQuery';
-import {
-  isScrollTopState,
-  scrollTopClikedState,
-} from '../../../atoms/scrollTopAtom';
 
 function Nav() {
   const location = useLocation();
