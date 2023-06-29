@@ -1,10 +1,11 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import useForm from 'hooks/useForm';
 import { postAddPost, putEditPost } from 'apis/posts';
 import getPostDetail from 'apis/detail';
 import PostInput from 'components/PostInput';
+import axios from 'axios';
 import OperatingTime from './OperatingTime';
 import SearchLocationPage from '../searchLocation/SearchLocationPage';
 import SelectOptions from '../../components/SelectOptions';
@@ -47,6 +48,33 @@ function PostingPage() {
   const [form, handleFormChange, resetForm, setForm] = useForm(initialState);
   const [imageList, setImageList] = useState([]);
   const { title, price, content, contentDetails } = form;
+  // 수정 데이터
+  const [editAmenityList, setEditAmenityList] = useState();
+  const [editHolidays, setEditHolidays] = useState();
+  const [downloadImageList, setDownloadImageList] = useState([]);
+
+  // 운영 시간 데이터 형식 가공
+  const getOperatingTime = () => {
+    const newHolidaysData = {};
+    if (editMode) {
+      editHolidays.forEach(day => {
+        newHolidaysData[day.key] = day.checked;
+      });
+    } else {
+      holidays.forEach(day => {
+        newHolidaysData[day.key] = day.checked;
+      });
+    }
+
+    const newOperatingTime = {
+      openTime: openTime.hour + openTime.minute,
+      closeTime: closeTime.hour + closeTime.minute,
+      holidayTypes: holidayType,
+      holidays: newHolidaysData,
+    };
+
+    return newOperatingTime;
+  };
 
   // 수정 할 데이터 가져오기
   const { data, isLoading, isError } = useQuery(
@@ -54,11 +82,38 @@ function PostingPage() {
     () => getPostDetail(postId),
     {
       onSuccess: response => {
+        const editOpenTime = {
+          hour: response.data.operatingTime.openTime.slice(0, 2),
+          minute: response.data.operatingTime.openTime.slice(2, 4),
+        };
+        const editCloseTime = {
+          hour: response.data.operatingTime.closeTime.slice(0, 2),
+          minute: response.data.operatingTime.closeTime.slice(2, 4),
+        };
+        console.log(response);
         setForm(response.data);
         setLocation(response.data.location);
         setPersons(response.data.capacity);
         setImageList(response.data.imageUrl);
         setHolidayType(response.data.operatingTime.holidayTypes);
+        setOpenTime(editOpenTime);
+        setCloseTime(editCloseTime);
+        setEditAmenityList(
+          amenityCheckList.map(item => {
+            return {
+              ...item,
+              checked: response.data.amenities[item.key],
+            };
+          }),
+        );
+        setEditHolidays(
+          holidayCheckList.map(day => {
+            return {
+              ...day,
+              checked: response.data.operatingTime.holidays[day.key],
+            };
+          }),
+        );
       },
       enabled: editMode,
     },
@@ -109,57 +164,75 @@ function PostingPage() {
     }
   };
 
+  // 휴무일 수정
   const handleHolidayUpdate = e => {
     const { name, checked } = e.target;
-    const newHoliday = holidays.map(day => {
-      if (day.key === name) {
-        return {
-          ...day,
-          checked,
-        };
-      }
-      return day;
-    });
-    setHolidays(newHoliday);
+    console.log(checked);
+    if (editMode) {
+      const newHoliday = editHolidays.map(day => {
+        if (day.key === name) {
+          return {
+            ...day,
+            checked,
+          };
+        }
+        return day;
+      });
+      setEditHolidays(newHoliday);
+    } else {
+      const newHoliday = holidays.map(day => {
+        if (day.key === name) {
+          return {
+            ...day,
+            checked,
+          };
+        }
+        return day;
+      });
+      setHolidays(newHoliday);
+    }
   };
 
+  // 편의시설 수정
   const handleAmenitiesUpdate = e => {
     const { name, checked } = e.target;
-    const newAmenityList = amenityList.map(amenity => {
-      if (amenity.key === name) {
-        return {
-          ...amenity,
-          checked,
-        };
-      }
-      return amenity;
-    });
-    setAmenityList(newAmenityList);
-  };
-
-  // 운영 시간 데이터 형식 가공
-  const getOperatingTime = () => {
-    const newHolidaysData = {};
-    holidays.forEach(day => {
-      newHolidaysData[day.key] = day.checked;
-    });
-
-    const newOperatingTime = {
-      openTime: openTime.hour + openTime.minute,
-      closeTime: closeTime.hour + closeTime.minute,
-      holidayTypes: holidayType,
-      holidays: newHolidaysData,
-    };
-
-    return newOperatingTime;
+    if (editMode) {
+      const newAmenityList = editAmenityList.map(amenity => {
+        if (amenity.key === name) {
+          return {
+            ...amenity,
+            checked,
+          };
+        }
+        return amenity;
+      });
+      setEditAmenityList(newAmenityList);
+    } else {
+      const newAmenityList = amenityList.map(amenity => {
+        if (amenity.key === name) {
+          return {
+            ...amenity,
+            checked,
+          };
+        }
+        return amenity;
+      });
+      setAmenityList(newAmenityList);
+    }
   };
 
   // 편의 시설 데이터 형식 가공
   const getAmenities = () => {
     const newAmenitiesData = {};
-    amenityList.forEach(amenity => {
-      newAmenitiesData[amenity.key] = amenity.checked;
-    });
+    if (editMode) {
+      editAmenityList.forEach(amenity => {
+        newAmenitiesData[amenity.key] = amenity.checked;
+      });
+    } else {
+      amenityList.forEach(amenity => {
+        newAmenitiesData[amenity.key] = amenity.checked;
+      });
+    }
 
     return newAmenitiesData;
   };
@@ -212,8 +285,20 @@ function PostingPage() {
     const amenitiesData = getAmenities();
 
     if (validation()) {
-      alert('준비중인 기능입니다.');
-      navigate('/main');
+      // alert('준비중인 기능입니다.');
+      // navigate('/main');
+      mutationEdit.mutate({
+        postId,
+        title,
+        price: Number(form.price),
+        capacity: Number(persons),
+        content: content.replace(/\n/g, '\\n'),
+        contentDetails: contentDetails.replace(/\n/g, '\\n'),
+        amenities: amenitiesData,
+        operatingTime: operatingTimeData,
+        imageList: downloadImageList,
+        location,
+      });
     }
   };
 
@@ -235,9 +320,15 @@ function PostingPage() {
         imageURL: reader.result,
         file,
       };
-
       setImageList([...imageList, newImage]);
     };
+
+    if (editMode) {
+      const imageBlob = new Blob([file], {
+        type: file.type,
+      });
+      setDownloadImageList([...downloadImageList, { file: imageBlob }]);
+    }
   };
 
   // 이미지 삭제
@@ -246,29 +337,53 @@ function PostingPage() {
       (image, listIndex) => listIndex !== idx,
     );
     setImageList(deletedImageList);
+
+    const deletedDownloadImageList = downloadImageList.filter(
+      (image, listIndex) => listIndex !== idx,
+    );
+    setDownloadImageList(deletedDownloadImageList);
   };
 
-  // 수정할 데이터
-  const editAmenityList = amenityCheckList.map(item => {
-    return { ...item, checked: data && data.data.amenities[item.key] };
-  });
+  // 이미지 변경이 없을 경우, 다운로드 받아서 다시 세팅
+  const downloadFile = async () => {
+    if (data.data.imageUrl.length === 0) {
+      return;
+    }
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Cache-Control': 'no-cache',
+        },
+        responseType: 'blob',
+      };
 
-  const editOpenTime = {
-    hour: data && data.data.operatingTime.openTime.slice(0, 2),
-    minute: data && data.data.operatingTime.openTime.slice(2, 4),
+      data.data.imageUrl.map(async image => {
+        const response = await axios.get(image, config);
+        // console.log('다운받는 get 응답', response.data);
+        setDownloadImageList(prevImageList => [
+          ...prevImageList,
+          { file: response.data },
+        ]);
+        return null;
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
   };
 
-  const editCloseTime = {
-    hour: data && data.data.operatingTime.closeTime.slice(0, 2),
-    minute: data && data.data.operatingTime.closeTime.slice(2, 4),
-  };
+  useEffect(() => {
+    if (data) {
+      // console.log('data', data);
+      downloadFile();
+    }
+  }, [data]);
 
-  const editHolidayList = holidayCheckList.map(item => {
-    return {
-      ...item,
-      checked: data && data.data.operatingTime.holidays[item.key],
-    };
-  });
+  // useEffect(() => {
+  //   if (downloadImageList) {
+  //     console.log('data', downloadImageList);
+  //   }
+  // }, [downloadImageList]);
 
   return (
     <>
@@ -343,13 +458,13 @@ function PostingPage() {
             <div className={styles.timeCon}>
               <OperatingTime
                 label='opentime'
-                time={editMode ? editOpenTime : openTime}
+                time={openTime}
                 setTime={setOpenTime}
               />
               <span>~</span>
               <OperatingTime
                 label='closetime'
-                time={editMode ? editCloseTime : closeTime}
+                time={closeTime}
                 setTime={setCloseTime}
               />
             </div>
@@ -364,7 +479,7 @@ function PostingPage() {
               selectedUpdate={setHolidayType}
             />
             <div className={styles.selectDays}>
-              {(editMode ? editHolidayList : holidays).map(day => (
+              {(editMode && editHolidays ? editHolidays : holidays).map(day => (
                 <label
                   htmlFor={day.key}
                   // key={uuid()}
@@ -376,6 +491,7 @@ function PostingPage() {
                     type='checkbox'
                     name={day.key}
                     id={day.key}
+                    checked={day.checked}
                     onChange={handleHolidayUpdate}
                   />
                   {day.label}
@@ -399,22 +515,25 @@ function PostingPage() {
         <div className={styles.amenity}>
           <span className={styles.title}>편의 시설</span>
           <div className={styles.amenities}>
-            {(editMode ? editAmenityList : amenityList).map(amenity => (
-              <label
-                htmlFor={amenity.key}
-                className={`${styles.checkbox} ${
-                  amenity.checked ? styles.checked : null
-                }`}
-              >
-                <input
-                  type='checkbox'
-                  name={amenity.key}
-                  id={amenity.key}
-                  onChange={handleAmenitiesUpdate}
-                />
-                {amenity.label}
-              </label>
-            ))}
+            {(editMode && editAmenityList ? editAmenityList : amenityList).map(
+              amenity => (
+                <label
+                  htmlFor={amenity.key}
+                  className={`${styles.checkbox} ${
+                    amenity.checked ? styles.checked : undefined
+                  }`}
+                >
+                  <input
+                    type='checkbox'
+                    name={amenity.key}
+                    id={amenity.key}
+                    checked={amenity.checked}
+                    onChange={handleAmenitiesUpdate}
+                  />
+                  {amenity.label}
+                </label>
+              ),
+            )}
           </div>
         </div>
         {/* 이미지 등록 */}
