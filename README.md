@@ -43,12 +43,16 @@
   
 |   **오피스 조회**  | **포스트 작성** | **포스트 수정,삭제** |  
 | :---: | :---: |  :---: |  
-|  <img src="/public/image/무한스크롤.gif" width="220" />  | <img src="/public/image/게시글 CRUD 글 작성 페이지.gif" width="220" /> |  <img src="/public/image/수정.gif" width="220" /> | 
+|  <img src="/public/image/무한스크롤.gif" width="220" />  | <img src="/public/image/포스팅.gif" width="220" /> |  <img src="/public/image/수정.gif" width="220" /> | 
 </details>
 </details>
 <details>
   <summary> 2️⃣ 예약 및 채팅 기능 </summary>
-  
+
+| **예약 하기** | **예약 확인 채팅 메세지** | **채팅 기능, 목록** |
+| :-: | :-: | :-: |
+| <img src="/public/image/예약하기.gif" width="220" /> | <img src="/public/image/예약후메세지.gif" width="220" /> | <img src="/public/image/채팅기능.gif" width="220" /> |
+
 </details>
 <details>
   <summary> 3️⃣ 키워드 / 지역 별 검색 및 로그인, 회원가입 기능 </summary>
