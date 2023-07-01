@@ -42,8 +42,8 @@
   <summary> 1️⃣ 게시글 CRUD 기능 (포스트 작성, 조회, 수정, 삭제) </summary>
   
 |   **오피스 조회**  | **포스트 작성** | **포스트 수정,삭제** |  
-| --- | --- |  --- |  
-|  <img src="/public/image/무한스크롤.gif" />  | <img src="/public/image/게시글 CRUD 글 작성 페이지.gif" /> |  <img src="/public/image/수정.gif" /> | 
+| :---: | :---: |  :---: |  
+|  <img src="/public/image/무한스크롤.gif" width="220" />  | <img src="/public/image/게시글 CRUD 글 작성 페이지.gif" width="220" /> |  <img src="/public/image/수정.gif" width="220" /> | 
 </details>
 </details>
 <details>
@@ -179,7 +179,6 @@
 </details>
 
 <br>
-
 
 <br>
   
@@ -431,7 +430,6 @@ List<ChatMessage> messages = chatMessageRepository.findAllByRoomOrderByIdAsc(roo
 
 <br>
 
-
 <br>
   
 ## ![로고](https://github.com/ShareOffice-11/OHPickOfficial/assets/83201893/064c9d75-fbd9-40b2-867c-a31359cfc231) 유저 테스트 🧑🏻‍💻<br>
@@ -483,7 +481,6 @@ List<ChatMessage> messages = chatMessageRepository.findAllByRoomOrderByIdAsc(roo
 </details>
 
 <br>
-
 
 <br>
   
@@ -560,7 +557,6 @@ lazy-load(지연 로딩)을 사용하여 현재 화면 상 사용자에게 보�
 웹 접근성에 좋지 않은 태그 요소가 포함되어있거나, 중복되는 id값이 존재, 검색 엔진이 읽을 수 있는 robots.text의 누락 등 웹 접근성과 검색 엔진 점수가 각각 92, 91 점으로 조금 미흡한 부분이 있었습니다.
  
  ![lazy전 성능.gif](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/31c44eab-25b5-453d-86da-4288eb5d4e69/lazy%EC%A0%84_%EC%84%B1%EB%8A%A5.gif)
-
 
 `해결 방법`
 
@@ -670,7 +666,6 @@ JWT 액세스 토큰, 리프레시 토큰을 클라이언트에 보낼 때, resp
 </details>
 
 <br>
-
 
 <br>
   
