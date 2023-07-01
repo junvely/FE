@@ -76,10 +76,9 @@ const putEditPost = async payload => {
 
   formData.append('postRequestDto', postBlob);
   payload.imageList.forEach(image => {
-    const imageBlob = new Blob([image.file], {
-      type: image.type,
-    });
-    formData.append('imageFile', imageBlob);
+    const imageType = image.file.type.split('/')[1];
+    const imageNameWithType = `${image.file}.${imageType}`;
+    formData.append('imageFile', image.file, imageNameWithType);
   });
 
   try {

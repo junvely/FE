@@ -83,7 +83,7 @@ function Profile() {
     }
   };
 
-  // 기존 이미지인 경우, 다운로드 받아서 다시 세팅해줌
+  // 이미지 변경이 없을 경우, 다운로드 받아서 다시 세팅
   const downloadFile = async () => {
     if (!profileImage) {
       return;
