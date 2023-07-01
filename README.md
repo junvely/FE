@@ -30,7 +30,7 @@
 
 ![아키텍처 구성도](https://github.com/ShareOffice-11/OHPickOfficial/assets/83201893/13250ebe-c18e-4b8e-a9bd-30b91f8f2eab)
 
-#### FRONT-END STACK 🏗️
+### FRONT-END STACK 🏗️
 
 <div align=center> 
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white">
@@ -39,16 +39,17 @@
 <img src="https://img.shields.io/badge/React Router-CA4245?style=for-the-badge&logo=React Router&logoColor=white"> 
 <img src="https://img.shields.io/badge/React Query-FF4154?style=for-the-badge&logo=React Query&logoColor=white">
 <img src="https://img.shields.io/badge/Recoil-FFFFFF?style=for-the-badge&logo=&logoColor=black"/>
-<img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white">
-<img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=Tailwind-CSS&logoColor=white"/>
 <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white">
 <img src="https://img.shields.io/badge/Stomp-000000?style=for-the-badge&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/Kakao Map API-FFCD00?style=for-the-badge&logo=kakao&logoColor=black">
+<img src="https://img.shields.io/badge/Kakao Develop-FFCD00?style=for-the-badge&logo=kakao&logoColor=black">
+<img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white">
+<img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=Tailwind-CSS&logoColor=white"/>
 <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=white">
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">
-<img src="https://img.shields.io/badge/KakaoMap-FFCD00?style=for-the-badge&logo=kakao&logoColor=black">
 </div>
 
-#### BACK-END STACK 🏗️
+### BACK-END STACK 🏗️
 
 <div align=center> 
 <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
@@ -56,17 +57,17 @@
 <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 <img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white">
-<img src="https://img.shields.io/badge/JSON Web Tokens-000000?style=for-the-badge&logo=JSON Web Tokens&logoColor=white">
-<img src="https://img.shields.io/badge/WebSocket-000000?style=for-the-badge&logo=&logoColor=white"/>
-<img src="https://img.shields.io/badge/Stomp-000000?style=for-the-badge&logo=&logoColor=white"/>
-<img src="https://img.shields.io/badge/SMTP-000000?style=for-the-badge&logo=&logoColor=white"/>
-<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/amazonrds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white">
 <img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white">
 <img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white">
 <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
 <img src="https://img.shields.io/badge/AWS CodeDeploy-212599?style=for-the-badge&logo=CodeDeploy&logoColor=white">
+<img src="https://img.shields.io/badge/Kakao Develop-FFCD00?style=for-the-badge&logo=kakao&logoColor=black">
+<img src="https://img.shields.io/badge/JSON Web Tokens-000000?style=for-the-badge&logo=JSON Web Tokens&logoColor=white">
+<img src="https://img.shields.io/badge/WebSocket-000000?style=for-the-badge&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/Stomp-000000?style=for-the-badge&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/SMTP-000000?style=for-the-badge&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white">
 
 </div>
@@ -81,14 +82,17 @@
 <details>
   <summary> 1️⃣ 게시글 CRUD 기능 (포스트 작성, 조회, 수정, 삭제) </summary>
 <br>
-|   **오피스 조회 / 무한스크롤**  | **포스트 작성** | **포스트 수정,삭제** |  
-| :-: | :-: |  :-: |  
-|  <img src="/public/image/무한스크롤.gif" width="220" />  | <img src="/public/image/포스팅.gif" width="220" /> |  <img src="/public/image/수정.gif" width="220" /> | 
+
+| **오피스 조회 / 무한스크롤** | **포스트 작성** | **포스트 수정,삭제** |
+| :-: | :-: | :-: |
+| <img src="/public/image/무한스크롤.gif" width="220" /> | <img src="/public/image/포스팅.gif" width="220" /> | <img src="/public/image/수정.gif" width="220" /> |
+
 </details>
 </details>
 <details>
   <summary> 2️⃣ 예약 및 채팅 기능 </summary>
 <br>
+
 | **예약 하기** | **예약 확인 채팅 메세지** | **채팅 기능, 목록** |
 | :-: | :-: | :-: |
 | <img src="/public/image/예약하기.gif" width="220" /> | <img src="/public/image/예약후메세지.gif" width="220" /> | <img src="/public/image/채팅기능.gif" width="220" /> |
@@ -96,17 +100,21 @@
 </details>
 <details>
   <summary> 3️⃣ 키워드 / 지역 별 검색 및 로그인, 회원가입 기능 </summary>
-<br>  
+<br>
+
 | **검색 기능(키워드/필터)** | **소셜 로그인** | **회원가입** |
 | :-: | :-: | :-: |
 | <img src="/public/image/검색.gif" width="220" /> | <img src="/public/image/소셜로그인.gif" width="220" /> | <img src="/public/image/회원가입.gif" width="220" /> |
+
 </details>
 <details>
   <summary> 4️⃣ 마이페이지 (글 목록 조회, 로그아웃 및 회원 탈퇴) 기능 </summary>
-<br>    
+<br>
+
 | **마이 페이지(나의 오피스, 좋아요)** | **예약 현황** | **프로필 편집** |
 | :-: | :-: | :-: |
 | <img src="/public/image/마이페이지.gif" width="220" /> | <img src="/public/image/예약현황.gif" width="220" /> | <img src="/public/image/프로필편집.gif" width="220" /> |
+
 </details>
 
 <br>
