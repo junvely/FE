@@ -41,8 +41,8 @@
 <details>
   <summary> 1️⃣ 게시글 CRUD 기능 (포스트 작성, 조회, 수정, 삭제) </summary>
   
-|   **오피스 조회**  | **포스트 작성** | **포스트 수정,삭제** |  
-| :---: | :---: |  :---: |  
+|   **오피스 조회 / 무한스크롤**  | **포스트 작성** | **포스트 수정,삭제** |  
+| :-: | :-: |  :-: |  
 |  <img src="/public/image/무한스크롤.gif" width="220" />  | <img src="/public/image/포스팅.gif" width="220" /> |  <img src="/public/image/수정.gif" width="220" /> | 
 </details>
 </details>
@@ -57,10 +57,16 @@
 <details>
   <summary> 3️⃣ 키워드 / 지역 별 검색 및 로그인, 회원가입 기능 </summary>
   
+| **검색 기능(키워드/필터)** | **소셜 로그인** | **회원가입** |
+| :-: | :-: | :-: |
+| <img src="/public/image/검색.gif" width="220" /> | <img src="/public/image/소셜로그인.gif" width="220" /> | <img src="/public/image/회원가입.gif" width="220" /> |
 </details>
 <details>
   <summary> 4️⃣ 마이페이지 (글 목록 조회, 로그아웃 및 회원 탈퇴) 기능 </summary>
-  
+    
+| **마이 페이지(나의 오피스, 좋아요)** | **예약 현황** | **프로필 편집** |
+| :-: | :-: | :-: |
+| <img src="/public/image/마이페이지.gif" width="220" /> | <img src="/public/image/예약현황.gif" width="220" /> | <img src="/public/image/프로필편집.gif" width="220" /> |
 </details>
 
 <br>
