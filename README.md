@@ -11,7 +11,7 @@
 
 <br>
 
-## ![로고](https://github.com/ShareOffice-11/OHPickOfficial/assets/83201893/064c9d75-fbd9-40b2-867c-a31359cfc231) 서비스 소개 💁‍♀️<br>
+## ![로고](https://github.com/ShareOffice-11/OHPickOfficial/assets/83201893/064c9d75-fbd9-40b2-867c-a31359cfc231) 서비스 소개 💁‍♂️<br>
 
 ![KakaoTalk_20230620_001046503_01](https://github.com/ShareOffice-11/OHPickOfficial/assets/83201893/e32b365a-6b10-4459-8685-272cb59dba12)
 
