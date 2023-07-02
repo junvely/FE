@@ -80,40 +80,44 @@
 ![KakaoTalk_20230620_001046503_02](https://github.com/ShareOffice-11/OHPickOfficial/assets/83201893/6e9fc9a7-d0b4-477b-8977-451c6204e4aa)
 
 <details>
-  <summary> 1️⃣ 게시글 CRUD 기능 (포스트 작성, 조회, 수정, 삭제) </summary>
+  <summary> ⚡ 게시글 CRUD 기능 (포스트 작성, 조회, 수정, 삭제) </summary>
 <br>
-
+    
+<div align=center> 
+    
 | **오피스 조회 / 무한스크롤** | **포스트 작성** | **포스트 수정,삭제** |
 | :-: | :-: | :-: |
-| <img src="/public/image/무한스크롤.gif" width="220" /> | <img src="/public/image/포스팅.gif" width="220" /> | <img src="/public/image/수정.gif" width="220" /> |
+| <img src="https://github.com/OHPick/FE/assets/83201893/cd092bd1-b872-491e-af18-9d55d2d58bf0" width="220" /> | <img src="https://github.com/OHPick/FE/assets/83201893/2042f2c2-9995-4450-9ba4-67bb2fde5424" width="220" /> | <img src="https://github.com/OHPick/FE/assets/83201893/46762781-3e8b-43ed-bc0e-369ec44df2b6" width="220" /> |
+
+</div>
 
 </details>
 </details>
 <details>
-  <summary> 2️⃣ 예약 및 채팅 기능 </summary>
+  <summary> ⚡ 예약 및 채팅 기능 </summary>
 <br>
-
+    
 | **예약 하기** | **예약 확인 채팅 메세지** | **채팅 기능, 목록** |
 | :-: | :-: | :-: |
-| <img src="/public/image/예약하기.gif" width="220" /> | <img src="/public/image/예약후메세지.gif" width="220" /> | <img src="/public/image/채팅기능.gif" width="220" /> |
+| <img src="https://github.com/OHPick/FE/assets/83201893/18aa4ea5-2a6d-404e-a48f-1b60ae55cdcc" width="220" /> | <img src="https://github.com/OHPick/FE/assets/83201893/984e6b05-8c84-4bfc-a070-c3a66e09334d" width="220" /> | <img src="https://github.com/OHPick/FE/assets/83201893/773ac8aa-0818-405b-a9c5-3ad09f74ffa7" width="220" /> |
 
 </details>
 <details>
-  <summary> 3️⃣ 키워드 / 지역 별 검색 및 로그인, 회원가입 기능 </summary>
+  <summary> ⚡ 키워드 / 지역 별 검색 및 로그인, 회원가입 기능 </summary>
 <br>
-
+    
 | **검색 기능(키워드/필터)** | **소셜 로그인** | **회원가입** |
 | :-: | :-: | :-: |
-| <img src="/public/image/검색.gif" width="220" /> | <img src="/public/image/소셜로그인.gif" width="220" /> | <img src="/public/image/회원가입.gif" width="220" /> |
+| <img src="https://github.com/OHPick/FE/assets/83201893/9c12ae6d-23ed-4494-9488-04f57966062c" width="220" /> | <img src="https://github.com/OHPick/FE/assets/83201893/4743708e-10c3-4b6f-9668-01281eda0adc" width="220" /> | <img src="https://github.com/OHPick/FE/assets/83201893/7f674741-474e-46b2-9c2c-4c3c77b68604" width="220" /> |
 
 </details>
 <details>
-  <summary> 4️⃣ 마이페이지 (글 목록 조회, 로그아웃 및 회원 탈퇴) 기능 </summary>
+  <summary> ⚡ 마이페이지 (글 목록 조회, 로그아웃 및 회원 탈퇴) 기능 </summary>
 <br>
 
 | **마이 페이지(나의 오피스, 좋아요)** | **예약 현황** | **프로필 편집** |
 | :-: | :-: | :-: |
-| <img src="/public/image/마이페이지.gif" width="220" /> | <img src="/public/image/예약현황.gif" width="220" /> | <img src="/public/image/프로필편집.gif" width="220" /> |
+| <img src="https://github.com/OHPick/FE/assets/83201893/69f0704c-cd9a-477b-a466-bdde7ee9911f" width="220" /> | <img src="https://github.com/OHPick/FE/assets/83201893/3f5811bb-6d5c-4130-9307-bff8a88d0987" width="220" /> | <img src="https://github.com/OHPick/FE/assets/83201893/1df13391-aecb-4465-b170-5d49e43a1f96" width="220" /> |
 
 </details>
 
